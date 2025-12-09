@@ -5,6 +5,7 @@ import { GaugeChart } from "@/components/dashboard/GaugeChart";
 import { BarChart } from "@/components/dashboard/BarChart";
 import { StudentList } from "@/components/dashboard/StudentList";
 import { Filters } from "@/components/dashboard/Filters";
+import { ExportButton } from "@/components/dashboard/ExportButton";
 import { academicData, filterByBienio, filterByQuadrienio } from "@/data/academicData";
 import { Users, GraduationCap, UserCheck, Clock, CheckCircle, Timer } from "lucide-react";
 
@@ -121,17 +122,20 @@ const Index = () => {
       <Header />
       
       <main className="container mx-auto px-4 py-8">
-        <Filters
-          selectedYear={selectedYear}
-          selectedProfessor={selectedProfessor}
-          selectedPeriodType={selectedPeriodType}
-          selectedPeriod={selectedPeriod}
-          onYearChange={setSelectedYear}
-          onProfessorChange={setSelectedProfessor}
-          onPeriodTypeChange={setSelectedPeriodType}
-          onPeriodChange={setSelectedPeriod}
-          professors={professors}
-        />
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
+          <Filters
+            selectedYear={selectedYear}
+            selectedProfessor={selectedProfessor}
+            selectedPeriodType={selectedPeriodType}
+            selectedPeriod={selectedPeriod}
+            onYearChange={setSelectedYear}
+            onProfessorChange={setSelectedProfessor}
+            onPeriodTypeChange={setSelectedPeriodType}
+            onPeriodChange={setSelectedPeriod}
+            professors={professors}
+          />
+          <ExportButton data={filteredData} filename={`ppgenf-${selectedPeriodType}-${selectedPeriod !== "Todos" ? selectedPeriod : "todos"}`} />
+        </div>
 
         {/* KPI Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
