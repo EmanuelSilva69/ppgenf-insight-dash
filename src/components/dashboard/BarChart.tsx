@@ -47,6 +47,11 @@ export function BarChart({ title, data, showGlobalAverage = false, horizontalLab
                 borderRadius: "8px"
               }}
             />
+            <Bar dataKey="value" radius={[8, 8, 0, 0]}>
+              {data.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Bar>
             {showGlobalAverage && globalAverage > 0 && (
               <ReferenceLine 
                 y={globalAverage} 
@@ -62,11 +67,6 @@ export function BarChart({ title, data, showGlobalAverage = false, horizontalLab
                 }}
               />
             )}
-            <Bar dataKey="value" radius={[8, 8, 0, 0]}>
-              {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Bar>
           </RechartsBarChart>
         </ResponsiveContainer>
       </CardContent>
