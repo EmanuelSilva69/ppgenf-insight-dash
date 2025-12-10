@@ -6,8 +6,11 @@ import { BarChart } from "@/components/dashboard/BarChart";
 import { StudentList } from "@/components/dashboard/StudentList";
 import { Filters } from "@/components/dashboard/Filters";
 import { ExportButton } from "@/components/dashboard/ExportButton";
+import { QuadrienniumChart } from "@/components/dashboard/QuadrienniumChart";
+import { CotasTab } from "@/components/dashboard/CotasTab";
 import { academicData, filterByBienio, filterByQuadrienio } from "@/data/academicData";
-import { Users, GraduationCap, UserCheck, Clock, CheckCircle, Timer } from "lucide-react";
+import { Users, UserCheck, CheckCircle, Clock, Timer } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Index = () => {
   const [selectedYear, setSelectedYear] = useState("Todos");
@@ -91,8 +94,8 @@ const Index = () => {
     const lineCounts: Record<string, number> = {};
     filteredData.forEach(record => {
       const lineName = record.linhaPesquisa.includes("CUIDADO") 
-        ? "O Cuidado em Saúde e Enfermagem" 
-        : "Enfermagem em Saúde Coletiva";
+        ? "Cuidado em Saúde" 
+        : "Saúde Coletiva";
       lineCounts[lineName] = (lineCounts[lineName] || 0) + 1;
     });
     return Object.entries(lineCounts)
@@ -122,74 +125,95 @@ const Index = () => {
       <Header />
       
       <main className="container mx-auto px-4 py-8">
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
-          <Filters
-            selectedYear={selectedYear}
-            selectedProfessor={selectedProfessor}
-            selectedPeriodType={selectedPeriodType}
-            selectedPeriod={selectedPeriod}
-            onYearChange={setSelectedYear}
-            onProfessorChange={setSelectedProfessor}
-            onPeriodTypeChange={setSelectedPeriodType}
-            onPeriodChange={setSelectedPeriod}
-            professors={professors}
-          />
-          <ExportButton data={filteredData} filename={`ppgenf-${selectedPeriodType}-${selectedPeriod !== "Todos" ? selectedPeriod : "todos"}`} />
-        </div>
+        <Tabs defaultValue="dashboard" className="w-full">
+          <TabsList className="mb-6">
+            <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+            <TabsTrigger value="cotas">Cotas, Idade e Sexo</TabsTrigger>
+          </TabsList>
 
-        {/* KPI Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
-          <KPICard 
-            title="Total de alunos" 
-            value={totalStudents} 
-            icon={Users} 
-          />
-          <KPICard 
-            title="Orientações em andamento" 
-            value={ongoingOrientations} 
-            icon={UserCheck} 
-          />
-          <KPICard 
-            title="Orientações concluídas" 
-            value={completedOrientations} 
-            icon={CheckCircle} 
-          />
-          <KPICard 
-            title="Alunos formados" 
-            value={graduatedStudents} 
-            icon={GraduationCap} 
-          />
-          <KPICard 
-            title="Média tempo conclusão" 
-            value={`${averageCompletionTime}`}
-            subtitle="meses"
-            icon={Clock} 
-          />
-          <KPICard 
-            title="Conclusão no prazo" 
-            value={`${completionRate.toFixed(0)}%`}
-            subtitle={`${onTimeCount} de ${graduatedStudents}`}
-            icon={Timer} 
-          />
-        </div>
+          <TabsContent value="dashboard">
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
+              <Filters
+                selectedYear={selectedYear}
+                selectedProfessor={selectedProfessor}
+                selectedPeriodType={selectedPeriodType}
+                selectedPeriod={selectedPeriod}
+                onYearChange={setSelectedYear}
+                onProfessorChange={setSelectedProfessor}
+                onPeriodTypeChange={setSelectedPeriodType}
+                onPeriodChange={setSelectedPeriod}
+                professors={professors}
+              />
+              <ExportButton data={filteredData} filename={`ppgenf-${selectedPeriodType}-${selectedPeriod !== "Todos" ? selectedPeriod : "todos"}`} />
+            </div>
 
-        {/* Charts Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <GaugeChart title="Taxa de conclusão no prazo" percentage={completionRate} />
-          <BarChart title="Distribuição por linha de pesquisa" data={researchLinesData} />
-        </div>
+            {/* KPI Cards - Removed "Alunos formados" card */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-8">
+              <KPICard 
+                title="Total de alunos" 
+                value={totalStudents} 
+                icon={Users} 
+              />
+              <KPICard 
+                title="Orientações em andamento" 
+                value={ongoingOrientations} 
+                icon={UserCheck} 
+              />
+              <KPICard 
+                title="Orientações concluídas" 
+                value={completedOrientations} 
+                icon={CheckCircle} 
+              />
+              <KPICard 
+                title="Média tempo conclusão" 
+                value={`${averageCompletionTime}`}
+                subtitle="meses"
+                icon={Clock} 
+              />
+              <KPICard 
+                title="Conclusão no prazo" 
+                value={`${completionRate.toFixed(0)}%`}
+                subtitle={`${onTimeCount} de ${graduatedStudents}`}
+                icon={Timer} 
+              />
+            </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <BarChart title="Orientandos por professor (Top 10)" data={advisorsData} />
-          <BarChart title="Média de meses para conclusão por ano" data={completionByYearData} />
-        </div>
+            {/* Charts Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+              <GaugeChart title="Taxa de conclusão no prazo" percentage={completionRate} />
+              <BarChart 
+                title="Distribuição por linha de pesquisa" 
+                data={researchLinesData} 
+                horizontalLabels={true}
+              />
+            </div>
 
-        <div className="grid grid-cols-1 gap-6">
-          <StudentList 
-            title="Lista de alunos" 
-            students={filteredData} 
-          />
-        </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+              <BarChart title="Orientandos por professor (Top 10)" data={advisorsData} />
+              <BarChart 
+                title="Média de meses para conclusão por ano" 
+                data={completionByYearData} 
+                showGlobalAverage={true}
+              />
+            </div>
+
+            {/* Quadrennium Chart */}
+            <div className="mb-8">
+              <QuadrienniumChart data={filteredData} />
+            </div>
+
+            <div className="grid grid-cols-1 gap-6">
+              <StudentList 
+                title="Lista de alunos" 
+                students={filteredData} 
+              />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="cotas">
+            <CotasTab />
+          </TabsContent>
+        </Tabs>
       </main>
     </div>
   );

@@ -10,13 +10,12 @@ interface StudentListProps {
 
 export function StudentList({ title, students }: StudentListProps) {
   const getStatusBadge = (status: string) => {
+    // Only show "Em andamento" status badge for active students
     if (status === "EM_ANDAMENTO") {
       return <Badge variant="secondary" className="bg-yellow-500/20 text-yellow-700">Em andamento</Badge>;
     }
-    if (status === "SIM") {
-      return <Badge variant="secondary" className="bg-green-500/20 text-green-700">No prazo</Badge>;
-    }
-    return <Badge variant="secondary" className="bg-red-500/20 text-red-700">Fora do prazo</Badge>;
+    // For completed students (SIM or NÃO), don't show any status badge
+    return null;
   };
 
   return (
@@ -34,7 +33,7 @@ export function StudentList({ title, students }: StudentListProps) {
               >
                 <div className="flex justify-between items-start gap-2">
                   <div className="flex-1">
-                    <p className="font-medium text-sm text-foreground">{student.nome}</p>
+                    <p className="font-bold text-sm text-foreground">{student.nome}</p>
                     <p className="text-xs text-muted-foreground mt-1">
                       <span className="font-medium">Orientador:</span> {student.orientador}
                     </p>

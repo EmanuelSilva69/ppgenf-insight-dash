@@ -1,9 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
+import { BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceLine } from "recharts";
 
 interface BarChartProps {
   title: string;
   data: { name: string; value: number }[];
+  showGlobalAverage?: boolean;
+  horizontalLabels?: boolean;
 }
 
 const COLORS = [
@@ -14,7 +16,12 @@ const COLORS = [
   "hsl(var(--chart-5))",
 ];
 
-export function BarChart({ title, data }: BarChartProps) {
+export function BarChart({ title, data, showGlobalAverage = false, horizontalLabels = false }: BarChartProps) {
+  // Calculate global average if needed
+  const globalAverage = showGlobalAverage && data.length > 0
+    ? data.reduce((sum, item) => sum + item.value, 0) / data.length
+    : 0;
+
   return (
     <Card className="border-primary/20">
       <CardHeader>
@@ -22,14 +29,15 @@ export function BarChart({ title, data }: BarChartProps) {
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={300}>
-          <RechartsBarChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+          <RechartsBarChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: horizontalLabels ? 20 : 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
             <XAxis 
               dataKey="name" 
-              tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
-              angle={-45}
-              textAnchor="end"
-              height={100}
+              tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }}
+              angle={horizontalLabels ? 0 : -45}
+              textAnchor={horizontalLabels ? "middle" : "end"}
+              height={horizontalLabels ? 50 : 100}
+              interval={0}
             />
             <YAxis tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }} />
             <Tooltip 
@@ -39,6 +47,20 @@ export function BarChart({ title, data }: BarChartProps) {
                 borderRadius: "8px"
               }}
             />
+            {showGlobalAverage && globalAverage > 0 && (
+              <ReferenceLine 
+                y={globalAverage} 
+                stroke="hsl(var(--destructive))" 
+                strokeWidth={2}
+                strokeDasharray="5 5"
+                label={{ 
+                  value: `Média: ${globalAverage.toFixed(1)}`, 
+                  position: "right",
+                  fill: "hsl(var(--destructive))",
+                  fontSize: 12
+                }}
+              />
+            )}
             <Bar dataKey="value" radius={[8, 8, 0, 0]}>
               {data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
