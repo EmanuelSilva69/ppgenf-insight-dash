@@ -8,7 +8,7 @@ interface QuadrienniumChartProps {
 }
 
 const QUADRIENNIUMS = [
-  { label: "2011-2013", start: 2011, end: 2013, note: "(Incompleto)" },
+  { label: "2011-2013", start: 2011, end: 2012, note: "(Incompleto)" },
   { label: "2013-2016", start: 2013, end: 2016, note: "" },
   { label: "2017-2020", start: 2017, end: 2020, note: "" },
   { label: "2021-2024", start: 2021, end: 2024, note: "" },
