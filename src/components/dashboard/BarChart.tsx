@@ -33,13 +33,13 @@ export function BarChart({ title, data, showGlobalAverage = false, horizontalLab
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
             <XAxis 
               dataKey="name" 
-              tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }}
+              tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11, fontWeight: "bold" }}
               angle={horizontalLabels ? 0 : -45}
               textAnchor={horizontalLabels ? "middle" : "end"}
               height={horizontalLabels ? 50 : 100}
               interval={0}
             />
-            <YAxis tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }} />
+            <YAxis tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12, fontWeight: "bold" }} />
             <Tooltip 
               contentStyle={{ 
                 backgroundColor: "hsl(var(--card))",
