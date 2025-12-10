@@ -51,13 +51,13 @@ export function QuadrienniumChart({ data }: QuadrienniumChartProps) {
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
             <XAxis 
               dataKey="name" 
-              tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }}
+              tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11, fontWeight: "bold" }}
               angle={0}
               textAnchor="middle"
               height={50}
               interval={0}
             />
-            <YAxis tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }} />
+            <YAxis tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12, fontWeight: "bold" }} />
             <Tooltip 
               contentStyle={{ 
                 backgroundColor: "hsl(var(--card))",
