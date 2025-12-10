@@ -54,10 +54,11 @@ export function BarChart({ title, data, showGlobalAverage = false, horizontalLab
                 strokeWidth={2}
                 strokeDasharray="5 5"
                 label={{ 
-                  value: `Média: ${globalAverage.toFixed(1)}`, 
-                  position: "right",
+                  value: `Média Global: ${globalAverage.toFixed(1)} meses`, 
+                  position: "insideTopRight",
                   fill: "hsl(var(--destructive))",
-                  fontSize: 12
+                  fontSize: 12,
+                  fontWeight: "bold"
                 }}
               />
             )}
