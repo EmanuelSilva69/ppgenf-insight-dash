@@ -238,7 +238,7 @@ export const getBienios = () => [
 ];
 
 export const getQuadrienios = () => [
-  "2011-2014", "2015-2018", "2019-2022", "2023-2026"
+  "2011-2013 (Incompleto)", "2013-2016", "2017-2020", "2021-2024", "2025+"
 ];
 
 export const filterByBienio = (data: AcademicRecord[], bienio: string) => {
@@ -247,6 +247,13 @@ export const filterByBienio = (data: AcademicRecord[], bienio: string) => {
 };
 
 export const filterByQuadrienio = (data: AcademicRecord[], quadrienio: string) => {
+  // Handle the special quadrennium formats
+  if (quadrienio === "2011-2013 (Incompleto)") {
+    return data.filter(r => r.ano >= 2011 && r.ano <= 2013);
+  }
+  if (quadrienio === "2025+") {
+    return data.filter(r => r.ano >= 2025);
+  }
   const [start, end] = quadrienio.split("-").map(Number);
   return data.filter(r => r.ano >= start && r.ano <= end);
 };
