@@ -50,7 +50,7 @@ export function GaugeChart({ title, percentage }: GaugeChartProps) {
           </svg>
           
           {/* Percentage display */}
-          <div className="absolute inset-0 flex items-center justify-center pt-12">
+          <div className="absolute inset-0 flex items-center justify-center pt-20">
             <div className="text-center">
               <div className="text-4xl font-bold text-primary">{percentage.toFixed(1)}%</div>
               <div className="text-xs text-muted-foreground mt-1">Taxa de conclusão</div>
