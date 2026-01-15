@@ -51,14 +51,15 @@ Instale as dependências:
 ```
 npm install
 ```
-Rodar Localmente
+### Rodar Localmente
 Para abrir o modo de desenvolvimento com hot-reload:
 ```
 npm run dev
 ```
 O projeto estará disponível em http://localhost:8080 (ou a porta indicada no terminal).
 
-Gerar Build Manualmente
+### Gerar Build Manualmente
+
 Se não for usar Docker e quiser apenas os arquivos estáticos para servir em Apache/Nginx padrão:
 ```
 npm run build
