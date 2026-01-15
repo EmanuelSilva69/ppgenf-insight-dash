@@ -1,73 +1,75 @@
-# Welcome to your Lovable project
+# 🏥 Portal do Mestrado em Enfermagem
 
-## Project info
+Este repositório contém o código-fonte do portal web informativo para os discentes do Programa de Mestrado em Enfermagem.
 
-**URL**: https://lovable.dev/projects/36a74c72-dc5a-4cc7-ba6d-f45f25a6a9fc
+O objetivo do sistema é centralizar comunicações, cronogramas, editais e informações gerais do curso em uma interface moderna e acessível.
 
-## How can I edit this code?
+## 🛠 Tecnologias Utilizadas
 
-There are several ways of editing your application.
+O projeto é uma **SPA (Single Page Application)** estática, construída com foco em performance e facilidade de hospedagem.
 
-**Use Lovable**
+* **Framework:** React + Vite
+* **Linguagem:** TypeScript
+* **Estilização:** Tailwind CSS + Shadcn-ui
+* **Infraestrutura:** Docker + Nginx (Alpine)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/36a74c72-dc5a-4cc7-ba6d-f45f25a6a9fc) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🚀 Guia de Instalação e Deploy (Para o TI/Servidor)
 
-**Use your preferred IDE**
+A aplicação está containerizada para facilitar o deploy em qualquer infraestrutura institucional. O container utiliza um **Multi-stage build** que resulta em uma imagem leve (Alpine) servindo arquivos estáticos via Nginx.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Pré-requisitos
+* Docker instalado.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Passo 1: Construir a Imagem
+Na raiz do projeto, execute:
 
-Follow these steps:
+```bash
+docker build -t portal-enfermagem .
+```
+Passo 2: Rodar o Container
+Para iniciar o servidor web na porta 80 (ou outra porta de preferência):
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Exemplo rodando na porta 80 do host
+docker run -d -p 80:80 --name mestrado-web portal-enfermagem
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+Nota sobre Rotas: O container já possui um arquivo nginx.conf configurado internamente para lidar com o roteamento de SPA (redirecionando rotas desconhecidas para o index.html), evitando erros 404 ao atualizar a página.
 
-# Step 3: Install the necessary dependencies.
-npm i
+## Guia de Desenvolvimento (Para Edição)
+Caso seja necessário realizar alterações no código (texto, layouts, novas páginas):
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+Pré-requisitos
+Node.js (versão 18 ou superior)
+
+npm
+
+Instalação
+Clone o repositório.
+
+Instale as dependências:
+```
+npm install
+```
+Rodar Localmente
+Para abrir o modo de desenvolvimento com hot-reload:
+```
 npm run dev
 ```
+O projeto estará disponível em http://localhost:8080 (ou a porta indicada no terminal).
 
-**Edit a file directly in GitHub**
+Gerar Build Manualmente
+Se não for usar Docker e quiser apenas os arquivos estáticos para servir em Apache/Nginx padrão:
+```
+npm run build
+```
+Os arquivos finais otimizados estarão na pasta /dist.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 📂 Estrutura de Pastas
+src/: Todo o código fonte, páginas e componentes.
 
-**Use GitHub Codespaces**
+public/: Imagens e assets estáticos.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Dockerfile: Configuração da imagem do container.
 
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/36a74c72-dc5a-4cc7-ba6d-f45f25a6a9fc) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+nginx.conf: Configuração do servidor web para produção.
