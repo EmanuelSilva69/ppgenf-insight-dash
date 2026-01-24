@@ -129,7 +129,7 @@ const Index = () => {
         <Tabs defaultValue="dashboard" className="w-full">
           <TabsList className="mb-6">
             <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
-            <TabsTrigger value="analise">Análise Crítica</TabsTrigger>
+            <TabsTrigger value="analise">Análise do Quadriênio</TabsTrigger>
             <TabsTrigger value="cotas">Cotas, Idade e Sexo</TabsTrigger>
           </TabsList>
 
