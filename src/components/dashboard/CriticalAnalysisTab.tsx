@@ -358,7 +358,7 @@ export function CriticalAnalysisTab() {
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
-              <FunnelChart>
+              <FunnelChart margin={{ top: 10, right: 80, bottom: 10, left: 10 }}>
                 <Tooltip 
                   contentStyle={{ 
                     backgroundColor: "hsl(var(--card))",
@@ -371,8 +371,8 @@ export function CriticalAnalysisTab() {
                   data={funnelData}
                   isAnimationActive
                 >
-                  <LabelList position="center" fill="#fff" stroke="none" dataKey="name" fontSize={12} fontWeight="bold" />
-                  <LabelList position="right" fill="hsl(var(--foreground))" stroke="none" dataKey="value" fontSize={14} fontWeight="bold" />
+                  <LabelList position="center" fill="#fff" stroke="none" dataKey="name" fontSize={11} fontWeight="bold" />
+                  <LabelList position="right" fill="hsl(var(--foreground))" stroke="none" dataKey="value" fontSize={13} fontWeight="bold" offset={10} />
                 </Funnel>
               </FunnelChart>
             </ResponsiveContainer>
@@ -430,24 +430,25 @@ export function CriticalAnalysisTab() {
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
+              <PieChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
                 <Pie
                   data={nonCompletionData}
                   cx="50%"
                   cy="50%"
-                  innerRadius={60}
-                  outerRadius={100}
+                  innerRadius={50}
+                  outerRadius={80}
                   paddingAngle={5}
                   dataKey="value"
                   label={({ name, value, percent }) => 
                     `${name}: ${value} (${(percent * 100).toFixed(0)}%)`
                   }
+                  labelLine={{ stroke: "hsl(var(--muted-foreground))", strokeWidth: 1 }}
                 >
                   {nonCompletionData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip 
+                <Tooltip
                   contentStyle={{ 
                     backgroundColor: "hsl(var(--card))",
                     border: "1px solid hsl(var(--border))",
