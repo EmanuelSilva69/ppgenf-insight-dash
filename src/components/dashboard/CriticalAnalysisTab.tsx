@@ -483,7 +483,8 @@ export function CriticalAnalysisTab() {
                 dataKey="ano" 
                 tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }}
               />
-              <YAxis tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }} />
+              <YAxis yAxisId="left" tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }} />
+              <YAxis yAxisId="right" orientation="right" tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }} domain={[0, 100]} tickFormatter={(v) => `${v}%`} />
               <Tooltip 
                 contentStyle={{ 
                   backgroundColor: "hsl(var(--card))",
@@ -496,8 +497,8 @@ export function CriticalAnalysisTab() {
                 }}
               />
               <Legend />
-              <Bar dataKey="aprovados" fill="hsl(var(--chart-1))" name="Aprovados" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="concluintes" fill="#22c55e" name="Concluintes" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="aprovados" fill="hsl(var(--chart-1))" name="Aprovados" radius={[4, 4, 0, 0]} yAxisId="left" />
+              <Bar dataKey="concluintes" fill="#22c55e" name="Concluintes" radius={[4, 4, 0, 0]} yAxisId="left" />
               <Line type="monotone" dataKey="taxaSucesso" stroke="hsl(var(--chart-4))" strokeWidth={3} name="Taxa Sucesso (%)" dot={{ r: 4 }} yAxisId="right" />
             </ComposedChart>
           </ResponsiveContainer>
