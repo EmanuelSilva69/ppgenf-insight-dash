@@ -8,6 +8,7 @@ import { Filters } from "@/components/dashboard/Filters";
 import { ExportButton } from "@/components/dashboard/ExportButton";
 import { QuadrienniumChart } from "@/components/dashboard/QuadrienniumChart";
 import { CotasTab } from "@/components/dashboard/CotasTab";
+import { CriticalAnalysisTab } from "@/components/dashboard/CriticalAnalysisTab";
 import { academicData, filterByBienio, filterByQuadrienio } from "@/data/academicData";
 import { Users, UserCheck, CheckCircle, Clock, Timer } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -128,6 +129,7 @@ const Index = () => {
         <Tabs defaultValue="dashboard" className="w-full">
           <TabsList className="mb-6">
             <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+            <TabsTrigger value="analise">Análise Crítica</TabsTrigger>
             <TabsTrigger value="cotas">Cotas, Idade e Sexo</TabsTrigger>
           </TabsList>
 
@@ -208,6 +210,10 @@ const Index = () => {
                 students={filteredData} 
               />
             </div>
+          </TabsContent>
+
+          <TabsContent value="analise">
+            <CriticalAnalysisTab />
           </TabsContent>
 
           <TabsContent value="cotas">
