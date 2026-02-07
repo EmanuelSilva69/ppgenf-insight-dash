@@ -66,6 +66,32 @@ npm run build
 ```
 Os arquivos finais otimizados estarão na pasta /dist.
 
+## ☁️ Deploy Rápido no Vercel
+
+Para fazer deploy rápido para testes:
+
+### Opção 1: Via CLI
+```bash
+# Instalar Vercel CLI (se ainda não tiver)
+npm i -g vercel
+
+# Na raiz do projeto
+vercel
+
+# Para deploy em produção
+vercel --prod
+```
+
+### Opção 2: Via Dashboard Vercel
+1. Acesse [vercel.com](https://vercel.com)
+2. Importe o repositório do GitHub/GitLab
+3. As configurações do `vercel.json` serão detectadas automaticamente
+4. Clique em "Deploy"
+
+O projeto já está configurado com `vercel.json` otimizado para SPAs React.
+
+---
+
 ## 📂 Estrutura de Pastas
 src/: Todo o código fonte, páginas e componentes.
 
@@ -74,3 +100,5 @@ public/: Imagens e assets estáticos.
 Dockerfile: Configuração da imagem do container.
 
 nginx.conf: Configuração do servidor web para produção.
+
+vercel.json: Configuração para deploy no Vercel.

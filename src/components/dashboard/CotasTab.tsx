@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { quotaData, getQuotaSummary, getQuotaByYear, getQuotaTotals, inscritosPorCota } from "@/data/quotaData";
+import { quotaData, getQuotaSummary, getQuotaByYear, getQuotaTotals, inscritosPorCota, getInscritos } from "@/data/quotaData";
 import { 
   getGenderDistribution, 
   getAgeDistribution, 
@@ -24,6 +24,7 @@ export function CotasTab() {
   const quotaByYear = useMemo(() => getQuotaByYear(), []);
   const totals = useMemo(() => getQuotaTotals(), []);
   const availableYears = useMemo(() => getAvailableYears(), []);
+  const inscritos = useMemo(() => getInscritos(), []);
 
   const totalCotas = totals.pcd + totals.pngc + totals.piq + totals.brTrans + totals.sta;
   const percentCotas = totals.vagas > 0 ? ((totalCotas / totals.vagas) * 100).toFixed(1) : "0";
@@ -182,12 +183,12 @@ export function CotasTab() {
           {/* Inscritos por Cota */}
           <Card className="border-primary/20 mb-6">
             <CardHeader>
-              <CardTitle className="text-lg font-semibold text-primary">Inscritos por Tipo de Cota (Acumulado 2020-2025)</CardTitle>
+              <CardTitle className="text-lg font-semibold text-primary">Vagas Ofertadas vs Inscritos por Tipo de Cota (2020-2025)</CardTitle>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={200}>
+              <ResponsiveContainer width="100%" height={250}>
                 <BarChart 
-                  data={inscritosPorCota.filter(i => i.inscritos > 0)} 
+                  data={inscritos.filter(i => i.inscritos > 0 || i.vagas > 0)} 
                   layout="vertical"
                   margin={{ top: 5, right: 30, left: 150, bottom: 5 }}
                 >
@@ -205,10 +206,15 @@ export function CotasTab() {
                       border: "1px solid hsl(var(--border))",
                       borderRadius: "8px"
                     }}
-                    formatter={(value: number) => [`${value} inscritos`, "Total"]}
+                    formatter={(value: number, name: string) => {
+                      if (name === "vagas") return [`${value} vaga(s) ofertada(s)`, "Vagas Ofertadas"];
+                      return [`${value} inscritos`, "Inscritos"];
+                    }}
                   />
-                  <Bar dataKey="inscritos" fill="hsl(var(--primary))" radius={[0, 4, 4, 0]}>
-                    {inscritosPorCota.filter(i => i.inscritos > 0).map((entry, index) => (
+                  <Legend />
+                  <Bar dataKey="vagas" name="Vagas Ofertadas" fill="hsl(120, 70%, 50%)" radius={[0, 4, 4, 0]} opacity={0.7} />
+                  <Bar dataKey="inscritos" name="Inscritos" fill="hsl(var(--primary))" radius={[0, 4, 4, 0]}>
+                    {inscritos.filter(i => i.inscritos > 0 || i.vagas > 0).map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.cor} />
                     ))}
                   </Bar>

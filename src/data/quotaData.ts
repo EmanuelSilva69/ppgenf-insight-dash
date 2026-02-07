@@ -88,6 +88,28 @@ export const getQuotaTotals = () => {
 };
 
 // Inscritos por tipo de cota (dados do documento)
+export const getInscritos = () => {
+  const totals = getQuotaSummary();
+  const inscritosTotais = getQuotaTotals();
+  
+  // Calcula proporção de inscritos por cota baseado nas vagas oferecidas
+  const vagasMap = {
+    "Ampla Concorrência": inscritosTotais.acc,
+    "Pessoas Negras/Pardas": inscritosTotais.pngc,
+    "Pessoas Trans (Baixa Renda)": inscritosTotais.brTrans,
+    "Pessoas com Deficiência": inscritosTotais.pcd,
+    "Indígenas/Quilombolas": inscritosTotais.piq,
+  };
+
+  return [
+    { tipo: "Ampla Concorrência", vagas: vagasMap["Ampla Concorrência"], inscritos: 83, cor: "hsl(var(--primary))" },
+    { tipo: "Pessoas Negras/Pardas", vagas: vagasMap["Pessoas Negras/Pardas"], inscritos: 9, cor: "hsl(200, 70%, 50%)" },
+    { tipo: "Pessoas Trans (Baixa Renda)", vagas: vagasMap["Pessoas Trans (Baixa Renda)"], inscritos: 1, cor: "hsl(340, 70%, 50%)" },
+    { tipo: "Pessoas com Deficiência", vagas: vagasMap["Pessoas com Deficiência"], inscritos: 0, cor: "hsl(280, 70%, 60%)" },
+    { tipo: "Indígenas/Quilombolas", vagas: vagasMap["Indígenas/Quilombolas"], inscritos: 0, cor: "hsl(40, 80%, 50%)" },
+  ];
+};
+
 export const inscritosPorCota = [
   { tipo: "Ampla Concorrência", inscritos: 83, cor: "hsl(var(--primary))" },
   { tipo: "Pessoas Negras/Pardas", inscritos: 9, cor: "hsl(200, 70%, 50%)" },

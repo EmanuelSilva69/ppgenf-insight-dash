@@ -122,9 +122,9 @@ export function CriticalAnalysisTab() {
   // Dados para Funnel Chart
   const funnelData = useMemo(() => {
     return [
-      { name: "Inscritos", value: filteredTotals.inscritos, fill: COLORS.primary },
-      { name: "Aprovados", value: filteredTotals.aprovados, fill: COLORS.secondary },
-      { name: "Matriculados", value: filteredTotals.matriculados, fill: COLORS.tertiary },
+      { name: "Inscritos", value: filteredTotals.inscritos, displayValue: filteredTotals.inscritos, fill: COLORS.primary },
+      { name: "Aprovados", value: filteredTotals.aprovados * 1.6, displayValue: filteredTotals.aprovados, fill: COLORS.secondary },
+      { name: "Matriculados", value: filteredTotals.matriculados * 2.0, displayValue: filteredTotals.matriculados, fill: COLORS.tertiary },
     ];
   }, [filteredTotals]);
 
@@ -336,7 +336,11 @@ export function CriticalAnalysisTab() {
                     border: "1px solid hsl(var(--border))",
                     borderRadius: "8px"
                   }}
-                  formatter={(value: number, name: string) => [value, name === 'vagas' ? 'Vagas Ofertadas' : 'Inscritos']}
+                  formatter={(value: number, name: string) => {
+                    if (name === 'vagas' || name === 'Vagas Ofertadas') return [value, 'Vagas Ofertadas'];
+                    if (name === 'inscritos' || name === 'Inscritos') return [value, 'Inscritos'];
+                    return [value, name];
+                  }}
                 />
                 <Legend />
                 <Bar dataKey="vagas" fill="hsl(var(--chart-2))" name="Vagas Ofertadas" radius={[4, 4, 0, 0]} />
@@ -358,21 +362,22 @@ export function CriticalAnalysisTab() {
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
-              <FunnelChart margin={{ top: 10, right: 80, bottom: 10, left: 10 }}>
+              <FunnelChart margin={{ top: 10, right: 30, bottom: 10, left: 10 }}>
                 <Tooltip 
                   contentStyle={{ 
                     backgroundColor: "hsl(var(--card))",
                     border: "1px solid hsl(var(--border))",
                     borderRadius: "8px"
                   }}
+                  formatter={(value: number, name: string, entry: any) => [entry.payload.displayValue, "Total"]}
                 />
                 <Funnel
                   dataKey="value"
                   data={funnelData}
                   isAnimationActive
                 >
-                  <LabelList position="center" fill="#fff" stroke="none" dataKey="name" fontSize={11} fontWeight="bold" />
-                  <LabelList position="right" fill="hsl(var(--foreground))" stroke="none" dataKey="value" fontSize={13} fontWeight="bold" offset={10} />
+                  <LabelList position="center" fill="#fff" stroke="none" dataKey="name" fontSize={11} fontWeight="bold" dy={-10} />
+                  <LabelList position="right" fill="hsl(var(--foreground))" stroke="none" dataKey="displayValue" fontSize={13} fontWeight="bold" offset={10} />
                 </Funnel>
               </FunnelChart>
             </ResponsiveContainer>

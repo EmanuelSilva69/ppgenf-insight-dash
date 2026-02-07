@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.vercel
+
+# Sensitive data files with PII (Personal Identifiable Information)
+texto_*.txt
+*.pdf
+check_data.py
+RELATORIO_VERIFICACAO_DASHBOARD.md
