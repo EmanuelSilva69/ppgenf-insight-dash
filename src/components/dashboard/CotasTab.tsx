@@ -8,14 +8,47 @@ import {
   getAgeDistribution, 
   getDemographicSummary, 
   getYearlyGenderData,
-  getAvailableYears 
+  getAvailableYears,
+  approvedCandidates
 } from "@/data/demographicData";
+import { academicData } from "@/data/academicData";
 import { 
   PieChart, Pie, Cell, ResponsiveContainer, 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend 
 } from "recharts";
 import { Users, UserCheck, FileText, TrendingUp, User, Calendar, Percent } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
+// Calcula média de idade na defesa por ano
+function getAverageAgeAtDefenseByYear() {
+  const yearData: Record<number, number[]> = {};
+  
+  academicData
+    .filter(r => r.defesa !== "")
+    .forEach(record => {
+      const candidate = approvedCandidates.find(c =>
+        c.nome.toUpperCase().trim() === record.nome.toUpperCase().trim()
+      );
+      if (candidate) {
+        const [diaDefesa, mesDefesa, anoDefesa] = record.defesa.split("/").map(Number);
+        const [diaNasc, mesNasc, anoNasc] = candidate.dataNascimento.split("/").map(Number);
+        let age = anoDefesa - anoNasc;
+        if (mesDefesa < mesNasc || (mesDefesa === mesNasc && diaDefesa < diaNasc)) {
+          age--;
+        }
+        if (!yearData[anoDefesa]) yearData[anoDefesa] = [];
+        yearData[anoDefesa].push(age);
+      }
+    });
+
+  return Object.entries(yearData)
+    .map(([year, ages]) => ({
+      ano: parseInt(year),
+      mediaIdade: parseFloat((ages.reduce((a, b) => a + b, 0) / ages.length).toFixed(1)),
+      quantidade: ages.length,
+    }))
+    .sort((a, b) => a.ano - b.ano);
+}
 
 export function CotasTab() {
   const [selectedYear, setSelectedYear] = useState<string>("Todos");
@@ -25,6 +58,7 @@ export function CotasTab() {
   const totals = useMemo(() => getQuotaTotals(), []);
   const availableYears = useMemo(() => getAvailableYears(), []);
   const inscritos = useMemo(() => getInscritos(), []);
+  const ageAtDefenseData = useMemo(() => getAverageAgeAtDefenseByYear(), []);
 
   const totalCotas = totals.pcd + totals.pngc + totals.piq + totals.brTrans + totals.sta;
   const percentCotas = totals.vagas > 0 ? ((totalCotas / totals.vagas) * 100).toFixed(1) : "0";
@@ -144,6 +178,12 @@ export function CotasTab() {
                         borderRadius: "8px"
                       }}
                       formatter={(value: number, name: string) => [`${value} vagas`, name]}
+                    />
+                    <Legend 
+                      verticalAlign="bottom"
+                      formatter={(value: string) => (
+                        <span style={{ color: "hsl(var(--foreground))", fontWeight: "bold", fontSize: 12 }}>{value}</span>
+                      )}
                     />
                   </PieChart>
                 </ResponsiveContainer>
@@ -482,13 +522,57 @@ export function CotasTab() {
             </CardContent>
           </Card>
 
+          {/* Tabela de Média de Idade na Defesa */}
+          <Card className="border-primary/20 mb-6">
+            <CardHeader>
+              <CardTitle className="text-lg font-semibold text-primary">Média de Idade dos Concluintes por Ano de Defesa</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="font-bold">Ano da Defesa</TableHead>
+                      <TableHead className="font-bold text-center">Concluintes</TableHead>
+                      <TableHead className="font-bold text-center">Média de Idade (anos)</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {ageAtDefenseData.map((row, index) => (
+                      <TableRow key={index}>
+                        <TableCell className="font-semibold">{row.ano}</TableCell>
+                        <TableCell className="text-center">{row.quantidade}</TableCell>
+                        <TableCell className="text-center font-bold">{row.mediaIdade}</TableCell>
+                      </TableRow>
+                    ))}
+                    {ageAtDefenseData.length > 0 && (
+                      <TableRow className="bg-muted/50 font-bold">
+                        <TableCell>MÉDIA GERAL</TableCell>
+                        <TableCell className="text-center">
+                          {ageAtDefenseData.reduce((sum, r) => sum + r.quantidade, 0)}
+                        </TableCell>
+                        <TableCell className="text-center font-bold">
+                          {(
+                            ageAtDefenseData.reduce((sum, r) => sum + r.mediaIdade * r.quantidade, 0) /
+                            ageAtDefenseData.reduce((sum, r) => sum + r.quantidade, 0)
+                          ).toFixed(1)}
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Nota de Privacidade */}
           <Card className="border-dashed border-2 border-muted">
             <CardContent className="p-4">
               <p className="text-sm font-semibold text-muted-foreground mb-2">📊 Sobre os Dados:</p>
               <div className="text-xs text-muted-foreground space-y-1">
-                <p>• Dados extraídos dos formulários de inscrição e listas de aprovados (2020-2023)</p>
+                <p>• Dados extraídos dos formulários de inscrição e listas de aprovados (2020-2025)</p>
                 <p>• Idade calculada com base no ano da seletiva</p>
+                <p>• Média de idade na defesa calculada pelo intervalo entre data de nascimento e data da defesa</p>
                 <p>• Apenas dados agregados são exibidos para preservar a privacidade dos candidatos</p>
                 <p>• Total de {summary.total} aprovados analisados</p>
               </div>
