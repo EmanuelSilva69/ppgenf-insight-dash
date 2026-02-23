@@ -10,7 +10,8 @@ import {
   getDemographicSummary, 
   getYearlyGenderData,
   getAvailableYears,
-  approvedCandidates
+  approvedCandidates,
+  studentBirthDates
 } from "@/data/demographicData";
 import { academicData } from "@/data/academicData";
 import { 
@@ -20,19 +21,17 @@ import {
 import { Users, UserCheck, FileText, TrendingUp, User, Calendar, Percent } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-// Calcula média de idade na defesa por ano (excluindo 2022 - dados faltando)
+// Calcula média de idade na defesa por ano usando datas de nascimento atualizadas (DOCX)
 function getAverageAgeAtDefenseByYear() {
   const yearData: Record<number, number[]> = {};
   
   academicData
     .filter(r => r.defesa !== "")
     .forEach(record => {
-      const candidate = approvedCandidates.find(c =>
-        c.nome.toUpperCase().trim() === record.nome.toUpperCase().trim()
-      );
-      if (candidate) {
+      const birthDate = studentBirthDates[record.matricula];
+      if (birthDate) {
         const [diaDefesa, mesDefesa, anoDefesa] = record.defesa.split("/").map(Number);
-        const [diaNasc, mesNasc, anoNasc] = candidate.dataNascimento.split("/").map(Number);
+        const [diaNasc, mesNasc, anoNasc] = birthDate.split("/").map(Number);
         let age = anoDefesa - anoNasc;
         if (mesDefesa < mesNasc || (mesDefesa === mesNasc && diaDefesa < diaNasc)) {
           age--;
@@ -48,7 +47,6 @@ function getAverageAgeAtDefenseByYear() {
       mediaIdade: parseFloat((ages.reduce((a, b) => a + b, 0) / ages.length).toFixed(1)),
       quantidade: ages.length,
     }))
-    .filter(item => item.ano !== 2022) // Remover 2022 - dados incompletos
     .sort((a, b) => a.ano - b.ano);
 }
 
@@ -650,7 +648,7 @@ export function CotasTab() {
                   />
                   <YAxis 
                     tick={{ fill: "hsl(var(--foreground))", fontWeight: "bold" }}
-                    domain={[25, 35]}
+                    domain={[20, 45]}
                   />
                   <Tooltip 
                     formatter={(value: any) => [`${value} anos`, 'Média de Idade']}
