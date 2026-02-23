@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, Legend } from "recharts";
-import { AcademicRecord } from "@/data/academicData";
+import { AcademicRecord, academicData } from "@/data/academicData";
+import { selectiveProcessData } from "@/data/selectiveProcessData";
 import { useMemo } from "react";
 
 interface QuadrienniumChartProps {
@@ -25,19 +26,41 @@ const COLORS = [
 
 export function QuadrienniumChart({ data }: QuadrienniumChartProps) {
   const chartData = useMemo(() => {
-    return QUADRIENNIUMS.map((quad, index) => {
-      const students = data.filter(r => r.ano >= quad.start && r.ano <= quad.end);
-      const completed = students.filter(r => r.defesa !== "").length;
-      const ongoing = students.filter(r => r.conclusaoNoPrazo === "EM_ANDAMENTO").length;
-      
-      return {
-        name: quad.note ? `${quad.label} ${quad.note}` : quad.label,
-        total: students.length,
-        concluidos: completed,
-        emAndamento: ongoing,
-        color: COLORS[index % COLORS.length]
-      };
-    }).filter(q => q.total > 0);
+    // Check if data is filtered
+    const isFiltered = data.length !== academicData.length;
+    
+    if (isFiltered) {
+      // Use provided filtered academic data
+      return QUADRIENNIUMS.map((quad, index) => {
+        const students = data.filter(r => r.ano >= quad.start && r.ano <= quad.end);
+        const completed = students.filter(r => r.defesa !== "").length;
+        const ongoing = students.filter(r => r.conclusaoNoPrazo === "EM_ANDAMENTO").length;
+        
+        return {
+          name: quad.note ? `${quad.label} ${quad.note}` : quad.label,
+          total: students.length,
+          concluidos: completed,
+          emAndamento: ongoing,
+          color: COLORS[index % COLORS.length]
+        };
+      }).filter(q => q.total > 0);
+    } else {
+      // Use selectiveProcessData for accurate totals
+      return QUADRIENNIUMS.map((quad, index) => {
+        const turmas = selectiveProcessData.filter(t => t.ano >= quad.start && t.ano <= quad.end);
+        const totalMatriculados = turmas.reduce((sum, t) => sum + t.matriculados, 0);
+        const totalConcluintes = turmas.reduce((sum, t) => sum + t.concluintes, 0);
+        const totalEmAndamento = turmas.reduce((sum, t) => sum + t.emAndamento, 0);
+        
+        return {
+          name: quad.note ? `${quad.label} ${quad.note}` : quad.label,
+          total: totalMatriculados,
+          concluidos: totalConcluintes,
+          emAndamento: totalEmAndamento,
+          color: COLORS[index % COLORS.length]
+        };
+      }).filter(q => q.total > 0);
+    }
   }, [data]);
 
   return (
@@ -74,6 +97,11 @@ export function QuadrienniumChart({ data }: QuadrienniumChartProps) {
               }}
             />
             <Legend 
+              wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }}
+              iconSize={10}
+              layout="horizontal"
+              verticalAlign="bottom"
+              align="center"
               formatter={(value: string) => {
                 const labels: Record<string, string> = {
                   total: "Total",

@@ -29,3 +29,4 @@ texto_*.txt
 *.pdf
 check_data.py
 RELATORIO_VERIFICACAO_DASHBOARD.md
+.env*.local

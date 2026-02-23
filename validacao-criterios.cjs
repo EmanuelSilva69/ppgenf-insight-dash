@@ -105,8 +105,8 @@ if (idadeErrors === 0) {
   console.log(`\n❌ FALHA: ${idadeErrors} erros de cálculo de idade encontrados!\n`);
 }
 
-// ========== CRITÉRIO 3: CONSISTÊNCIA DE GÊNERO ==========
-console.log('⚧ CRITÉRIO 3: CONSISTÊNCIA DE GÊNERO');
+// ========== CRITÉRIO 3: CONSISTÊNCIA DE SEXO ==========
+console.log('⚧ CRITÉRIO 3: CONSISTÊNCIA DE SEXO');
 console.log('─────────────────────────────────────────────────────────────\n');
 
 const genderByYear = candidates.reduce((acc, c) => {
@@ -115,7 +115,7 @@ const genderByYear = candidates.reduce((acc, c) => {
   return acc;
 }, {});
 
-console.log('Distribuição de gênero por ano:');
+console.log('Distribuição de sexo por ano:');
 Object.keys(genderByYear).sort().forEach(year => {
   const g = genderByYear[year];
   const total = g.Masculino + g.Feminino;
@@ -131,7 +131,7 @@ console.log(`\n📊 Total Geral:`);
 console.log(`  Feminino: ${totalFeminino} (${((totalFeminino / candidates.length) * 100).toFixed(1)}%)`);
 console.log(`  Masculino: ${totalMasculino} (${((totalMasculino / candidates.length) * 100).toFixed(1)}%)`);
 
-console.log('\n✅ APROVADO: Distribuição de gênero verificada!\n');
+console.log('\n✅ APROVADO: Distribuição de sexo verificada!\n');
 
 // ========== CRITÉRIO 4: PRIVACIDADE ==========
 console.log('🔒 CRITÉRIO 4: PRIVACIDADE');
@@ -194,7 +194,7 @@ console.log('══════════════════════�
 const criteriaResults = [
   { nome: 'Integridade da Contagem', status: candidates.length === expectedTotal },
   { nome: 'Precisão de Idade', status: idadeErrors === 0 },
-  { nome: 'Consistência de Gênero', status: true },
+  { nome: 'Consistência de Sexo', status: true },
   { nome: 'Privacidade (sem CPF)', status: !cpfMatches || cpfMatches.length === 0 },
   { nome: 'Funcionalidade dos Filtros', status: yearlyMatch !== null }
 ];

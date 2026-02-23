@@ -181,10 +181,10 @@ npm run build
 
 Após adicionar novos dados, o dashboard atualiza automaticamente:
 
-- 📊 Cards de resumo (total, média de idade, gênero predominante)
+- 📊 Cards de resumo (total, média de idade, sexo predominante)
 - 🥧 Gráfico de pizza (proporção M/F)
 - 📈 Histograma de faixas etárias
-- 📉 Evolução anual por gênero
+- 📉 Evolução anual por sexo
 - 🔍 Filtro por ano
 
 **Não precisa modificar mais nada!**

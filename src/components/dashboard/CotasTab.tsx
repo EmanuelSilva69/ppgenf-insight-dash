@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -14,12 +15,12 @@ import {
 import { academicData } from "@/data/academicData";
 import { 
   PieChart, Pie, Cell, ResponsiveContainer, 
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend 
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine 
 } from "recharts";
 import { Users, UserCheck, FileText, TrendingUp, User, Calendar, Percent } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-// Calcula média de idade na defesa por ano
+// Calcula média de idade na defesa por ano (excluindo 2022 - dados faltando)
 function getAverageAgeAtDefenseByYear() {
   const yearData: Record<number, number[]> = {};
   
@@ -47,6 +48,7 @@ function getAverageAgeAtDefenseByYear() {
       mediaIdade: parseFloat((ages.reduce((a, b) => a + b, 0) / ages.length).toFixed(1)),
       quantidade: ages.length,
     }))
+    .filter(item => item.ano !== 2022) // Remover 2022 - dados incompletos
     .sort((a, b) => a.ano - b.ano);
 }
 
@@ -59,6 +61,14 @@ export function CotasTab() {
   const availableYears = useMemo(() => getAvailableYears(), []);
   const inscritos = useMemo(() => getInscritos(), []);
   const ageAtDefenseData = useMemo(() => getAverageAgeAtDefenseByYear(), []);
+  
+  // Calcular média de idade na defesa do período (média ponderada)
+  const averageAgeAtDefense = useMemo(() => {
+    if (ageAtDefenseData.length === 0) return 0;
+    const totalWeighted = ageAtDefenseData.reduce((sum, d) => sum + d.mediaIdade * d.quantidade, 0);
+    const totalQuantidade = ageAtDefenseData.reduce((sum, d) => sum + d.quantidade, 0);
+    return totalWeighted / totalQuantidade;
+  }, [ageAtDefenseData]);
 
   const totalCotas = totals.pcd + totals.pngc + totals.piq + totals.brTrans + totals.sta;
   const percentCotas = totals.vagas > 0 ? ((totalCotas / totals.vagas) * 100).toFixed(1) : "0";
@@ -69,28 +79,36 @@ export function CotasTab() {
   const ageData = useMemo(() => getAgeDistribution(yearFilter), [yearFilter]);
   const summary = useMemo(() => getDemographicSummary(yearFilter), [yearFilter]);
   const yearlyGenderData = useMemo(() => getYearlyGenderData(), []);
+  
+  // Calcular média total do período
+  const averageTotal = useMemo(() => {
+    const totals = yearlyGenderData.map(d => d.Feminino + d.Masculino);
+    return totals.reduce((a, b) => a + b, 0) / totals.length;
+  }, [yearlyGenderData]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <Tabs defaultValue="cotas" className="w-full">
-        <TabsList className="mb-4">
-          <TabsTrigger value="cotas">Cotas</TabsTrigger>
-          <TabsTrigger value="demografico">Idade e Sexo</TabsTrigger>
-        </TabsList>
+        <div className="overflow-x-auto -mx-3 sm:-mx-4 md:mx-0 px-3 sm:px-4 md:px-0 mb-4">
+          <TabsList className="mb-0 w-fit sm:w-auto inline-flex justify-start">
+            <TabsTrigger value="cotas" className="text-xs sm:text-sm">Cotas</TabsTrigger>
+            <TabsTrigger value="demografico" className="text-xs sm:text-sm">Idade e Sexo</TabsTrigger>
+          </TabsList>
+        </div>
 
         {/* === ABA COTAS === */}
-        <TabsContent value="cotas">
-          {/* KPI Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <TabsContent value="cotas" className="space-y-4 sm:space-y-6">
+          {/* KPI Cards - Responsivo */}
+          <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
             <Card className="border-primary/20">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-lg bg-primary/10">
-                    <FileText className="h-6 w-6 text-primary" />
+              <CardContent className="p-3 sm:p-4 md:p-6">
+                <div className="flex flex-col xs:flex-row xs:items-center gap-2 xs:gap-3">
+                  <div className="p-2 xs:p-3 rounded-lg bg-primary/10 flex-shrink-0">
+                    <FileText className="h-5 xs:h-6 w-5 xs:w-6 text-primary" />
                   </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Total de Vagas</p>
-                    <p className="text-2xl font-bold">{totals.vagas}</p>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs xs:text-sm text-muted-foreground truncate">Total de Vagas</p>
+                    <p className="text-xl xs:text-2xl font-bold">{totals.vagas}</p>
                     <p className="text-xs text-muted-foreground">2020-2025</p>
                   </div>
                 </div>
@@ -98,44 +116,44 @@ export function CotasTab() {
             </Card>
 
             <Card className="border-primary/20">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-lg bg-primary/10">
-                    <Users className="h-6 w-6 text-primary" />
+              <CardContent className="p-3 sm:p-4 md:p-6">
+                <div className="flex flex-col xs:flex-row xs:items-center gap-2 xs:gap-3">
+                  <div className="p-2 xs:p-3 rounded-lg bg-primary/10 flex-shrink-0">
+                    <Users className="h-5 xs:h-6 w-5 xs:w-6 text-primary" />
                   </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Ampla Concorrência</p>
-                    <p className="text-2xl font-bold">{totals.acc}</p>
-                    <p className="text-xs text-muted-foreground">{((totals.acc / totals.vagas) * 100).toFixed(1)}% do total</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="border-primary/20">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-lg bg-primary/10">
-                    <UserCheck className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Vagas Cotas</p>
-                    <p className="text-2xl font-bold">{totalCotas}</p>
-                    <p className="text-xs text-muted-foreground">{percentCotas}% do total</p>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs xs:text-sm text-muted-foreground truncate">Ampla Concorrência</p>
+                    <p className="text-xl xs:text-2xl font-bold">{totals.acc}</p>
+                    <p className="text-xs text-muted-foreground">{((totals.acc / totals.vagas) * 100).toFixed(1)}%</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
             <Card className="border-primary/20">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-lg bg-primary/10">
-                    <TrendingUp className="h-6 w-6 text-primary" />
+              <CardContent className="p-3 sm:p-4 md:p-6">
+                <div className="flex flex-col xs:flex-row xs:items-center gap-2 xs:gap-3">
+                  <div className="p-2 xs:p-3 rounded-lg bg-primary/10 flex-shrink-0">
+                    <UserCheck className="h-5 xs:h-6 w-5 xs:w-6 text-primary" />
                   </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Inscritos (Total)</p>
-                    <p className="text-2xl font-bold">{totals.isentos + totals.pagantes}</p>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs xs:text-sm text-muted-foreground truncate">Vagas Cotas</p>
+                    <p className="text-xl xs:text-2xl font-bold">{totalCotas}</p>
+                    <p className="text-xs text-muted-foreground">{percentCotas}%</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-primary/20">
+              <CardContent className="p-3 sm:p-4 md:p-6">
+                <div className="flex flex-col xs:flex-row xs:items-center gap-2 xs:gap-3">
+                  <div className="p-2 xs:p-3 rounded-lg bg-primary/10 flex-shrink-0">
+                    <TrendingUp className="h-5 xs:h-6 w-5 xs:w-6 text-primary" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs xs:text-sm text-muted-foreground truncate">Inscritos (Total)</p>
+                    <p className="text-xl xs:text-2xl font-bold">{totals.isentos + totals.pagantes}</p>
                     <p className="text-xs text-muted-foreground">{totals.isentos} isentos, {totals.pagantes} pagantes</p>
                   </div>
                 </div>
@@ -181,8 +199,11 @@ export function CotasTab() {
                     />
                     <Legend 
                       verticalAlign="bottom"
+                      align="center"
+                      wrapperStyle={{ fontSize: '11px', paddingTop: '10px' }}
+                      iconSize={10}
                       formatter={(value: string) => (
-                        <span style={{ color: "hsl(var(--foreground))", fontWeight: "bold", fontSize: 12 }}>{value}</span>
+                        <span style={{ color: "hsl(var(--foreground))", fontWeight: "bold", fontSize: 11 }}>{value}</span>
                       )}
                     />
                   </PieChart>
@@ -211,7 +232,13 @@ export function CotasTab() {
                         borderRadius: "8px"
                       }}
                     />
-                    <Legend />
+                    <Legend 
+                      wrapperStyle={{ fontSize: '11px', paddingTop: '10px' }}
+                      iconSize={10}
+                      layout="horizontal"
+                      verticalAlign="bottom"
+                      align="center"
+                    />
                     <Bar dataKey="amplaConcorrencia" name="Ampla Concorrência" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
                     <Bar dataKey="cotas" name="Cotas" fill="hsl(200, 70%, 50%)" radius={[4, 4, 0, 0]} />
                   </BarChart>
@@ -251,7 +278,13 @@ export function CotasTab() {
                       return [`${value} inscritos`, "Inscritos"];
                     }}
                   />
-                  <Legend />
+                  <Legend 
+                    wrapperStyle={{ fontSize: '11px', paddingTop: '10px' }}
+                    iconSize={10}
+                    layout="horizontal"
+                    verticalAlign="bottom"
+                    align="center"
+                  />
                   <Bar dataKey="vagas" name="Vagas Ofertadas" fill="hsl(120, 70%, 50%)" radius={[0, 4, 4, 0]} opacity={0.7} />
                   <Bar dataKey="inscritos" name="Inscritos" fill="hsl(var(--primary))" radius={[0, 4, 4, 0]}>
                     {inscritos.filter(i => i.inscritos > 0 || i.vagas > 0).map((entry, index) => (
@@ -388,8 +421,8 @@ export function CotasTab() {
                     <User className="h-6 w-6 text-pink-500" />
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Gênero Predominante</p>
-                    <p className="text-2xl font-bold">{summary.generoPredominante}</p>
+                    <p className="text-sm text-muted-foreground">Sexo Predominante</p>
+                    <p className="text-2xl font-bold">{summary.sexoPredominante}</p>
                     <p className="text-xs text-muted-foreground">
                       {summary.feminino}F / {summary.masculino}M
                     </p>
@@ -493,10 +526,10 @@ export function CotasTab() {
             </Card>
           </div>
 
-          {/* Evolução de Gênero por Ano */}
+          {/* Evolução de Sexo por Ano */}
           <Card className="border-primary/20 mb-6">
             <CardHeader>
-              <CardTitle className="text-lg font-semibold text-primary">Evolução de Gênero por Ano da Seletiva</CardTitle>
+              <CardTitle className="text-lg font-semibold text-primary">Distribuição por sexo e ano de seleção</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={250}>
@@ -514,7 +547,6 @@ export function CotasTab() {
                       borderRadius: "8px"
                     }}
                   />
-                  <Legend />
                   <Bar dataKey="Feminino" name="Feminino" fill="hsl(340, 70%, 55%)" radius={[4, 4, 0, 0]} stackId="a" />
                   <Bar dataKey="Masculino" name="Masculino" fill="hsl(210, 70%, 55%)" radius={[4, 4, 0, 0]} stackId="a" />
                 </BarChart>
@@ -522,51 +554,139 @@ export function CotasTab() {
             </CardContent>
           </Card>
 
-          {/* Tabela de Média de Idade na Defesa */}
+          {/* Tabela de Média de Idade na Defesa - Responsivo */}
           <Card className="border-primary/20 mb-6">
             <CardHeader>
               <CardTitle className="text-lg font-semibold text-primary">Média de Idade dos Concluintes por Ano de Defesa</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="font-bold">Ano da Defesa</TableHead>
-                      <TableHead className="font-bold text-center">Concluintes</TableHead>
-                      <TableHead className="font-bold text-center">Média de Idade (anos)</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {ageAtDefenseData.map((row, index) => (
-                      <TableRow key={index}>
-                        <TableCell className="font-semibold">{row.ano}</TableCell>
-                        <TableCell className="text-center">{row.quantidade}</TableCell>
-                        <TableCell className="text-center font-bold">{row.mediaIdade}</TableCell>
-                      </TableRow>
-                    ))}
-                    {ageAtDefenseData.length > 0 && (
-                      <TableRow className="bg-muted/50 font-bold">
-                        <TableCell>MÉDIA GERAL</TableCell>
-                        <TableCell className="text-center">
-                          {ageAtDefenseData.reduce((sum, r) => sum + r.quantidade, 0)}
-                        </TableCell>
-                        <TableCell className="text-center font-bold">
+              {useIsMobile() ? (
+                // Mobile: Stack Cards
+                <div className="space-y-3">
+                  {ageAtDefenseData.map((row, index) => (
+                    <div key={index} className="border border-primary/20 rounded-lg p-4 bg-card">
+                      <div className="flex justify-between items-start mb-2">
+                        <span className="font-semibold text-primary text-lg">{row.ano}</span>
+                        <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
+                          {row.quantidade} aluno{row.quantidade > 1 ? 's' : ''}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-muted-foreground">Média de Idade:</span>
+                        <span className="text-xl font-bold text-primary">{row.mediaIdade} anos</span>
+                      </div>
+                    </div>
+                  ))}
+                  {/* Resumo Geral - Mobile */}
+                  {ageAtDefenseData.length > 0 && (
+                    <div className="border-2 border-primary rounded-lg p-4 bg-primary/5 mt-4">
+                      <div className="text-center">
+                        <p className="text-sm text-muted-foreground mb-2">MÉDIA GERAL</p>
+                        <p className="text-2xl font-bold text-primary mb-2">
                           {(
                             ageAtDefenseData.reduce((sum, r) => sum + r.mediaIdade * r.quantidade, 0) /
                             ageAtDefenseData.reduce((sum, r) => sum + r.quantidade, 0)
-                          ).toFixed(1)}
-                        </TableCell>
+                          ).toFixed(1)} anos
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          Total: {ageAtDefenseData.reduce((sum, r) => sum + r.quantidade, 0)} concluintes
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                // Desktop: Tabela com Scroll
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="font-bold">Ano da Defesa</TableHead>
+                        <TableHead className="font-bold text-center">Concluintes</TableHead>
+                        <TableHead className="font-bold text-center">Média de Idade (anos)</TableHead>
                       </TableRow>
-                    )}
-                  </TableBody>
-                </Table>
-              </div>
+                    </TableHeader>
+                    <TableBody>
+                      {ageAtDefenseData.map((row, index) => (
+                        <TableRow key={index}>
+                          <TableCell className="font-semibold">{row.ano}</TableCell>
+                          <TableCell className="text-center">{row.quantidade}</TableCell>
+                          <TableCell className="text-center font-bold">{row.mediaIdade}</TableCell>
+                        </TableRow>
+                      ))}
+                      {ageAtDefenseData.length > 0 && (
+                        <TableRow className="bg-muted/50 font-bold">
+                          <TableCell>MÉDIA GERAL</TableCell>
+                          <TableCell className="text-center">
+                            {ageAtDefenseData.reduce((sum, r) => sum + r.quantidade, 0)}
+                          </TableCell>
+                          <TableCell className="text-center font-bold">
+                            {(
+                              ageAtDefenseData.reduce((sum, r) => sum + r.mediaIdade * r.quantidade, 0) /
+                              ageAtDefenseData.reduce((sum, r) => sum + r.quantidade, 0)
+                            ).toFixed(1)}
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Gráfico de Barras - Média de Idade por Ano (Responsivo) */}
+          <Card className="border-primary/20">
+            <CardHeader>
+              <CardTitle className="text-lg font-semibold text-primary">Evolução da Média de Idade na Defesa</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={ageAtDefenseData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                  <XAxis 
+                    dataKey="ano" 
+                    tick={{ fill: "hsl(var(--foreground))", fontWeight: "bold" }}
+                  />
+                  <YAxis 
+                    tick={{ fill: "hsl(var(--foreground))", fontWeight: "bold" }}
+                    domain={[25, 35]}
+                  />
+                  <Tooltip 
+                    formatter={(value: any) => [`${value} anos`, 'Média de Idade']}
+                    labelFormatter={(label) => `Ano: ${label}`}
+                    contentStyle={{ 
+                      backgroundColor: "hsl(var(--card))",
+                      border: "1px solid hsl(var(--border))",
+                      borderRadius: "8px"
+                    }}
+                  />
+                  <Bar 
+                    dataKey="mediaIdade" 
+                    fill="hsl(142, 76%, 36%)" 
+                    radius={[8, 8, 0, 0]}
+                  />
+                  <ReferenceLine 
+                    y={averageAgeAtDefense} 
+                    stroke="#ff6b35" 
+                    strokeDasharray="8 4" 
+                    strokeWidth={3}
+                    label={{ 
+                      value: `Média do período: ${averageAgeAtDefense.toFixed(1)} anos`, 
+                      position: "top",
+                      fill: "#ff6b35",
+                      fontSize: 13,
+                      fontWeight: "bold",
+                      offset: 10
+                    }}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
             </CardContent>
           </Card>
 
           {/* Nota de Privacidade */}
-          <Card className="border-dashed border-2 border-muted">
+          <Card className="border-dashed border-2 border-muted mt-6">
             <CardContent className="p-4">
               <p className="text-sm font-semibold text-muted-foreground mb-2">📊 Sobre os Dados:</p>
               <div className="text-xs text-muted-foreground space-y-1">

@@ -10,6 +10,8 @@ import {
   getMostCompetitiveYear,
   getAttritionAlerts
 } from "@/data/selectiveProcessData";
+import { academicData } from "@/data/academicData";
+import { vagasData, getVagasTotals } from "@/data/vagasData";
 import { 
   Users, 
   UserCheck, 
@@ -109,24 +111,41 @@ export function CriticalAnalysisTab() {
     };
   }, [filteredData]);
 
-  // Dados para gráfico Oferta vs Demanda
+  // Dados para gráfico Oferta vs Demanda - Acumulado
   const ofertaDemandaData = useMemo(() => {
-    return filteredData.map(t => ({
-      ano: t.ano.toString(),
-      vagas: t.vagas_ofertadas,
-      inscritos: t.inscritos,
-      ratio: (t.inscritos / t.vagas_ofertadas).toFixed(1),
-    }));
-  }, [filteredData]);
+    if (selectedYear === "Todos") {
+      // Usar dados acumulados de vagasData
+      const vagas = getVagasTotals();
+      return [{
+        ano: "Acumulado",
+        vagas: vagas.totalVagas,
+        inscritos: vagas.totalInscritos,
+        ratio: (vagas.totalInscritos / vagas.totalVagas).toFixed(1),
+      }];
+    } else {
+      // Dados por ano
+      return filteredData.map(t => ({
+        ano: t.ano.toString(),
+        vagas: t.vagas_ofertadas,
+        inscritos: t.inscritos,
+        ratio: (t.inscritos / t.vagas_ofertadas).toFixed(1),
+      }));
+    }
+  }, [filteredData, selectedYear]);
 
-  // Dados para Funnel Chart
+  // Dados para Funnel Chart - Fluxo acumulado de seleção
   const funnelData = useMemo(() => {
+    // Calcular totais acumulados do selectiveProcessData
+    const totalInscritos = selectiveProcessData.reduce((sum, t) => sum + t.inscritos, 0);
+    const totalAprovados = selectiveProcessData.reduce((sum, t) => sum + t.aprovados, 0);
+    const totalMatriculados = academicData.length; // 186 - apenas com registros acadêmicos
+    
     return [
-      { name: "Inscritos", value: filteredTotals.inscritos, displayValue: filteredTotals.inscritos, fill: COLORS.primary },
-      { name: "Aprovados", value: filteredTotals.aprovados * 1.6, displayValue: filteredTotals.aprovados, fill: COLORS.secondary },
-      { name: "Matriculados", value: filteredTotals.matriculados * 2.0, displayValue: filteredTotals.matriculados, fill: COLORS.tertiary },
+      { name: "Inscritos", value: totalInscritos, displayValue: totalInscritos, fill: COLORS.primary },
+      { name: "Aprovados", value: totalAprovados * 3, displayValue: totalAprovados, fill: COLORS.secondary },
+      { name: "Matriculados", value: totalMatriculados * 3.5, displayValue: totalMatriculados, fill: COLORS.tertiary },
     ];
-  }, [filteredTotals]);
+  }, []);
 
   // Dados para gráfico de área (fluxo por coorte)
   const fluxData = useMemo(() => {
@@ -342,7 +361,13 @@ export function CriticalAnalysisTab() {
                     return [value, name];
                   }}
                 />
-                <Legend />
+                <Legend 
+                  wrapperStyle={{ fontSize: '11px', paddingTop: '10px' }}
+                  iconSize={10}
+                  layout="horizontal"
+                  verticalAlign="bottom"
+                  align="center"
+                />
                 <Bar dataKey="vagas" fill="hsl(var(--chart-2))" name="Vagas Ofertadas" radius={[4, 4, 0, 0]} />
                 <Bar dataKey="inscritos" fill="hsl(var(--chart-1))" name="Inscritos" radius={[4, 4, 0, 0]} />
               </RechartsBarChart>
@@ -413,7 +438,13 @@ export function CriticalAnalysisTab() {
                     borderRadius: "8px"
                   }}
                 />
-                <Legend />
+                <Legend 
+                  wrapperStyle={{ fontSize: '11px', paddingTop: '10px' }}
+                  iconSize={10}
+                  layout="horizontal"
+                  verticalAlign="bottom"
+                  align="center"
+                />
                 <Area type="monotone" dataKey="concluintes" stackId="1" stroke="#22c55e" fill="#22c55e" name="Concluintes" />
                 <Area type="monotone" dataKey="emAndamento" stackId="1" stroke="hsl(var(--chart-3))" fill="hsl(var(--chart-3))" name="Em Andamento" />
                 <Area type="monotone" dataKey="desistencias" stackId="1" stroke="#f59e0b" fill="#f59e0b" name="Desistências" />
@@ -502,7 +533,13 @@ export function CriticalAnalysisTab() {
                   return [value, name === 'aprovados' ? 'Aprovados' : name === 'concluintes' ? 'Concluintes' : 'Gap'];
                 }}
               />
-              <Legend />
+              <Legend 
+                wrapperStyle={{ fontSize: '11px', paddingTop: '10px' }}
+                iconSize={10}
+                layout="horizontal"
+                verticalAlign="bottom"
+                align="center"
+              />
               <Bar dataKey="aprovados" fill="hsl(var(--chart-1))" name="Aprovados" radius={[4, 4, 0, 0]} yAxisId="left" />
               <Bar dataKey="concluintes" fill="#22c55e" name="Concluintes" radius={[4, 4, 0, 0]} yAxisId="left" />
               <Line type="monotone" dataKey="taxaSucesso" stroke="hsl(var(--chart-4))" strokeWidth={3} name="Taxa Sucesso (%)" dot={{ r: 4 }} yAxisId="right" />
@@ -540,7 +577,13 @@ export function CriticalAnalysisTab() {
                   borderRadius: "8px"
                 }}
               />
-              <Legend />
+              <Legend 
+                wrapperStyle={{ fontSize: '11px', paddingTop: '10px' }}
+                iconSize={10}
+                layout="horizontal"
+                verticalAlign="bottom"
+                align="center"
+              />
               <Bar dataKey="inscritos" fill="hsl(var(--chart-1))" name="Inscritos" radius={[4, 4, 0, 0]} />
               <Bar dataKey="aprovados" fill="hsl(var(--chart-2))" name="Aprovados" radius={[4, 4, 0, 0]} />
               <Line type="monotone" dataKey="concluintes" stroke="hsl(var(--chart-4))" strokeWidth={3} name="Concluintes" dot={{ r: 4 }} />
@@ -624,7 +667,13 @@ export function CriticalAnalysisTab() {
                 }}
                 formatter={(value: number) => `${value}%`}
               />
-              <Legend />
+              <Legend 
+                wrapperStyle={{ fontSize: '11px', paddingTop: '10px' }}
+                iconSize={10}
+                layout="horizontal"
+                verticalAlign="bottom"
+                align="center"
+              />
               <Bar dataKey="taxaAprovacao" fill="hsl(var(--chart-2))" name="Taxa Aprovação" radius={[4, 4, 0, 0]} />
               <Bar dataKey="taxaSucesso" fill="#22c55e" name="Taxa Sucesso" radius={[4, 4, 0, 0]} />
               <Bar dataKey="taxaEvasao" fill="hsl(var(--destructive))" name="Taxa Evasão" radius={[4, 4, 0, 0]} />

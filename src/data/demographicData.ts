@@ -41,22 +41,27 @@ function calcularIdade(dataNascimento: string, anoSeletiva: number): number {
 // Dados dos candidatos aprovados com informações demográficas
 // Extraídos dos PDFs: formulários de inscrição + listas de aprovados
 export const approvedCandidates: ApprovedCandidate[] = [
-  // === SELETIVO 2020 (16 aprovados) ===
+  // === SELETIVO 2020 (21 aprovados) ===
+  { nome: "ALICEA DA CONCEIÇÃO RODRIGUES", sexo: "Feminino", dataNascimento: "02/05/1996", anoSeletiva: 2020, idadeNoAno: 24 },
   { nome: "AMANDA SILVA DE OLIVEIRA", sexo: "Feminino", dataNascimento: "15/03/1995", anoSeletiva: 2020, idadeNoAno: 25 },
-  { nome: "ANDREA DE JESUS SÁ COSTA ROCHA", sexo: "Feminino", dataNascimento: "22/07/1980", anoSeletiva: 2020, idadeNoAno: 40 },
-  { nome: "CLAUDIONETE ABREU COSTA", sexo: "Feminino", dataNascimento: "10/09/1976", anoSeletiva: 2020, idadeNoAno: 44 },
-  { nome: "ELIAN RODRIGUES FERREIRA", sexo: "Feminino", dataNascimento: "05/12/1992", anoSeletiva: 2020, idadeNoAno: 28 },
-  { nome: "EREMILTA SILVA BARROS", sexo: "Feminino", dataNascimento: "18/04/1978", anoSeletiva: 2020, idadeNoAno: 42 },
-  { nome: "IDERLANIA MARIA DE OLIVEIRA SOUSA", sexo: "Feminino", dataNascimento: "25/08/1985", anoSeletiva: 2020, idadeNoAno: 35 },
-  { nome: "JULIANA CAMPOS COELHO", sexo: "Feminino", dataNascimento: "12/06/1988", anoSeletiva: 2020, idadeNoAno: 32 },
-  { nome: "KÁSSIA CRISTHINE NOGUEIRA GUSMÃO", sexo: "Feminino", dataNascimento: "30/11/1990", anoSeletiva: 2020, idadeNoAno: 30 },
-  { nome: "LARISSA KARLA BARROS DE ALENCAR", sexo: "Feminino", dataNascimento: "08/02/1995", anoSeletiva: 2020, idadeNoAno: 25 },
+  { nome: "ANDREA DE JESUS SÁ COSTA ROCHA", sexo: "Feminino", dataNascimento: "12/03/1984", anoSeletiva: 2020, idadeNoAno: 36 },
+  { nome: "CLAUDIONETE ABREU COSTA", sexo: "Feminino", dataNascimento: "14/05/1971", anoSeletiva: 2020, idadeNoAno: 49 },
+  { nome: "ELIAN RODRIGUES FERREIRA", sexo: "Feminino", dataNascimento: "11/11/1987", anoSeletiva: 2020, idadeNoAno: 32 },
+  { nome: "EREMILTA SILVA BARROS", sexo: "Feminino", dataNascimento: "14/05/1976", anoSeletiva: 2020, idadeNoAno: 44 },
+  { nome: "IDERLANIA MARIA DE OLIVEIRA SOUSA", sexo: "Feminino", dataNascimento: "24/09/1985", anoSeletiva: 2020, idadeNoAno: 35 },
+  { nome: "JULIANA CAMPOS COELHO", sexo: "Feminino", dataNascimento: "13/08/1993", anoSeletiva: 2020, idadeNoAno: 27 },
+  { nome: "KAINAN JOSÉ SARAIVA BARROS", sexo: "Masculino", dataNascimento: "01/06/1996", anoSeletiva: 2020, idadeNoAno: 24 },
+  { nome: "KÁSSIA CRISTHINE NOGUEIRA GUSMÃO", sexo: "Feminino", dataNascimento: "24/11/1992", anoSeletiva: 2020, idadeNoAno: 28 },
+  { nome: "LARISSA KARLA BARROS DE ALENCAR", sexo: "Feminino", dataNascimento: "17/12/1982", anoSeletiva: 2020, idadeNoAno: 37 },
+  { nome: "LIDIA CRISTINA PINHEIRO RODRIGUES", sexo: "Feminino", dataNascimento: "12/10/1983", anoSeletiva: 2020, idadeNoAno: 37 },
   { nome: "LIENDNE PENHA ABREU", sexo: "Feminino", dataNascimento: "14/07/1993", anoSeletiva: 2020, idadeNoAno: 27 },
+  { nome: "MONICA ROBERTA PINHEIRO DE OLIVEIRA", sexo: "Feminino", dataNascimento: "09/06/1975", anoSeletiva: 2020, idadeNoAno: 45 },
   { nome: "PÂMELA DRIELY GEORGES MENDES", sexo: "Feminino", dataNascimento: "20/01/1996", anoSeletiva: 2020, idadeNoAno: 24 },
   { nome: "POLYANNA FREITAS ALBUQUERQUE CASTRO", sexo: "Feminino", dataNascimento: "03/09/1989", anoSeletiva: 2020, idadeNoAno: 31 },
   { nome: "SAMARA SALES GOMES DE SOUSA", sexo: "Feminino", dataNascimento: "27/05/1994", anoSeletiva: 2020, idadeNoAno: 26 },
   { nome: "SHIRLEY PRISCILA MARTINS CHAGAS DINIZ", sexo: "Feminino", dataNascimento: "11/10/1991", anoSeletiva: 2020, idadeNoAno: 29 },
   { nome: "SILVANA MENDES COSTA", sexo: "Feminino", dataNascimento: "14/12/1967", anoSeletiva: 2020, idadeNoAno: 53 },
+  { nome: "THAIANNE MARIA DA SILVA ALMEIDA", sexo: "Feminino", dataNascimento: "05/01/1993", anoSeletiva: 2020, idadeNoAno: 27 },
   { nome: "WALANA ERIKA AMANCIO SOUSA", sexo: "Feminino", dataNascimento: "06/03/1988", anoSeletiva: 2020, idadeNoAno: 32 },
 
   // === SELETIVO 2021.1 (15 aprovados) ===
@@ -207,14 +212,14 @@ export function getDemographicSummary(year?: number) {
   const feminino = data.filter(c => c.sexo === "Feminino").length;
   const ages = data.map(c => c.idadeNoAno);
   const mediaIdade = ages.length > 0 ? ages.reduce((a, b) => a + b, 0) / ages.length : 0;
-  const generoPredominante = feminino >= masculino ? "Feminino" : "Masculino";
+  const sexoPredominante = feminino >= masculino ? "Feminino" : "Masculino";
 
   return {
     total,
     masculino,
     feminino,
     mediaIdade: mediaIdade.toFixed(1),
-    generoPredominante,
+    sexoPredominante,
     percentFeminino: total > 0 ? ((feminino / total) * 100).toFixed(1) : "0",
     percentMasculino: total > 0 ? ((masculino / total) * 100).toFixed(1) : "0",
   };

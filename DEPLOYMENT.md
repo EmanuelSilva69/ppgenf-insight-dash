@@ -113,10 +113,10 @@ vercel --prod
 
 Após adicionar novos dados, **todos os componentes são atualizados automaticamente**:
 
-- ✅ Cards de resumo (total, média, gênero predominante)
+- ✅ Cards de resumo (total, média, sexo predominante)
 - ✅ Gráfico de pizza (proporção M/F)
 - ✅ Histograma de faixas etárias
-- ✅ Evolução anual por gênero
+- ✅ Evolução anual por sexo
 - ✅ Filtro por ano (novos anos aparecem automaticamente)
 
 Não é necessário modificar mais nenhum arquivo!

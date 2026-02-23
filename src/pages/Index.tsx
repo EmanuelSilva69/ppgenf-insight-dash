@@ -10,6 +10,7 @@ import { QuadrienniumChart } from "@/components/dashboard/QuadrienniumChart";
 import { CotasTab } from "@/components/dashboard/CotasTab";
 import { CriticalAnalysisTab } from "@/components/dashboard/CriticalAnalysisTab";
 import { academicData, filterByBienio, filterByQuadrienio } from "@/data/academicData";
+import { selectiveProcessData, getProgramTotals } from "@/data/selectiveProcessData";
 import { Users, UserCheck, CheckCircle, Clock, Timer } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -46,24 +47,49 @@ const Index = () => {
     return data;
   }, [selectedYear, selectedProfessor, selectedPeriodType, selectedPeriod]);
 
-  // Calculate KPIs
-  const activeStudents = filteredData.filter(r => r.conclusaoNoPrazo === "EM_ANDAMENTO").length;
-  const graduatedStudents = filteredData.filter(r => r.defesa !== "").length;
-  const totalStudents = filteredData.length;
+  // Gets program totals when no filters, filtered when there are filters
+  const getProgramStats = useMemo(() => {
+    const hasFilters = selectedYear !== "Todos" || selectedProfessor !== "Todos" || selectedPeriod !== "Todos";
+    
+    if (!hasFilters) {
+      // No filters - use academicData totals only (students with complete academic records)
+      return {
+        totalMatriculados: academicData.length,
+        totalConcluintes: academicData.filter(r => r.defesa !== "").length,
+        totalEmAndamento: academicData.filter(r => r.conclusaoNoPrazo === "EM_ANDAMENTO").length,
+      };
+    } else if (selectedYear !== "Todos") {
+      // Filter by year from academicData
+      const yearData = academicData.filter(r => r.ano === parseInt(selectedYear));
+      return {
+        totalMatriculados: yearData.length,
+        totalConcluintes: yearData.filter(r => r.defesa !== "").length,
+        totalEmAndamento: yearData.filter(r => r.conclusaoNoPrazo === "EM_ANDAMENTO").length,
+      };
+    }
+    
+    // For other filters, use filtered academic data
+    return {
+      totalMatriculados: filteredData.length,
+      totalConcluintes: filteredData.filter(r => r.defesa !== "").length,
+      totalEmAndamento: filteredData.filter(r => r.conclusaoNoPrazo === "EM_ANDAMENTO").length,
+    };
+  }, [selectedYear, selectedProfessor, selectedPeriod, selectedPeriodType, filteredData]);
 
-  // Orientações em andamento vs concluídas
-  const ongoingOrientations = activeStudents;
-  const completedOrientations = graduatedStudents;
+  // Calculate KPIs using program stats
+  const totalStudents = getProgramStats.totalMatriculados;
+  const ongoingOrientations = getProgramStats.totalEmAndamento;
+  const completedOrientations = getProgramStats.totalConcluintes;
 
-  // Média de tempo de conclusão (apenas alunos formados)
-  const completedStudents = filteredData.filter(r => r.totalMeses > 0);
+  // Média de tempo de conclusão (apenas alunos formados com data de defesa)
+  const completedStudents = filteredData.filter(r => r.totalMeses > 0 && r.defesa !== "");
   const averageCompletionTime = completedStudents.length > 0 
     ? (completedStudents.reduce((sum, r) => sum + r.totalMeses, 0) / completedStudents.length).toFixed(1)
     : "0";
 
-  // Taxa de conclusão no prazo
-  const onTimeCount = filteredData.filter(r => r.conclusaoNoPrazo === "SIM").length;
-  const completionRate = graduatedStudents > 0 ? (onTimeCount / graduatedStudents) * 100 : 0;
+  // Taxa de conclusão no prazo (considera concluintes vs total matriculados)
+  const onTimeCount = filteredData.filter(r => r.conclusaoNoPrazo === "SIM" && r.defesa !== "").length;
+  const completionRate = completedOrientations > 0 ? (completedOrientations / totalStudents) * 100 : 0;
 
   // Data for advisors chart
   const advisorsData = useMemo(() => {
@@ -95,8 +121,8 @@ const Index = () => {
     const lineCounts: Record<string, number> = {};
     filteredData.forEach(record => {
       const lineName = record.linhaPesquisa.includes("CUIDADO") 
-        ? "Cuidado em Saúde" 
-        : "Saúde Coletiva";
+        ? "Cuidado em Saúde e Enfermagem" 
+        : "Enfermagem em Saúde Coletiva";
       lineCounts[lineName] = (lineCounts[lineName] || 0) + 1;
     });
     return Object.entries(lineCounts)
@@ -125,16 +151,20 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      <main className="container mx-auto px-4 py-8">
+      <main className="w-full mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8">
         <Tabs defaultValue="dashboard" className="w-full">
-          <TabsList className="mb-6">
-            <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
-            <TabsTrigger value="analise">Análise do Quadriênio</TabsTrigger>
-            <TabsTrigger value="cotas">Cotas, Idade e Sexo</TabsTrigger>
-          </TabsList>
+          {/* Tabs List - Responsivo */}
+          <div className="overflow-x-auto -mx-3 sm:-mx-4 md:mx-0 px-3 sm:px-4 md:px-0 mb-4 sm:mb-6">
+            <TabsList className="mb-0 w-fit sm:w-auto inline-flex sm:flex justify-start sm:justify-start">
+              <TabsTrigger value="dashboard" className="text-xs sm:text-sm">Dashboard</TabsTrigger>
+              <TabsTrigger value="analise" className="text-xs sm:text-sm">Análise do Quadriênio</TabsTrigger>
+              <TabsTrigger value="cotas" className="text-xs sm:text-sm">Cotas, Idade e Sexo</TabsTrigger>
+            </TabsList>
+          </div>
 
-          <TabsContent value="dashboard">
-            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
+          <TabsContent value="dashboard" className="space-y-4 sm:space-y-6">
+            {/* Filters & Export - Responsivo */}
+            <div className="flex flex-col gap-3 sm:gap-4">
               <Filters
                 selectedYear={selectedYear}
                 selectedProfessor={selectedProfessor}
@@ -149,8 +179,8 @@ const Index = () => {
               <ExportButton data={filteredData} filename={`ppgenf-${selectedPeriodType}-${selectedPeriod !== "Todos" ? selectedPeriod : "todos"}`} />
             </div>
 
-            {/* KPI Cards - Removed "Alunos formados" card */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-8">
+            {/* KPI Cards - Responsivo com Grid Adaptativo */}
+            <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-3 md:gap-4">
               <KPICard 
                 title="Total de alunos" 
                 value={totalStudents} 
@@ -175,13 +205,13 @@ const Index = () => {
               <KPICard 
                 title="Conclusão no prazo" 
                 value={`${completionRate.toFixed(0)}%`}
-                subtitle={`${onTimeCount} de ${graduatedStudents}`}
+                subtitle={`${completedOrientations} de ${totalStudents}`}
                 icon={Timer} 
               />
             </div>
 
-            {/* Charts Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            {/* Charts Grid - Responsivo */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               <GaugeChart title="Taxa de conclusão no prazo" percentage={completionRate} />
               <BarChart 
                 title="Distribuição por linha de pesquisa" 
@@ -190,7 +220,7 @@ const Index = () => {
               />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               <BarChart title="Orientandos por professor (Top 10)" data={advisorsData} />
               <BarChart 
                 title="Média de meses para conclusão por ano" 
@@ -200,11 +230,12 @@ const Index = () => {
             </div>
 
             {/* Quadrennium Chart */}
-            <div className="mb-8">
+            <div>
               <QuadrienniumChart data={filteredData} />
             </div>
 
-            <div className="grid grid-cols-1 gap-6">
+            {/* Student List */}
+            <div>
               <StudentList 
                 title="Lista de alunos" 
                 students={filteredData} 

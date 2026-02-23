@@ -34,11 +34,11 @@ export const selectiveProcessData: SelectiveProcessData[] = [
   // Quadriênio 2021-2024
   { turma: 11, ano: 2021, vagas_ofertadas: 16, inscritos: 82, aprovados: 16, matriculados: 14, concluintes: 14, desistencias: 0, desligamentos: 0, emAndamento: 0 },
   { turma: 12, ano: 2022, vagas_ofertadas: 16, inscritos: 90, aprovados: 16, matriculados: 13, concluintes: 13, desistencias: 0, desligamentos: 0, emAndamento: 0 },
-  { turma: 13, ano: 2023, vagas_ofertadas: 16, inscritos: 95, aprovados: 16, matriculados: 13, concluintes: 13, desistencias: 0, desligamentos: 0, emAndamento: 0 },
-  { turma: 14, ano: 2024, vagas_ofertadas: 16, inscritos: 88, aprovados: 16, matriculados: 13, concluintes: 5, desistencias: 0, desligamentos: 0, emAndamento: 8 },
+  { turma: 13, ano: 2023, vagas_ofertadas: 16, inscritos: 95, aprovados: 16, matriculados: 6, concluintes: 6, desistencias: 0, desligamentos: 0, emAndamento: 0 },
+  { turma: 14, ano: 2024, vagas_ofertadas: 16, inscritos: 88, aprovados: 16, matriculados: 17, concluintes: 5, desistencias: 0, desligamentos: 0, emAndamento: 12 },
   
   // Quadriênio 2025+
-  { turma: 15, ano: 2025, vagas_ofertadas: 18, inscritos: 102, aprovados: 18, matriculados: 15, concluintes: 0, desistencias: 0, desligamentos: 0, emAndamento: 15 },
+  { turma: 15, ano: 2025, vagas_ofertadas: 18, inscritos: 102, aprovados: 18, matriculados: 16, concluintes: 0, desistencias: 0, desligamentos: 0, emAndamento: 16 },
 ];
 
 // Interface para análise por quadriênio
