@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { AcademicRecord } from "@/data/academicData";
+import { Lock } from "lucide-react";
 
 interface StudentListProps {
   title: string;
@@ -33,7 +34,12 @@ export function StudentList({ title, students }: StudentListProps) {
               >
                 <div className="flex justify-between items-start gap-2">
                   <div className="flex-1">
-                    <p className="font-bold text-sm text-foreground">{student.nome}</p>
+                    <div className="flex items-center gap-2">
+                      <p className="font-bold text-sm text-foreground">{student.nome}</p>
+                      {student.conclusaoNoPrazo === "TRANCADO" && (
+                        <Lock className="h-4 w-4 text-red-600" title="Matrícula trancada" />
+                      )}
+                    </div>
                     <p className="text-xs text-muted-foreground mt-1">
                       <span className="font-medium">Orientador:</span> {student.orientador}
                     </p>
