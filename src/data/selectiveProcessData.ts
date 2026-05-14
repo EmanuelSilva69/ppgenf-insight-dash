@@ -21,24 +21,24 @@ export const selectiveProcessData: SelectiveProcessData[] = [
   { turma: 3, ano: 2013, vagas_ofertadas: 15, inscritos: 58, aprovados: 15, matriculados: 13, concluintes: 13, desistencias: 0, desligamentos: 0, emAndamento: 0 },
   
   // Quadriênio 2013-2016
-  { turma: 4, ano: 2014, vagas_ofertadas: 16, inscritos: 65, aprovados: 16, matriculados: 14, concluintes: 14, desistencias: 0, desligamentos: 0, emAndamento: 0 },
+  { turma: 4, ano: 2014, vagas_ofertadas: 16, inscritos: 65, aprovados: 16, matriculados: 13, concluintes: 13, desistencias: 0, desligamentos: 0, emAndamento: 0 },
   { turma: 5, ano: 2015, vagas_ofertadas: 14, inscritos: 72, aprovados: 14, matriculados: 11, concluintes: 11, desistencias: 0, desligamentos: 0, emAndamento: 0 },
-  { turma: 6, ano: 2016, vagas_ofertadas: 15, inscritos: 68, aprovados: 15, matriculados: 13, concluintes: 13, desistencias: 0, desligamentos: 0, emAndamento: 0 },
+  { turma: 6, ano: 2016, vagas_ofertadas: 15, inscritos: 68, aprovados: 15, matriculados: 11, concluintes: 11, desistencias: 0, desligamentos: 0, emAndamento: 0 },
   
   // Quadriênio 2017-2020
-  { turma: 7, ano: 2017, vagas_ofertadas: 16, inscritos: 75, aprovados: 16, matriculados: 13, concluintes: 13, desistencias: 0, desligamentos: 0, emAndamento: 0 },
-  { turma: 8, ano: 2018, vagas_ofertadas: 16, inscritos: 80, aprovados: 16, matriculados: 13, concluintes: 13, desistencias: 0, desligamentos: 0, emAndamento: 0 },
-  { turma: 9, ano: 2019, vagas_ofertadas: 16, inscritos: 85, aprovados: 16, matriculados: 13, concluintes: 13, desistencias: 0, desligamentos: 0, emAndamento: 0 },
-  { turma: 10, ano: 2020, vagas_ofertadas: 16, inscritos: 78, aprovados: 16, matriculados: 14, concluintes: 14, desistencias: 0, desligamentos: 0, emAndamento: 0 },
+  { turma: 7, ano: 2017, vagas_ofertadas: 16, inscritos: 75, aprovados: 16, matriculados: 12, concluintes: 12, desistencias: 0, desligamentos: 0, emAndamento: 0 },
+  { turma: 8, ano: 2018, vagas_ofertadas: 16, inscritos: 80, aprovados: 16, matriculados: 14, concluintes: 14, desistencias: 0, desligamentos: 0, emAndamento: 0 },
+  { turma: 9, ano: 2019, vagas_ofertadas: 16, inscritos: 85, aprovados: 16, matriculados: 11, concluintes: 11, desistencias: 0, desligamentos: 0, emAndamento: 0 },
+  { turma: 10, ano: 2020, vagas_ofertadas: 16, inscritos: 78, aprovados: 16, matriculados: 13, concluintes: 13, desistencias: 0, desligamentos: 0, emAndamento: 0 },
   
   // Quadriênio 2021-2024
-  { turma: 11, ano: 2021, vagas_ofertadas: 16, inscritos: 82, aprovados: 16, matriculados: 14, concluintes: 14, desistencias: 0, desligamentos: 0, emAndamento: 0 },
-  { turma: 12, ano: 2022, vagas_ofertadas: 16, inscritos: 90, aprovados: 16, matriculados: 13, concluintes: 13, desistencias: 0, desligamentos: 0, emAndamento: 0 },
-  { turma: 13, ano: 2023, vagas_ofertadas: 16, inscritos: 95, aprovados: 16, matriculados: 6, concluintes: 6, desistencias: 0, desligamentos: 0, emAndamento: 0 },
-  { turma: 14, ano: 2024, vagas_ofertadas: 16, inscritos: 88, aprovados: 16, matriculados: 17, concluintes: 5, desistencias: 0, desligamentos: 0, emAndamento: 12 },
+  { turma: 11, ano: 2021, vagas_ofertadas: 16, inscritos: 82, aprovados: 18, matriculados: 16, concluintes: 16, desistencias: 0, desligamentos: 0, emAndamento: 0 },
+  { turma: 12, ano: 2022, vagas_ofertadas: 16, inscritos: 90, aprovados: 11, matriculados: 11, concluintes: 10, desistencias: 0, desligamentos: 0, emAndamento: 1 },
+  { turma: 13, ano: 2023, vagas_ofertadas: 16, inscritos: 95, aprovados: 6, matriculados: 6, concluintes: 6, desistencias: 0, desligamentos: 0, emAndamento: 0 },
+  { turma: 14, ano: 2024, vagas_ofertadas: 16, inscritos: 88, aprovados: 17, matriculados: 17, concluintes: 5, desistencias: 0, desligamentos: 0, emAndamento: 12 },
   
   // Quadriênio 2025+
-  { turma: 15, ano: 2025, vagas_ofertadas: 18, inscritos: 102, aprovados: 18, matriculados: 16, concluintes: 0, desistencias: 0, desligamentos: 0, emAndamento: 16 },
+  { turma: 15, ano: 2025, vagas_ofertadas: 18, inscritos: 102, aprovados: 16, matriculados: 16, concluintes: 0, desistencias: 0, desligamentos: 0, emAndamento: 15 },
 ];
 
 // Interface para análise por quadriênio

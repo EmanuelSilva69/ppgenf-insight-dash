@@ -386,12 +386,12 @@ export function CotasTab() {
               <CardContent className="p-6">
                 <div className="flex items-center gap-4">
                   <div className="p-3 rounded-lg bg-primary/10">
-                    <Users className="h-6 w-6 text-primary" />
+                    <UserCheck className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Total Analisados</p>
+                    <p className="text-sm text-muted-foreground">Total de Aprovados</p>
                     <p className="text-2xl font-bold">{summary.total}</p>
-                    <p className="text-xs text-muted-foreground">aprovados</p>
+                    <p className="text-xs text-muted-foreground">últimas 6 seletivas (2020-2025)</p>
                   </div>
                 </div>
               </CardContent>
@@ -404,9 +404,9 @@ export function CotasTab() {
                     <Calendar className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Média de Idade</p>
+                    <p className="text-sm text-muted-foreground">Média de Idade (Entrada)</p>
                     <p className="text-2xl font-bold">{summary.mediaIdade}</p>
-                    <p className="text-xs text-muted-foreground">anos</p>
+                    <p className="text-xs text-muted-foreground">anos no ano da seletiva</p>
                   </div>
                 </div>
               </CardContent>
@@ -438,7 +438,7 @@ export function CotasTab() {
                   <div>
                     <p className="text-sm text-muted-foreground">% Feminino</p>
                     <p className="text-2xl font-bold">{summary.percentFeminino}%</p>
-                    <p className="text-xs text-muted-foreground">{summary.feminino} de {summary.total}</p>
+                    <p className="text-xs text-muted-foreground">{summary.feminino} de {summary.totalComDados} com dados</p>
                   </div>
                 </div>
               </CardContent>
@@ -689,10 +689,10 @@ export function CotasTab() {
               <p className="text-sm font-semibold text-muted-foreground mb-2">📊 Sobre os Dados:</p>
               <div className="text-xs text-muted-foreground space-y-1">
                 <p>• Dados extraídos dos formulários de inscrição e listas de aprovados (2020-2025)</p>
-                <p>• Idade calculada com base no ano da seletiva</p>
+                <p>• Idade calculada com base no ano da seletiva (entrada no programa)</p>
                 <p>• Média de idade na defesa calculada pelo intervalo entre data de nascimento e data da defesa</p>
                 <p>• Apenas dados agregados são exibidos para preservar a privacidade dos candidatos</p>
-                <p>• Total de {summary.total} aprovados analisados</p>
+                <p>• Total de {summary.total} aprovados ({summary.totalComDados} com dados demográficos completos)</p>
               </div>
             </CardContent>
           </Card>

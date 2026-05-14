@@ -3,6 +3,7 @@ import { BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip
 import { AcademicRecord, academicData } from "@/data/academicData";
 import { selectiveProcessData } from "@/data/selectiveProcessData";
 import { useMemo } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface QuadrienniumChartProps {
   data: AcademicRecord[];
@@ -25,6 +26,8 @@ const COLORS = [
 ];
 
 export function QuadrienniumChart({ data }: QuadrienniumChartProps) {
+  const isMobile = useIsMobile();
+  
   const chartData = useMemo(() => {
     // Check if data is filtered
     const isFiltered = data.length !== academicData.length;
@@ -70,17 +73,25 @@ export function QuadrienniumChart({ data }: QuadrienniumChartProps) {
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={300}>
-          <RechartsBarChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 20 }}>
+          <RechartsBarChart 
+            data={chartData} 
+            margin={{ 
+              top: 5, 
+              right: isMobile ? 10 : 30, 
+              left: isMobile ? 10 : 20, 
+              bottom: isMobile ? 80 : 40 
+            }}
+          >
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
             <XAxis 
               dataKey="name" 
-              tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11, fontWeight: "bold" }}
-              angle={0}
-              textAnchor="middle"
-              height={50}
+              tick={{ fill: "hsl(var(--muted-foreground))", fontSize: isMobile ? 9 : 11, fontWeight: "bold" }}
+              angle={isMobile ? -15 : 0}
+              textAnchor={isMobile ? "end" : "middle"}
+              height={isMobile ? 60 : 50}
               interval={0}
             />
-            <YAxis tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12, fontWeight: "bold" }} />
+            <YAxis tick={{ fill: "hsl(var(--muted-foreground))", fontSize: isMobile ? 10 : 12, fontWeight: "bold" }} />
             <Tooltip 
               contentStyle={{ 
                 backgroundColor: "hsl(var(--card))",
@@ -97,8 +108,12 @@ export function QuadrienniumChart({ data }: QuadrienniumChartProps) {
               }}
             />
             <Legend 
-              wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }}
-              iconSize={10}
+              wrapperStyle={{ 
+                fontSize: isMobile ? '10px' : '12px', 
+                paddingTop: isMobile ? '15px' : '10px',
+                lineHeight: isMobile ? '1.8' : '1.5'
+              }}
+              iconSize={isMobile ? 8 : 10}
               layout="horizontal"
               verticalAlign="bottom"
               align="center"

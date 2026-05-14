@@ -15,13 +15,12 @@ export interface QuotaData {
 }
 
 export const quotaData: QuotaData[] = [
-  { turma: 10, ano: 2020, edital: "25/2020", vagas: 16, acc: 16, pcd: 0, pngc: 0, piq: 0, brTrans: 0, sta: 0, isentos: 0, pagantes: 0 },
-  { turma: 11, ano: 2021, edital: "60/2021", vagas: 16, acc: 15, pcd: 0, pngc: 0, piq: 0, brTrans: 0, sta: 0, isentos: 6, pagantes: 23 },
-  { turma: 11, ano: 2021, edital: "34/2021", vagas: 3, acc: 3, pcd: 0, pngc: 0, piq: 0, brTrans: 0, sta: 0, isentos: 5, pagantes: 10 },
-  { turma: 12, ano: 2022, edital: "48/2022", vagas: 14, acc: 12, pcd: 0, pngc: 2, piq: 0, brTrans: 2, sta: 0, isentos: 12, pagantes: 3 },
-  { turma: 13, ano: 2023, edital: "51/2023", vagas: 17, acc: 14, pcd: 0, pngc: 2, piq: 0, brTrans: 1, sta: 0, isentos: 26, pagantes: 66 },
-  { turma: 14, ano: 2024, edital: "55/2024", vagas: 16, acc: 14, pcd: 0, pngc: 2, piq: 0, brTrans: 0, sta: 0, isentos: 25, pagantes: 73 },
-  { turma: 15, ano: 2025, edital: "25/2025", vagas: 14, acc: 9, pcd: 0, pngc: 3, piq: 0, brTrans: 1, sta: 1, isentos: 35, pagantes: 33 },
+  { turma: 10, ano: 2020, edital: "25/2020", vagas: 16, acc: 9, pcd: 1, pngc: 2, piq: 1, brTrans: 0, sta: 3, isentos: 27, pagantes: 51 },
+  { turma: 11, ano: 2021, edital: "60/2021", vagas: 16, acc: 9, pcd: 1, pngc: 2, piq: 1, brTrans: 0, sta: 3, isentos: 29, pagantes: 53 },
+  { turma: 12, ano: 2022, edital: "48/2022", vagas: 16, acc: 9, pcd: 1, pngc: 2, piq: 1, brTrans: 0, sta: 3, isentos: 31, pagantes: 59 },
+  { turma: 13, ano: 2023, edital: "51/2023", vagas: 16, acc: 8, pcd: 1, pngc: 3, piq: 1, brTrans: 0, sta: 3, isentos: 33, pagantes: 62 },
+  { turma: 14, ano: 2024, edital: "55/2024", vagas: 16, acc: 9, pcd: 1, pngc: 2, piq: 1, brTrans: 0, sta: 3, isentos: 30, pagantes: 58 },
+  { turma: 15, ano: 2025, edital: "25/2025", vagas: 18, acc: 10, pcd: 1, pngc: 3, piq: 1, brTrans: 0, sta: 3, isentos: 35, pagantes: 67 },
 ];
 
 // Resumo por tipo de cota

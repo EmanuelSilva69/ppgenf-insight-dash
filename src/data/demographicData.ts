@@ -1,5 +1,6 @@
 // Dados demográficos extraídos dos formulários de inscrição e listas de aprovados
 // Processamento: cruzamento entre formulários (sexo/nascimento) e listas de aprovados
+import { selectiveProcessData } from "./selectiveProcessData";
 
 /**
  * 📋 GUIA PARA ADICIONAR NOVOS CANDIDATOS
@@ -41,119 +42,96 @@ function calcularIdade(dataNascimento: string, anoSeletiva: number): number {
 // Dados dos candidatos aprovados com informações demográficas
 // Extraídos dos PDFs: formulários de inscrição + listas de aprovados
 export const approvedCandidates: ApprovedCandidate[] = [
-  // === SELETIVO 2020 (21 aprovados) ===
-  { nome: "ALICEA DA CONCEIÇÃO RODRIGUES", sexo: "Feminino", dataNascimento: "02/05/1996", anoSeletiva: 2020, idadeNoAno: 24 },
-  { nome: "AMANDA SILVA DE OLIVEIRA", sexo: "Feminino", dataNascimento: "15/03/1995", anoSeletiva: 2020, idadeNoAno: 25 },
-  { nome: "ANDREA DE JESUS SÁ COSTA ROCHA", sexo: "Feminino", dataNascimento: "12/03/1984", anoSeletiva: 2020, idadeNoAno: 36 },
-  { nome: "CLAUDIONETE ABREU COSTA", sexo: "Feminino", dataNascimento: "14/05/1971", anoSeletiva: 2020, idadeNoAno: 49 },
-  { nome: "ELIAN RODRIGUES FERREIRA", sexo: "Feminino", dataNascimento: "11/11/1987", anoSeletiva: 2020, idadeNoAno: 32 },
-  { nome: "EREMILTA SILVA BARROS", sexo: "Feminino", dataNascimento: "14/05/1976", anoSeletiva: 2020, idadeNoAno: 44 },
-  { nome: "IDERLANIA MARIA DE OLIVEIRA SOUSA", sexo: "Feminino", dataNascimento: "24/09/1985", anoSeletiva: 2020, idadeNoAno: 35 },
-  { nome: "JULIANA CAMPOS COELHO", sexo: "Feminino", dataNascimento: "13/08/1993", anoSeletiva: 2020, idadeNoAno: 27 },
-  { nome: "KAINAN JOSÉ SARAIVA BARROS", sexo: "Masculino", dataNascimento: "01/06/1996", anoSeletiva: 2020, idadeNoAno: 24 },
-  { nome: "KÁSSIA CRISTHINE NOGUEIRA GUSMÃO", sexo: "Feminino", dataNascimento: "24/11/1992", anoSeletiva: 2020, idadeNoAno: 28 },
-  { nome: "LARISSA KARLA BARROS DE ALENCAR", sexo: "Feminino", dataNascimento: "17/12/1982", anoSeletiva: 2020, idadeNoAno: 37 },
-  { nome: "LIDIA CRISTINA PINHEIRO RODRIGUES", sexo: "Feminino", dataNascimento: "12/10/1983", anoSeletiva: 2020, idadeNoAno: 37 },
-  { nome: "LIENDNE PENHA ABREU", sexo: "Feminino", dataNascimento: "14/07/1993", anoSeletiva: 2020, idadeNoAno: 27 },
-  { nome: "MONICA ROBERTA PINHEIRO DE OLIVEIRA", sexo: "Feminino", dataNascimento: "09/06/1975", anoSeletiva: 2020, idadeNoAno: 45 },
-  { nome: "PÂMELA DRIELY GEORGES MENDES", sexo: "Feminino", dataNascimento: "20/01/1996", anoSeletiva: 2020, idadeNoAno: 24 },
-  { nome: "POLYANNA FREITAS ALBUQUERQUE CASTRO", sexo: "Feminino", dataNascimento: "03/09/1989", anoSeletiva: 2020, idadeNoAno: 31 },
-  { nome: "SAMARA SALES GOMES DE SOUSA", sexo: "Feminino", dataNascimento: "27/05/1994", anoSeletiva: 2020, idadeNoAno: 26 },
-  { nome: "SHIRLEY PRISCILA MARTINS CHAGAS DINIZ", sexo: "Feminino", dataNascimento: "11/10/1991", anoSeletiva: 2020, idadeNoAno: 29 },
-  { nome: "SILVANA MENDES COSTA", sexo: "Feminino", dataNascimento: "14/12/1967", anoSeletiva: 2020, idadeNoAno: 53 },
-  { nome: "THAIANNE MARIA DA SILVA ALMEIDA", sexo: "Feminino", dataNascimento: "05/01/1993", anoSeletiva: 2020, idadeNoAno: 27 },
-  { nome: "WALANA ERIKA AMANCIO SOUSA", sexo: "Feminino", dataNascimento: "06/03/1988", anoSeletiva: 2020, idadeNoAno: 32 },
+  // === SELETIVO 2020 - TURMA 10 (16 aprovados, 13 matriculados) ===
+  { nome: "ADRIANA TORRES DOS SANTOS", sexo: "Feminino", dataNascimento: "28/01/1986", anoSeletiva: 2020, idadeNoAno: 34 },
+  { nome: "AIDA PATRICIA DA FONSECA DIAS SILVA", sexo: "Feminino", dataNascimento: "08/08/1983", anoSeletiva: 2020, idadeNoAno: 37 },
+  { nome: "BRUNA CAROLINE SILVA FALCAO", sexo: "Feminino", dataNascimento: "08/10/1992", anoSeletiva: 2020, idadeNoAno: 28 },
+  { nome: "JAIZA SOUSA PENHA", sexo: "Feminino", dataNascimento: "17/03/1993", anoSeletiva: 2020, idadeNoAno: 27 },
+  { nome: "JOCELHA MARIA COSTA DE ALMEIDA", sexo: "Feminino", dataNascimento: "01/07/1979", anoSeletiva: 2020, idadeNoAno: 41 },
+  { nome: "JORDANA MARIA FREITAS ALVES", sexo: "Feminino", dataNascimento: "03/08/1981", anoSeletiva: 2020, idadeNoAno: 39 },
+  { nome: "KASSYA ROSETE SILVA LEITÃO", sexo: "Feminino", dataNascimento: "01/05/1990", anoSeletiva: 2020, idadeNoAno: 30 },
+  { nome: "LIANA PRISCILLA LIMA DE MELO", sexo: "Feminino", dataNascimento: "23/08/1989", anoSeletiva: 2020, idadeNoAno: 31 },
+  { nome: "MAYANE CRISTINA PEREIRA MARQUES", sexo: "Feminino", dataNascimento: "13/10/1994", anoSeletiva: 2020, idadeNoAno: 26 },
+  { nome: "MAYARA DAILEY FREIRE MENDES", sexo: "Feminino", dataNascimento: "04/04/1988", anoSeletiva: 2020, idadeNoAno: 32 },
+  { nome: "NIVYA CARLA DE OLIVEIRA PEREIRA ROLIM", sexo: "Feminino", dataNascimento: "26/10/1981", anoSeletiva: 2020, idadeNoAno: 39 },
+  { nome: "RAYLENA MARTINS DA COSTA", sexo: "Feminino", dataNascimento: "11/01/1985", anoSeletiva: 2020, idadeNoAno: 35 },
+  { nome: "WESLEI MELO DA SILVA", sexo: "Masculino", dataNascimento: "26/05/1984", anoSeletiva: 2020, idadeNoAno: 36 },
 
-  // === SELETIVO 2021.1 (15 aprovados) ===
-  { nome: "ALINE SOUSA FALCÃO", sexo: "Feminino", dataNascimento: "15/08/1994", anoSeletiva: 2021, idadeNoAno: 27 },
-  { nome: "BRUNA RAFAELLA CARVALHO ANDRADE", sexo: "Feminino", dataNascimento: "22/04/1995", anoSeletiva: 2021, idadeNoAno: 26 },
-  { nome: "CIBELE SILVA LIMA", sexo: "Feminino", dataNascimento: "19/03/1977", anoSeletiva: 2021, idadeNoAno: 44 },
-  { nome: "FRANCISCA MARIA DA SILVA FREITAS", sexo: "Feminino", dataNascimento: "08/11/1973", anoSeletiva: 2021, idadeNoAno: 48 },
-  { nome: "INGRID LOYANE BEZERRA BALATA", sexo: "Feminino", dataNascimento: "17/06/1996", anoSeletiva: 2021, idadeNoAno: 25 },
-  { nome: "KAYO ELMANO COSTA DA PONTE GALVÃO", sexo: "Masculino", dataNascimento: "03/05/1993", anoSeletiva: 2021, idadeNoAno: 28 },
-  { nome: "LUCAS ANTONIO DE OLIVEIRA CANTANHEDE", sexo: "Masculino", dataNascimento: "12/09/1995", anoSeletiva: 2021, idadeNoAno: 26 },
-  { nome: "MARIA ALMIRA BULCÃO LOUREIRO", sexo: "Feminino", dataNascimento: "28/02/1970", anoSeletiva: 2021, idadeNoAno: 51 },
-  { nome: "MATEUS VERAS PESSOA DE OLIVEIRA", sexo: "Masculino", dataNascimento: "24/08/1996", anoSeletiva: 2021, idadeNoAno: 25 },
-  { nome: "MILKA BORGES DA SILVA", sexo: "Feminino", dataNascimento: "05/07/1997", anoSeletiva: 2021, idadeNoAno: 24 },
-  { nome: "NÁDIA ALESSA VENÇÃO DE MOURA", sexo: "Feminino", dataNascimento: "30/01/1995", anoSeletiva: 2021, idadeNoAno: 26 },
-  { nome: "POLYANA CABRAL DA SILVA", sexo: "Feminino", dataNascimento: "19/10/1992", anoSeletiva: 2021, idadeNoAno: 29 },
-  { nome: "RAFAELA ALVES DE OLIVEIRA", sexo: "Feminino", dataNascimento: "14/04/1988", anoSeletiva: 2021, idadeNoAno: 33 },
-  { nome: "RENATA PINHEIRO PEDRA FERNANDES", sexo: "Feminino", dataNascimento: "07/12/1981", anoSeletiva: 2021, idadeNoAno: 40 },
-  { nome: "THAYNÁ CUNHA BEZERRA", sexo: "Feminino", dataNascimento: "25/09/1997", anoSeletiva: 2021, idadeNoAno: 24 },
-
-  // === SELETIVO 2021.2 (3 aprovados) ===
+  // === SELETIVO 2021 - TURMA 11 (18 aprovados, 16 matriculados) ===
+  { nome: "AMANDA SILVA DE OLIVEIRA", sexo: "Feminino", dataNascimento: "07/03/1978", anoSeletiva: 2021, idadeNoAno: 43 },
+  { nome: "ANDREA DE JESUS SA COSTA ROCHA", sexo: "Feminino", dataNascimento: "29/08/1988", anoSeletiva: 2021, idadeNoAno: 33 },
   { nome: "DÉBORA LORENA MELO PEREIRA", sexo: "Feminino", dataNascimento: "15/10/1996", anoSeletiva: 2021, idadeNoAno: 25 },
-  { nome: "EUDIJESSICA MELO DE OLIVEIRA", sexo: "Feminino", dataNascimento: "23/03/1997", anoSeletiva: 2021, idadeNoAno: 24 },
+  { nome: "ELIAN RODRIGUES FERREIRA", sexo: "Masculino", dataNascimento: "25/03/1975", anoSeletiva: 2021, idadeNoAno: 46 },
+  { nome: "EREMILTA SILVA BARROS", sexo: "Feminino", dataNascimento: "23/07/1971", anoSeletiva: 2021, idadeNoAno: 50 },
+  { nome: "EUDIJESSICA MELO DE OLIVEIRA", sexo: "Feminino", dataNascimento: "06/02/1992", anoSeletiva: 2021, idadeNoAno: 29 },
+  { nome: "IDERLANIA MARIA DE OLIVEIRA SOUSA", sexo: "Feminino", dataNascimento: "05/03/1979", anoSeletiva: 2021, idadeNoAno: 42 },
+  { nome: "JULIANA CAMPOS COELHO", sexo: "Feminino", dataNascimento: "03/02/1986", anoSeletiva: 2021, idadeNoAno: 35 },
+  { nome: "LARISSA KARLA BARROS DE ALENCAR", sexo: "Feminino", dataNascimento: "01/12/1985", anoSeletiva: 2021, idadeNoAno: 36 },
   { nome: "LARISSA NEUZA DA SILVA NINA", sexo: "Feminino", dataNascimento: "24/02/1994", anoSeletiva: 2021, idadeNoAno: 27 },
+  { nome: "LIENDNE PENHA ABREU", sexo: "Feminino", dataNascimento: "29/03/1989", anoSeletiva: 2021, idadeNoAno: 32 },
+  { nome: "PÂMELA DRIELY GEORGES MENDES", sexo: "Feminino", dataNascimento: "16/01/1987", anoSeletiva: 2021, idadeNoAno: 34 },
+  { nome: "POLYANNA FREITAS ALBUQUERQUE CASTRO", sexo: "Feminino", dataNascimento: "30/08/1979", anoSeletiva: 2021, idadeNoAno: 42 },
+  { nome: "SAMARA SALES GOMES DE SOUSA", sexo: "Feminino", dataNascimento: "08/04/1987", anoSeletiva: 2021, idadeNoAno: 34 },
+  { nome: "SHIRLEY PRISCILA MARTINS CHAGAS DINIZ", sexo: "Feminino", dataNascimento: "18/03/1985", anoSeletiva: 2021, idadeNoAno: 36 },
+  { nome: "SILVANA MENDES COSTA", sexo: "Feminino", dataNascimento: "14/12/1967", anoSeletiva: 2021, idadeNoAno: 54 },
 
-  // === SELETIVO 2022 (14 aprovados) ===
-  { nome: "ANA LUÍSA PEREIRA BRASILEIRO", sexo: "Feminino", dataNascimento: "04/02/1997", anoSeletiva: 2022, idadeNoAno: 25 },
-  { nome: "CLEIDIANE CRISTINA SOUSA DA SILVA DE OLIVEIRA", sexo: "Feminino", dataNascimento: "16/08/1993", anoSeletiva: 2022, idadeNoAno: 29 },
-  { nome: "CYNTHYA LAYS BATISTA BARROSO DE SOUSA", sexo: "Feminino", dataNascimento: "19/10/1991", anoSeletiva: 2022, idadeNoAno: 31 },
-  { nome: "ÉLIDA CRISTINA SANTOS CORRÊA", sexo: "Feminino", dataNascimento: "08/06/1994", anoSeletiva: 2022, idadeNoAno: 28 },
-  { nome: "EMANUELLA PEREIRA DE LACERDA", sexo: "Feminino", dataNascimento: "12/11/1995", anoSeletiva: 2022, idadeNoAno: 27 },
-  { nome: "FELIPE MORAES DA SILVA", sexo: "Masculino", dataNascimento: "27/03/1990", anoSeletiva: 2022, idadeNoAno: 32 },
-  { nome: "FERNANDA KAROLINA CARVALHO MATOS", sexo: "Feminino", dataNascimento: "05/01/1997", anoSeletiva: 2022, idadeNoAno: 25 },
-  { nome: "NATÁLIA DE JESUS SOUSA CUNHA", sexo: "Feminino", dataNascimento: "21/09/1994", anoSeletiva: 2022, idadeNoAno: 28 },
-  { nome: "RIVANNA CAYRE FEITOSA AVELAR SOUZA", sexo: "Feminino", dataNascimento: "20/11/1997", anoSeletiva: 2022, idadeNoAno: 25 },
-  { nome: "SAMARA ARAUJO OLIVEIRA", sexo: "Feminino", dataNascimento: "05/07/2002", anoSeletiva: 2022, idadeNoAno: 20 },
-  { nome: "SILVIA TEREZA NOGUEIRA", sexo: "Feminino", dataNascimento: "13/01/1968", anoSeletiva: 2022, idadeNoAno: 54 },
-  { nome: "TAYS CAMPOS RIBEIRO", sexo: "Feminino", dataNascimento: "19/07/1998", anoSeletiva: 2022, idadeNoAno: 24 },
-  { nome: "THAMIRES PINTO CAVALCANTE", sexo: "Feminino", dataNascimento: "12/09/1998", anoSeletiva: 2022, idadeNoAno: 24 },
-  { nome: "YURI SANDRO LIMA DE AZEVEDO", sexo: "Masculino", dataNascimento: "20/06/1997", anoSeletiva: 2022, idadeNoAno: 25 },
+  // === SELETIVO 2022 - TURMA 12 (11 aprovados) ===
+  { nome: "BRUNA RAFAELLA CARVALHO ANDRADE", sexo: "Feminino", dataNascimento: "05/09/1988", anoSeletiva: 2022, idadeNoAno: 34 },
+  { nome: "CIBELE SILVA LIMA", sexo: "Feminino", dataNascimento: "19/03/1977", anoSeletiva: 2022, idadeNoAno: 45 },
+  { nome: "FRANCISCA MARIA DA SILVA FREITAS", sexo: "Feminino", dataNascimento: "08/09/1977", anoSeletiva: 2022, idadeNoAno: 45 },
+  { nome: "INGRID LOYANE BEZERRA BALATA SILVA", sexo: "Feminino", dataNascimento: "13/07/1994", anoSeletiva: 2022, idadeNoAno: 28 },
+  { nome: "KAYO ELMANO COSTA DA PONTE GALVAO", sexo: "Masculino", dataNascimento: "03/05/1993", anoSeletiva: 2022, idadeNoAno: 29 },
+  { nome: "LUCAS ANTONIO DE OLIVEIRA CANTANHEDE", sexo: "Masculino", dataNascimento: "10/12/1993", anoSeletiva: 2022, idadeNoAno: 29 },
+  { nome: "MILKA BORGES DA SILVA", sexo: "Feminino", dataNascimento: "11/02/1995", anoSeletiva: 2022, idadeNoAno: 27 },
+  { nome: "NADIA ALESSA VENCAO DE MOURA", sexo: "Feminino", dataNascimento: "12/03/1990", anoSeletiva: 2022, idadeNoAno: 32 },
+  { nome: "POLYANA CABRAL DA SILVA", sexo: "Feminino", dataNascimento: "29/10/1993", anoSeletiva: 2022, idadeNoAno: 29 },
+  { nome: "RENATA PINHEIRO PEDRA FERNANDES", sexo: "Feminino", dataNascimento: "02/09/1978", anoSeletiva: 2022, idadeNoAno: 44 },
+  { nome: "THAYNÁ CUNHA BEZERRA", sexo: "Feminino", dataNascimento: "02/08/1995", anoSeletiva: 2022, idadeNoAno: 27 },
 
-  // === SELETIVO 2023 (17 aprovados) ===
-  { nome: "ANDRIO CORRÊA BARROS", sexo: "Masculino", dataNascimento: "18/07/1990", anoSeletiva: 2023, idadeNoAno: 33 },
-  { nome: "DANDARA DE JESUS DOS SANTOS E SANTOS", sexo: "Feminino", dataNascimento: "09/12/1996", anoSeletiva: 2023, idadeNoAno: 27 },
-  { nome: "DÉBORAH PESTANA LIMA VIEIRA", sexo: "Feminino", dataNascimento: "03/05/1995", anoSeletiva: 2023, idadeNoAno: 28 },
-  { nome: "EUSIENE FURTADO MOTA SILVA", sexo: "Feminino", dataNascimento: "14/08/1988", anoSeletiva: 2023, idadeNoAno: 35 },
-  { nome: "EVANDICLEUDE FERREIRA DE CARVALHO RODRIGUES", sexo: "Feminino", dataNascimento: "27/02/1980", anoSeletiva: 2023, idadeNoAno: 43 },
-  { nome: "GIRLANE CAROLINE PEREIRA SANTOS", sexo: "Feminino", dataNascimento: "10/04/1993", anoSeletiva: 2023, idadeNoAno: 30 },
-  { nome: "ISADORA ARAUJO RODRIGUES", sexo: "Feminino", dataNascimento: "22/11/1998", anoSeletiva: 2023, idadeNoAno: 25 },
-  { nome: "KASSYA FERNANDA FREIRE LIMA", sexo: "Feminino", dataNascimento: "06/09/1995", anoSeletiva: 2023, idadeNoAno: 28 },
-  { nome: "MARTA SILVA DE SANTANA", sexo: "Feminino", dataNascimento: "19/03/1992", anoSeletiva: 2023, idadeNoAno: 31 },
-  { nome: "PABLO NASCIMENTO CRUZ", sexo: "Masculino", dataNascimento: "15/06/1989", anoSeletiva: 2023, idadeNoAno: 34 },
-  { nome: "RAYLENE FRAZAO LINDOSO", sexo: "Feminino", dataNascimento: "28/01/1997", anoSeletiva: 2023, idadeNoAno: 26 },
-  { nome: "ROSEMARY FERNANDES CORREA ALENCAR", sexo: "Feminino", dataNascimento: "04/10/1975", anoSeletiva: 2023, idadeNoAno: 48 },
-  { nome: "SUELEN GONÇALVES BARROSO", sexo: "Feminino", dataNascimento: "12/07/1992", anoSeletiva: 2023, idadeNoAno: 31 },
-  { nome: "THÁTILA LARISSA DA CRUZ ANDRADE", sexo: "Feminino", dataNascimento: "30/05/1996", anoSeletiva: 2023, idadeNoAno: 27 },
-  { nome: "THAYSA GOIS TRINTA ABREU", sexo: "Feminino", dataNascimento: "08/08/1994", anoSeletiva: 2023, idadeNoAno: 29 },
-  { nome: "VITALIANO DE OLIVEIRA LEITE JUNIOR", sexo: "Masculino", dataNascimento: "23/04/1993", anoSeletiva: 2023, idadeNoAno: 30 },
-  { nome: "WILDILENE LEITE CARVALHO", sexo: "Feminino", dataNascimento: "17/02/1987", anoSeletiva: 2023, idadeNoAno: 36 },
+  // === SELETIVO 2023 - TURMA 13 (6 aprovados) ===
+  { nome: "CLEIDIANE CRISTINA SOUSA DA SILVA DE OLIVEIRA", sexo: "Feminino", dataNascimento: "15/09/1982", anoSeletiva: 2023, idadeNoAno: 41 },
+  { nome: "CYNTHYA LAYS BATISTA BARROSO DE SOUSA", sexo: "Feminino", dataNascimento: "19/10/1991", anoSeletiva: 2023, idadeNoAno: 32 },
+  { nome: "ÉLIDA CRISTINA SANTOS CORRÊA", sexo: "Feminino", dataNascimento: "22/09/1990", anoSeletiva: 2023, idadeNoAno: 33 },
+  { nome: "EMANUELLA PEREIRA DE LACERDA", sexo: "Feminino", dataNascimento: "04/06/1985", anoSeletiva: 2023, idadeNoAno: 38 },
+  { nome: "FERNANDA KAROLINA CARVALHO MATOS", sexo: "Feminino", dataNascimento: "27/05/1995", anoSeletiva: 2023, idadeNoAno: 28 },
+  { nome: "NATÁLIA DE JESUS SOUSA CUNHA", sexo: "Feminino", dataNascimento: "29/12/1985", anoSeletiva: 2023, idadeNoAno: 38 },
 
-  // === SELETIVO 2024 (16 aprovados) ===
-  { nome: "ANA CAROLYNE ABREU FONTINELLE TORRES", sexo: "Feminino", dataNascimento: "01/04/1999", anoSeletiva: 2024, idadeNoAno: 25 },
-  { nome: "ANGELA DOS SANTOS SILVA", sexo: "Feminino", dataNascimento: "17/09/1991", anoSeletiva: 2024, idadeNoAno: 33 },
-  { nome: "DANNYEL ROGGER ALMEIDA TEIXEIRA", sexo: "Masculino", dataNascimento: "25/01/1996", anoSeletiva: 2024, idadeNoAno: 28 },
-  { nome: "ELOUISE RAYANNE DE ALMEIDA VASCONCELOS", sexo: "Feminino", dataNascimento: "07/11/1995", anoSeletiva: 2024, idadeNoAno: 29 },
-  { nome: "GEOVANE MOURA VIANA", sexo: "Masculino", dataNascimento: "09/07/1997", anoSeletiva: 2024, idadeNoAno: 27 },
-  { nome: "ISABELA MENDONCA RODRIGUES DOS SANTOS", sexo: "Feminino", dataNascimento: "20/02/1996", anoSeletiva: 2024, idadeNoAno: 28 },
-  { nome: "JESSICA NATHALIA DE MELO SOUSA", sexo: "Feminino", dataNascimento: "07/11/1996", anoSeletiva: 2024, idadeNoAno: 28 },
-  { nome: "JOSE PEREIRA DE MIRANDA NETO", sexo: "Masculino", dataNascimento: "27/01/1994", anoSeletiva: 2024, idadeNoAno: 30 },
-  { nome: "JULIANA JANSEN SANTOS", sexo: "Feminino", dataNascimento: "19/08/1997", anoSeletiva: 2024, idadeNoAno: 27 },
-  { nome: "LAYZA DE PAULA GUSMAO SILVA", sexo: "Feminino", dataNascimento: "16/12/2000", anoSeletiva: 2024, idadeNoAno: 24 },
-  { nome: "LETHYCIA CAROLINE AROUCHE FERREIRA", sexo: "Feminino", dataNascimento: "07/07/1999", anoSeletiva: 2024, idadeNoAno: 25 },
-  { nome: "MARCUS VINICIUS BARBOSA CHAGAS", sexo: "Masculino", dataNascimento: "24/10/1995", anoSeletiva: 2024, idadeNoAno: 29 },
-  { nome: "NAYARA ARAUJO SOUSA", sexo: "Feminino", dataNascimento: "11/02/1993", anoSeletiva: 2024, idadeNoAno: 31 },
-  { nome: "NISIANE DOS SANTOS", sexo: "Feminino", dataNascimento: "08/05/1997", anoSeletiva: 2024, idadeNoAno: 27 },
-  { nome: "RENATA GABRIELA SOARES TEIXEIRA", sexo: "Feminino", dataNascimento: "03/03/2001", anoSeletiva: 2024, idadeNoAno: 23 },
-  { nome: "VINICIUS ANDRE DO NASCIMENTO SILVA", sexo: "Masculino", dataNascimento: "11/04/2002", anoSeletiva: 2024, idadeNoAno: 22 },
+  // === SELETIVO 2024 - TURMA 14 (17 aprovados) ===
+  { nome: "ANDRIO CORRÊA BARROS", sexo: "Masculino", dataNascimento: "18/02/1994", anoSeletiva: 2024, idadeNoAno: 30 },
+  { nome: "DANDARA DE JESUS DOS SANTOS E SANTOS", sexo: "Feminino", dataNascimento: "27/01/1992", anoSeletiva: 2024, idadeNoAno: 32 },
+  { nome: "DÉBORAH PESTANA LIMA VIEIRA", sexo: "Feminino", dataNascimento: "02/10/1987", anoSeletiva: 2024, idadeNoAno: 37 },
+  { nome: "EUSIENE FURTADO MOTA SILVA", sexo: "Feminino", dataNascimento: "11/04/1984", anoSeletiva: 2024, idadeNoAno: 40 },
+  { nome: "EVANDICLEUDE FERREIRA DE CARVALHO", sexo: "Feminino", dataNascimento: "23/10/1985", anoSeletiva: 2024, idadeNoAno: 39 },
+  { nome: "GIRLANE CAROLINE PEREIRA SANTOS", sexo: "Feminino", dataNascimento: "02/03/1995", anoSeletiva: 2024, idadeNoAno: 29 },
+  { nome: "ISADORA ARAUJO RODRIGUES", sexo: "Feminino", dataNascimento: "21/08/1997", anoSeletiva: 2024, idadeNoAno: 27 },
+  { nome: "KASSYA FERNANDA FREIRE LIMA", sexo: "Feminino", dataNascimento: "25/02/1987", anoSeletiva: 2024, idadeNoAno: 37 },
+  { nome: "MARTA SILVA DE SANTANA", sexo: "Feminino", dataNascimento: "24/08/1981", anoSeletiva: 2024, idadeNoAno: 43 },
+  { nome: "PABLO NASCIMENTO CRUZ", sexo: "Masculino", dataNascimento: "24/06/1994", anoSeletiva: 2024, idadeNoAno: 30 },
+  { nome: "RAYLENE FRAZAO LINDOSO", sexo: "Feminino", dataNascimento: "08/11/1993", anoSeletiva: 2024, idadeNoAno: 31 },
+  { nome: "ROSEMARY FERNANDES CORREA ALENCAR", sexo: "Feminino", dataNascimento: "31/05/1972", anoSeletiva: 2024, idadeNoAno: 52 },
+  { nome: "SUELEN GONÇALVES BARROSO", sexo: "Feminino", dataNascimento: "13/12/1986", anoSeletiva: 2024, idadeNoAno: 38 },
+  { nome: "THÁTILA LARISSA DA CRUZ ANDRADE", sexo: "Feminino", dataNascimento: "13/05/1995", anoSeletiva: 2024, idadeNoAno: 29 },
+  { nome: "THAYSA GOIS TRINTA", sexo: "Feminino", dataNascimento: "04/08/1989", anoSeletiva: 2024, idadeNoAno: 35 },
+  { nome: "VITALIANO DE OLIVEIRA LEITE JUNIOR", sexo: "Masculino", dataNascimento: "16/05/1996", anoSeletiva: 2024, idadeNoAno: 28 },
+  { nome: "WILDILENE LEITE CARVALHO", sexo: "Feminino", dataNascimento: "06/09/1984", anoSeletiva: 2024, idadeNoAno: 40 },
 
-  // === SELETIVO 2025 (14 aprovados) ===
-  { nome: "ALLAN BRUNO ALVES DE SOUSA SANTOS", sexo: "Masculino", dataNascimento: "20/09/1999", anoSeletiva: 2025, idadeNoAno: 26 },
-  { nome: "AMANDA ALMEIDA PINHEIRO", sexo: "Feminino", dataNascimento: "10/02/2000", anoSeletiva: 2025, idadeNoAno: 25 },
-  { nome: "ANA KAROLINE MOREIRA", sexo: "Feminino", dataNascimento: "21/01/2000", anoSeletiva: 2025, idadeNoAno: 25 },
-  { nome: "DANIEL VINICIUS COSTA ROCHA", sexo: "Masculino", dataNascimento: "26/05/1983", anoSeletiva: 2025, idadeNoAno: 42 },
-  { nome: "JESSICA THAIS DA SILVA DE CASTRO", sexo: "Feminino", dataNascimento: "12/02/2002", anoSeletiva: 2025, idadeNoAno: 23 },
-  { nome: "JULIANE MARTINS DOS SANTOS", sexo: "Feminino", dataNascimento: "09/10/2000", anoSeletiva: 2025, idadeNoAno: 25 },
-  { nome: "LETICIA CUTRIM COSTA", sexo: "Feminino", dataNascimento: "09/11/1998", anoSeletiva: 2025, idadeNoAno: 27 },
-  { nome: "LETICIA MARIA PAIVA CRUZ", sexo: "Feminino", dataNascimento: "25/09/2002", anoSeletiva: 2025, idadeNoAno: 23 },
-  { nome: "LUIS FELIPE GOMES BOUERES VIANA", sexo: "Masculino", dataNascimento: "22/02/1999", anoSeletiva: 2025, idadeNoAno: 26 },
-  { nome: "MAIANA CRISLEY BARROSO BRANDAO", sexo: "Feminino", dataNascimento: "10/04/1997", anoSeletiva: 2025, idadeNoAno: 28 },
-  { nome: "MAQCIELLE FERREIRA LOPES", sexo: "Feminino", dataNascimento: "17/05/1998", anoSeletiva: 2025, idadeNoAno: 27 },
-  { nome: "NOELIA SOUSA BORGES DA SILVA", sexo: "Feminino", dataNascimento: "21/07/1998", anoSeletiva: 2025, idadeNoAno: 27 },
-  { nome: "RAISSA ALMEIDA RIBEIRO", sexo: "Feminino", dataNascimento: "04/04/2001", anoSeletiva: 2025, idadeNoAno: 24 },
-  { nome: "REGIANNE DE ARAUJO ALBUQUERQUE", sexo: "Feminino", dataNascimento: "19/03/2000", anoSeletiva: 2025, idadeNoAno: 25 },
+  // === SELETIVO 2025 - TURMA 15 (16 aprovados) ===
+  { nome: "ANA CAROLYNE ABREU FONTINELLE TORRES", sexo: "Feminino", dataNascimento: "01/04/1999", anoSeletiva: 2025, idadeNoAno: 26 },
+  { nome: "ANGELA DOS SANTOS SILVA", sexo: "Feminino", dataNascimento: "17/09/1991", anoSeletiva: 2025, idadeNoAno: 34 },
+  { nome: "DANNYEL ROGGER ALMEIDA TEIXEIRA", sexo: "Masculino", dataNascimento: "25/01/1996", anoSeletiva: 2025, idadeNoAno: 29 },
+  { nome: "ELOUISE RAYANNE DE ALMEIDA VASCONCELOS", sexo: "Feminino", dataNascimento: "07/11/1995", anoSeletiva: 2025, idadeNoAno: 30 },
+  { nome: "GEOVANE MOURA VIANA", sexo: "Masculino", dataNascimento: "09/07/1997", anoSeletiva: 2025, idadeNoAno: 28 },
+  { nome: "ISABELA MENDONCA RODRIGUES DOS SANTOS", sexo: "Feminino", dataNascimento: "20/02/1996", anoSeletiva: 2025, idadeNoAno: 29 },
+  { nome: "JESSICA NATHALIA DE MELO SOUSA", sexo: "Feminino", dataNascimento: "07/11/1996", anoSeletiva: 2025, idadeNoAno: 29 },
+  { nome: "JOSE PEREIRA DE MIRANDA NETO", sexo: "Masculino", dataNascimento: "27/01/1994", anoSeletiva: 2025, idadeNoAno: 31 },
+  { nome: "JULIANA JANSEN SANTOS", sexo: "Feminino", dataNascimento: "19/08/1997", anoSeletiva: 2025, idadeNoAno: 28 },
+  { nome: "LAYZA DE PAULA GUSMAO SILVA", sexo: "Feminino", dataNascimento: "16/12/2000", anoSeletiva: 2025, idadeNoAno: 25 },
+  { nome: "LETHYCIA CAROLINE AROUCHE FERREIRA", sexo: "Feminino", dataNascimento: "07/07/1999", anoSeletiva: 2025, idadeNoAno: 26 },
+  { nome: "MARCUS VINICIUS BARBOSA CHAGAS", sexo: "Masculino", dataNascimento: "24/10/1995", anoSeletiva: 2025, idadeNoAno: 30 },
+  { nome: "NAYARA ARAUJO SOUSA", sexo: "Feminino", dataNascimento: "11/02/1993", anoSeletiva: 2025, idadeNoAno: 32 },
+  { nome: "NISIANE DOS SANTOS", sexo: "Feminino", dataNascimento: "08/05/1997", anoSeletiva: 2025, idadeNoAno: 28 },
+  { nome: "RENATA GABRIELA SOARES TEIXEIRA", sexo: "Feminino", dataNascimento: "03/03/2001", anoSeletiva: 2025, idadeNoAno: 24 },
+  { nome: "VINICIUS ANDRE DO NASCIMENTO SILVA", sexo: "Masculino", dataNascimento: "11/04/2002", anoSeletiva: 2025, idadeNoAno: 23 },
 ];
 
 // Funções auxiliares para análise demográfica
@@ -203,11 +181,19 @@ export function getAgeDistribution(year?: number) {
 }
 
 export function getDemographicSummary(year?: number) {
+  // Dados demográficos disponíveis (matriculados com formulários)
   const data = year 
     ? approvedCandidates.filter(c => c.anoSeletiva === year)
     : approvedCandidates;
 
-  const total = data.length;
+  // Total de APROVADOS (fonte oficial: selectiveProcessData)
+  const selectiveData = year
+    ? selectiveProcessData.filter(s => s.ano === year)
+    : selectiveProcessData.filter(s => s.ano >= 2020); // Turmas 10-15 (2020-2025)
+  
+  const totalAprovados = selectiveData.reduce((sum, s) => sum + s.aprovados, 0);
+  const totalComDados = data.length; // Matriculados com dados demográficos
+  
   const masculino = data.filter(c => c.sexo === "Masculino").length;
   const feminino = data.filter(c => c.sexo === "Feminino").length;
   const ages = data.map(c => c.idadeNoAno);
@@ -215,13 +201,14 @@ export function getDemographicSummary(year?: number) {
   const sexoPredominante = feminino >= masculino ? "Feminino" : "Masculino";
 
   return {
-    total,
+    total: totalAprovados, // Total de APROVADOS (selectiveProcessData)
+    totalComDados, // Total de matriculados com dados demográficos
     masculino,
     feminino,
     mediaIdade: mediaIdade.toFixed(1),
     sexoPredominante,
-    percentFeminino: total > 0 ? ((feminino / total) * 100).toFixed(1) : "0",
-    percentMasculino: total > 0 ? ((masculino / total) * 100).toFixed(1) : "0",
+    percentFeminino: totalComDados > 0 ? ((feminino / totalComDados) * 100).toFixed(1) : "0",
+    percentMasculino: totalComDados > 0 ? ((masculino / totalComDados) * 100).toFixed(1) : "0",
   };
 }
 
