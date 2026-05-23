@@ -43,7 +43,7 @@ export const getQuotaSummary = (): QuotaSummary[] => {
   return [
     { tipo: "Ampla Concorrência", total: totals.acc, cor: "hsl(var(--primary))" },
     { tipo: "Pessoas Negras/Pardas", total: totals.pngc, cor: "hsl(200, 70%, 50%)" },
-    { tipo: "Pessoas com Deficiência", total: totals.pcd, cor: "hsl(280, 70%, 60%)" },
+    { tipo: "Pessoas com deficiência", total: totals.pcd, cor: "hsl(280, 70%, 60%)" },
     { tipo: "Pessoas Trans (Baixa Renda)", total: totals.brTrans, cor: "hsl(340, 70%, 50%)" },
     { tipo: "Servidores Téc. Adm.", total: totals.sta, cor: "hsl(160, 70%, 40%)" },
     { tipo: "Indígenas/Quilombolas", total: totals.piq, cor: "hsl(40, 80%, 50%)" },

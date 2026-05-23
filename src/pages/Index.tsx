@@ -217,15 +217,17 @@ const Index = () => {
                 title="Distribuição por linha de pesquisa" 
                 data={researchLinesData} 
                 horizontalLabels={true}
+                staggeredLabels={true}
               />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-              <BarChart title="Orientandos por professor (Top 10)" data={advisorsData} />
+              <BarChart title="Orientandos por professor (Top 10)" data={advisorsData} compactLabels={true} chartHeight={420} forceLabelAngle={-45} />
               <BarChart 
                 title="Média de meses para conclusão por ano" 
                 data={completionByYearData} 
                 showGlobalAverage={true}
+                chartHeight={380}
               />
             </div>
 

@@ -32,27 +32,27 @@ export function StudentList({ title, students }: StudentListProps) {
                 key={student.matricula}
                 className="p-3 rounded-lg bg-secondary/50 hover:bg-secondary transition-colors"
               >
-                <div className="flex justify-between items-start gap-2">
-                  <div className="flex-1">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <p className="font-bold text-sm text-foreground">{student.nome}</p>
+                      <p className="font-bold text-sm text-foreground break-words">{student.nome}</p>
                       {student.conclusaoNoPrazo === "TRANCADO" && (
                         <Lock className="h-4 w-4 text-red-600" title="Matrícula trancada" />
                       )}
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-muted-foreground mt-1 break-words">
                       <span className="font-medium">Orientador:</span> {student.orientador}
                     </p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-muted-foreground break-words">
                       <span className="font-medium">Linha:</span> {student.linhaPesquisa}
                     </p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-muted-foreground break-words">
                       <span className="font-medium">Entrada:</span> {student.mesAnoEntrada} | 
                       <span className="font-medium"> Turma:</span> {student.turma} | 
                       {student.totalMeses > 0 && <><span className="font-medium"> Meses:</span> {student.totalMeses}</>}
                     </p>
                   </div>
-                  <div className="text-right">
+                  <div className="text-left sm:text-right shrink-0">
                     {getStatusBadge(student.conclusaoNoPrazo)}
                     {student.defesa && (
                       <p className="text-xs text-muted-foreground mt-1">Defesa: {student.defesa}</p>

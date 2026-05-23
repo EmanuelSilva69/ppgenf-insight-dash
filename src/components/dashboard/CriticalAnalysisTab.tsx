@@ -66,6 +66,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useElementWidth } from "@/hooks/use-mobile";
 
 const COLORS = {
   primary: "hsl(var(--chart-1))",
@@ -82,6 +83,7 @@ const DONUT_COLORS = ["#f59e0b", "#ef4444"];
 
 export function CriticalAnalysisTab() {
   const [selectedYear, setSelectedYear] = useState("Todos");
+  const [nonCompletionChartRef, nonCompletionChartWidth] = useElementWidth<HTMLDivElement>();
   
   const availableYears = useMemo(() => getAvailableYears(), []);
   const filteredData = useMemo(() => filterDataByYear(selectedYear), [selectedYear]);
@@ -465,19 +467,18 @@ export function CriticalAnalysisTab() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
+            <div ref={nonCompletionChartRef} className="max-w-full overflow-x-auto">
+            <ResponsiveContainer width="100%" height={330}>
               <PieChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
                 <Pie
                   data={nonCompletionData}
                   cx="50%"
                   cy="50%"
                   innerRadius={50}
-                  outerRadius={80}
+                  outerRadius={nonCompletionChartWidth > 0 && nonCompletionChartWidth < 900 ? 70 : 80}
                   paddingAngle={5}
                   dataKey="value"
-                  label={({ name, value, percent }) => 
-                    `${name}: ${value} (${(percent * 100).toFixed(0)}%)`
-                  }
+                  label={nonCompletionChartWidth > 0 && nonCompletionChartWidth < 900 ? ({ value, percent }) => `${value} (${(percent * 100).toFixed(0)}%)` : ({ name, value, percent }) => `${name}: ${value} (${(percent * 100).toFixed(0)}%)`}
                   labelLine={{ stroke: "hsl(var(--muted-foreground))", strokeWidth: 1 }}
                 >
                   {nonCompletionData.map((entry, index) => (
@@ -491,8 +492,18 @@ export function CriticalAnalysisTab() {
                     borderRadius: "8px"
                   }}
                 />
+                <Legend
+                  verticalAlign="bottom"
+                  align="center"
+                  wrapperStyle={{ fontSize: '11px', paddingTop: '10px', width: '100%', display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
+                  iconSize={10}
+                  formatter={(value: string) => (
+                    <span style={{ color: "hsl(var(--foreground))", fontWeight: "bold", fontSize: 11, whiteSpace: "normal" }}>{value}</span>
+                  )}
+                />
               </PieChart>
             </ResponsiveContainer>
+            </div>
             {filteredTotals.desistencias === 0 && filteredTotals.desligamentos === 0 && (
               <p className="text-center text-sm text-green-600 font-medium mt-2">
                 ✓ Nenhuma perda registrada no período selecionado
@@ -693,8 +704,77 @@ export function CriticalAnalysisTab() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
-            <Table>
+          <div className="grid gap-3 lg:hidden">
+            {quadrienniumData.map((q) => (
+              <Card key={q.quadrienio} className="border-primary/20 bg-secondary/30">
+                <CardContent className="p-4 space-y-3">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-semibold text-foreground">{q.quadrienio}</p>
+                      <p className="text-xs text-muted-foreground">Inscritos: {q.totalInscritos} | Aprovados: {q.totalAprovados}</p>
+                    </div>
+                    <Badge variant={q.taxaSucesso >= 80 ? "default" : "secondary"} className={q.taxaSucesso >= 80 ? "bg-green-600" : "shrink-0"}>
+                      {q.taxaSucesso.toFixed(1)}%
+                    </Badge>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className="rounded-md bg-background/80 p-2">
+                      <p className="text-muted-foreground">Vagas</p>
+                      <p className="font-semibold text-foreground">{q.totalVagas}</p>
+                    </div>
+                    <div className="rounded-md bg-background/80 p-2">
+                      <p className="text-muted-foreground">Cand/Vaga</p>
+                      <p className="font-semibold text-foreground">{q.taxaSelecao.toFixed(1)}</p>
+                    </div>
+                    <div className="rounded-md bg-background/80 p-2">
+                      <p className="text-muted-foreground">Concluintes</p>
+                      <p className="font-semibold text-foreground">{q.totalConcluintes}</p>
+                    </div>
+                    <div className="rounded-md bg-background/80 p-2">
+                      <p className="text-muted-foreground">Em andamento</p>
+                      <p className="font-semibold text-foreground">{q.totalEmAndamento}</p>
+                    </div>
+                    <div className="rounded-md bg-background/80 p-2">
+                      <p className="text-muted-foreground">Desistências</p>
+                      <p className="font-semibold text-foreground">{q.totalDesistencias}</p>
+                    </div>
+                    <div className="rounded-md bg-background/80 p-2">
+                      <p className="text-muted-foreground">Desligamentos</p>
+                      <p className="font-semibold text-foreground">{q.totalDesligamentos}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+
+            <Card className="border-primary/20 bg-muted/40">
+              <CardContent className="p-4">
+                <p className="text-sm font-semibold text-foreground mb-3">TOTAL GERAL</p>
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <div className="rounded-md bg-background/80 p-2">
+                    <p className="text-muted-foreground">Vagas</p>
+                    <p className="font-semibold text-foreground">{programTotals.vagas}</p>
+                  </div>
+                  <div className="rounded-md bg-background/80 p-2">
+                    <p className="text-muted-foreground">Inscritos</p>
+                    <p className="font-semibold text-foreground">{programTotals.inscritos}</p>
+                  </div>
+                  <div className="rounded-md bg-background/80 p-2">
+                    <p className="text-muted-foreground">Aprovados</p>
+                    <p className="font-semibold text-foreground">{programTotals.aprovados}</p>
+                  </div>
+                  <div className="rounded-md bg-background/80 p-2">
+                    <p className="text-muted-foreground">Concluintes</p>
+                    <p className="font-semibold text-foreground">{programTotals.concluintes}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="hidden lg:block overflow-x-auto">
+            <Table className="min-w-[1100px] text-sm">
               <TableHeader>
                 <TableRow>
                   <TableHead>Quadriênio</TableHead>
