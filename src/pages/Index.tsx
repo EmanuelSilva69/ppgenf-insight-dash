@@ -5,7 +5,6 @@ import { GaugeChart } from "@/components/dashboard/GaugeChart";
 import { BarChart } from "@/components/dashboard/BarChart";
 import { StudentList } from "@/components/dashboard/StudentList";
 import { Filters } from "@/components/dashboard/Filters";
-import { ExportButton } from "@/components/dashboard/ExportButton";
 import { QuadrienniumChart } from "@/components/dashboard/QuadrienniumChart";
 import { CotasTab } from "@/components/dashboard/CotasTab";
 import { CriticalAnalysisTab } from "@/components/dashboard/CriticalAnalysisTab";
@@ -163,7 +162,7 @@ const Index = () => {
           </div>
 
           <TabsContent value="dashboard" className="space-y-4 sm:space-y-6">
-            {/* Filters & Export - Responsivo */}
+            {/* Filters - Responsivo */}
             <div className="flex flex-col gap-3 sm:gap-4">
               <Filters
                 selectedYear={selectedYear}
@@ -176,7 +175,6 @@ const Index = () => {
                 onPeriodChange={setSelectedPeriod}
                 professors={professors}
               />
-              <ExportButton data={filteredData} filename={`ppgenf-${selectedPeriodType}-${selectedPeriod !== "Todos" ? selectedPeriod : "todos"}`} />
             </div>
 
             {/* KPI Cards - Responsivo com Grid Adaptativo */}
