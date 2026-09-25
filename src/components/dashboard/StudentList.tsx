@@ -57,6 +57,9 @@ export function StudentList({ title, students }: StudentListProps) {
                     {student.defesa && (
                       <p className="text-xs text-muted-foreground mt-1">Defesa: {student.defesa}</p>
                     )}
+                    {student.dataQualificacao && (
+                      <p className="text-xs text-muted-foreground mt-1">Qualificação: {student.dataQualificacao}</p>
+                    )}
                   </div>
                 </div>
               </div>

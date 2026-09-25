@@ -27,6 +27,7 @@ export const ExportButton = ({ data, filename = "ppgenf-dados" }: ExportButtonPr
       "Mês/Ano Entrada": record.mesAnoEntrada,
       "Mês/Ano Limite": record.mesAnoLimite,
       "Defesa": record.defesa,
+      "Qualificação": record.dataQualificacao || "",
       "Total de Meses": record.totalMeses,
       "Conclusão no Prazo": record.conclusaoNoPrazo === "SIM" ? "Sim" : 
                            record.conclusaoNoPrazo === "NÃO" ? "Não" : "Em andamento"
