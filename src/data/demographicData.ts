@@ -101,7 +101,7 @@ export const approvedCandidates: ApprovedCandidate[] = [
   { nome: "DANDARA DE JESUS DOS SANTOS E SANTOS", sexo: "Feminino", dataNascimento: "27/01/1992", anoSeletiva: 2024, idadeNoAno: 32 },
   { nome: "DÉBORAH PESTANA LIMA VIEIRA", sexo: "Feminino", dataNascimento: "02/10/1987", anoSeletiva: 2024, idadeNoAno: 37 },
   { nome: "EUSIENE FURTADO MOTA SILVA", sexo: "Feminino", dataNascimento: "11/04/1984", anoSeletiva: 2024, idadeNoAno: 40 },
-  { nome: "EVANDICLEUDE FERREIRA DE CARVALHO", sexo: "Feminino", dataNascimento: "23/10/1985", anoSeletiva: 2024, idadeNoAno: 39 },
+  { nome: "EVANDICLEUDE FERREIRA DE CARVALHO RODRIGUES", sexo: "Feminino", dataNascimento: "23/10/1985", anoSeletiva: 2024, idadeNoAno: 39 },
   { nome: "GIRLANE CAROLINE PEREIRA SANTOS", sexo: "Feminino", dataNascimento: "02/03/1995", anoSeletiva: 2024, idadeNoAno: 29 },
   { nome: "ISADORA ARAUJO RODRIGUES", sexo: "Feminino", dataNascimento: "21/08/1997", anoSeletiva: 2024, idadeNoAno: 27 },
   { nome: "KASSYA FERNANDA FREIRE LIMA", sexo: "Feminino", dataNascimento: "25/02/1987", anoSeletiva: 2024, idadeNoAno: 37 },
@@ -111,7 +111,7 @@ export const approvedCandidates: ApprovedCandidate[] = [
   { nome: "ROSEMARY FERNANDES CORREA ALENCAR", sexo: "Feminino", dataNascimento: "31/05/1972", anoSeletiva: 2024, idadeNoAno: 52 },
   { nome: "SUELEN GONÇALVES BARROSO", sexo: "Feminino", dataNascimento: "13/12/1986", anoSeletiva: 2024, idadeNoAno: 38 },
   { nome: "THÁTILA LARISSA DA CRUZ ANDRADE", sexo: "Feminino", dataNascimento: "13/05/1995", anoSeletiva: 2024, idadeNoAno: 29 },
-  { nome: "THAYSA GOIS TRINTA", sexo: "Feminino", dataNascimento: "04/08/1989", anoSeletiva: 2024, idadeNoAno: 35 },
+  { nome: "THAYSA GOIS TRINTA ABREU", sexo: "Feminino", dataNascimento: "04/08/1989", anoSeletiva: 2024, idadeNoAno: 35 },
   { nome: "VITALIANO DE OLIVEIRA LEITE JUNIOR", sexo: "Masculino", dataNascimento: "16/05/1996", anoSeletiva: 2024, idadeNoAno: 28 },
   { nome: "WILDILENE LEITE CARVALHO", sexo: "Feminino", dataNascimento: "06/09/1984", anoSeletiva: 2024, idadeNoAno: 40 },
 
