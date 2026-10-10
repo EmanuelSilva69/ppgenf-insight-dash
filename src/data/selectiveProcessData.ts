@@ -33,7 +33,7 @@ export const selectiveProcessData: SelectiveProcessData[] = [
   
   // Quadriênio 2021-2024
   { turma: 11, ano: 2021, vagas_ofertadas: 16, inscritos: 82, aprovados: 18, matriculados: 16, concluintes: 16, desistencias: 0, desligamentos: 0, emAndamento: 0 },
-  { turma: 12, ano: 2022, vagas_ofertadas: 16, inscritos: 90, aprovados: 11, matriculados: 11, concluintes: 10, desistencias: 0, desligamentos: 0, emAndamento: 1 },
+  { turma: 12, ano: 2022, vagas_ofertadas: 16, inscritos: 90, aprovados: 11, matriculados: 11, concluintes: 11, desistencias: 0, desligamentos: 0, emAndamento: 0 },
   { turma: 13, ano: 2023, vagas_ofertadas: 16, inscritos: 95, aprovados: 6, matriculados: 6, concluintes: 6, desistencias: 0, desligamentos: 0, emAndamento: 0 },
   { turma: 14, ano: 2024, vagas_ofertadas: 16, inscritos: 88, aprovados: 17, matriculados: 17, concluintes: 14, desistencias: 0, desligamentos: 0, emAndamento: 3 },
   
