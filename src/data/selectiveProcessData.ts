@@ -34,11 +34,15 @@ export const selectiveProcessData: SelectiveProcessData[] = [
   // Quadriênio 2021-2024
   { turma: 11, ano: 2021, vagas_ofertadas: 16, inscritos: 82, aprovados: 18, matriculados: 16, concluintes: 16, desistencias: 0, desligamentos: 0, emAndamento: 0 },
   { turma: 12, ano: 2022, vagas_ofertadas: 16, inscritos: 90, aprovados: 11, matriculados: 11, concluintes: 11, desistencias: 0, desligamentos: 0, emAndamento: 0 },
-  { turma: 13, ano: 2023, vagas_ofertadas: 16, inscritos: 95, aprovados: 6, matriculados: 6, concluintes: 6, desistencias: 0, desligamentos: 0, emAndamento: 0 },
+  // Turma 13: Edital 48/2022 tinha 14 vagas e 13 inscrições homologadas; 8 aprovados.
+  // A base acadêmica tem 6 (Felipe Moraes da Silva e Ana Luísa Pereira Brasileiro não constam).
+  { turma: 13, ano: 2023, vagas_ofertadas: 14, inscritos: 13, aprovados: 8, matriculados: 6, concluintes: 6, desistencias: 0, desligamentos: 0, emAndamento: 0 },
   { turma: 14, ano: 2024, vagas_ofertadas: 16, inscritos: 88, aprovados: 17, matriculados: 17, concluintes: 14, desistencias: 0, desligamentos: 0, emAndamento: 3 },
   
   // Quadriênio 2025+
   { turma: 15, ano: 2025, vagas_ofertadas: 18, inscritos: 102, aprovados: 16, matriculados: 16, concluintes: 0, desistencias: 0, desligamentos: 0, emAndamento: 15 },
+  // Turma 16 (2026): 12 matriculados no PDF oficial; 64 inscrições homologadas e 30 aprovados/classificados no resultado final de 2025.
+  { turma: 16, ano: 2026, vagas_ofertadas: 16, inscritos: 64, aprovados: 30, matriculados: 12, concluintes: 0, desistencias: 0, desligamentos: 0, emAndamento: 12 },
 ];
 
 // Interface para análise por quadriênio

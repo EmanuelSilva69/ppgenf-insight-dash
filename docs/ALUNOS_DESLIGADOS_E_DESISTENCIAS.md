@@ -1,102 +1,67 @@
 # Alunos Desligados e Desistências - PPGENF
 
-## Resumo
-- **Total de Matriculados (selectiveProcessData):** 202
-- **Total com Registros Acadêmicos Completos (academicData):** 186
-- **Alunos que se desligaram/desistiram:** 16
-
----
-
-## Alunos Desligados por Turma
-
-### TURMA 13 (2023)
-**Matriculados (selectiveProcessData):** 13  
-**Com registros (academicData):** 6  
-**Desligados:** 7
-
-#### Identificados na académicData:
-1. ✅ CLEIDIANE CRISTINA SOUSA DA SILVA DE OLIVEIRA (2023105384)
-2. ✅ CYNTHYA LAYS BATISTA BARROSO DE SOUSA (2023105375)
-3. ✅ ÉLIDA CRISTINA SANTOS CORRÊA (2023102954)
-4. ✅ EMANUELLA PEREIRA DE LACERDA (2023105366)
-5. ✅ FERNANDA KAROLINA CARVALHO MATOS (2023105393)
-6. ✅ NATÁLIA DE JESUS SOUSA CUNHA (2023105357)
-
-#### Faltam Identificar (7):
-- ❌ **NOME 1** - Matricula desconhecida
-- ❌ **NOME 2** - Matricula desconhecida
-- ❌ **NOME 3** - Matricula desconhecida
-- ❌ **NOME 4** - Matricula desconhecida
-- ❌ **NOME 5** - Matricula desconhecida
-- ❌ **NOME 6** - Matricula desconhecida
-- ❌ **NOME 7** - Matricula desconhecida
-
----
-
-### TURMA 14 (2024)
-**Matriculados (selectiveProcessData):** 17  
-**Com registros (academicData):** 17  
-**Desligados:** 0
-
-✅ Todos os 17 alunos têm registros acadêmicos completos.
-
----
-
-### TURMA 15 (2025)
-**Matriculados (selectiveProcessData):** 16  
-**Com registros (academicData):** 16  
-**Desligados:** 0
-
-✅ Todos os 16 alunos têm registros acadêmicos completos.
-
----
-
-### TURMAS ANTERIORES (2011-2022)
-**Matriculados (selectiveProcessData):** 155  
-**Com registros (academicData):** 155  
-**Desligados:** 0
-
-✅ Todos os 155 alunos têm registros acadêmicos completos.
-
----
-
-## Resumo por Situação
-
-| Turma | Período | Matriculados | Com Registros | Desligados | Taxa de Retenção |
-|-------|---------|--------------|---------------|------------|------------------|
-| 1-12 | 2011-2022 | 155 | 155 | 0 | 100% |
-| 13 | 2023 | 13 | 6 | 7 | 46,2% |
-| 14 | 2024 | 17 | 17 | 0 | 100% |
-| 15 | 2025 | 16 | 16 | 0 | 100% |
-| **TOTAL** | | **202** | **186** | **16** | **92,1%** |
-
----
-
-## Por que apenas 186 aparece no Dashboard
-
-Os **186 alunos** exibidos no dashboard do PPGENF refletem aqueles com **registros acadêmicos completos**, incluindo:
-- Orientador designado
-- Data de entrada e limite
-- Informações sobre defesa/qualificação
-- Dados de desempenho acadêmico
-
-Os **16 alunos faltantes** descontinuaram o programa por diversos motivos:
-- Desistência voluntária
-- Desligamento por não cumprimento de requisitos
-- Trancamento de matrícula
-- Outras razões administrativas
-
----
-
-## Próximas Ações
-
-Para completar esta lista, será necessário:
-1. ✅ Obter a lista completa de matriculados de Turma 13 (2023) do SIGAA
-2. ✅ Identificar e documentar os nomes dos 7 alunos faltantes de Turma 13
-3. ✅ Adicionar motivo de desligamento (opcional)
-4. ✅ Adicionar data de desligamento (opcional)
-
----
-
-**Última atualização:** 11/02/2026  
+**Última atualização:** 12/11/2026
 **Responsável:** Dashboard PPGENF
+
+---
+
+## Correção importante — Turma 13 (2023)
+
+O número **"13 matriculados"** que circulava neste documento e em versões antigas do
+`selectiveProcessData.ts` **não tem origem em nenhum dos PDFs oficiais**. Ele veio de uma
+estimativa antiga do próprio código (git: antes do commit `39294ba`, a linha era
+`matriculados: 13, concluintes: 13`).
+
+O que os documentos oficiais mostram:
+
+| Fonte | Turma 13 |
+|---|---|
+| Resultado final do seletivo 2022 (Edital 48/2022) | **8 aprovados/classificados** |
+| PDF "DADOS E TÍTULO DA PESQUISA 2011-2026" | **6 alunos** com projeto/registro |
+| Base acadêmica do site (`academicData`) | **6 alunos** |
+
+Os 8 aprovados no seletivo de 2022 foram:
+
+1. Natália de Jesus Sousa Cunha (7872)
+2. Felipe Moraes da Silva (7851)
+3. Emanuella Pereira de Lacerda (7797)
+4. Cinthya Lays Batista Barroso de Souza (7808)
+5. Cleidiane Cristina Sousa da Silva de Oliveira (7875)
+6. Ana Luísa Pereira Brasileiro (7800)
+7. Fernanda Karolina Carvalho Matos (7873)
+8. Élida Cristina Santos Corrêa (7858)
+
+Desses, **6 permanecem na base** (Natália, Emanuella, Cinthya, Cleidiane, Fernanda e Élida).
+Os outros **2** (Felipe Moraes da Silva e Ana Luísa Pereira Brasileiro) não constam no PDF
+2011-2026 nem na base acadêmica — provável desligamento/desistência, mas **sem documento
+comprobatório** nos PDFs recebidos.
+
+> Portanto: **não há comprovação de 13 matriculados nem de 7 desligados na Turma 13.**
+> O que existe é 8 aprovados no seletivo e 6 alunos na base.
+
+---
+
+## Situação atual da base (12/11/2026)
+
+| Turma | Período | Na base | Concluintes | Em andamento | Matriculados (2026) | Trancados |
+|---|---|---:|---:|---:|---:|---:|
+| 1–13 | 2011–2023 | 156 | 156 | 0 | 0 | 0 |
+| 14 | 2024 | 17 | 14 | 3 | 0 | 0 |
+| 15 | 2025 | 16 | 0 | 15 | 0 | 1 |
+| 16 | 2026 | 12 | 0 | 0 | 12 | 0 |
+| **TOTAL** | | **201** | **170** | **18** | **12** | **1** |
+
+> A Turma 16 foi incluída em 12/11/2026 a partir do PDF oficial, com status **MATRICULADO**.
+> O PDF não traz orientador nem linha de pesquisa; esses campos ficam como "NÃO INFORMADO".
+
+---
+
+## Observações
+
+- O PDF "DADOS E TÍTULO DA PESQUISA 2011-2026" lista os alunos com projeto/defesa; ele
+  **não é uma lista de matrícula** e pode não incluir quem se desligou antes de registrar
+  o projeto.
+- Para fechar a evasão real de qualquer turma, é necessário cruzar a lista de matrícula
+  do SIGAA com a base acadêmica. Sem esse cruzamento, o dashboard não deve afirmar
+  "evasão zero".
+- A Turma 15 tem 1 aluna trancada (Nayara Araujo Sousa, matrícula 20251008116).

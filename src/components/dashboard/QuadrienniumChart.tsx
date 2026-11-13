@@ -37,7 +37,7 @@ export function QuadrienniumChart({ data }: QuadrienniumChartProps) {
       return QUADRIENNIUMS.map((quad, index) => {
         const students = data.filter(r => r.ano >= quad.start && r.ano <= quad.end);
         const completed = students.filter(r => r.defesa !== "").length;
-        const ongoing = students.filter(r => r.conclusaoNoPrazo === "EM_ANDAMENTO").length;
+        const ongoing = students.filter(r => r.conclusaoNoPrazo === "EM_ANDAMENTO" || r.conclusaoNoPrazo === "MATRICULADO").length;
         
         return {
           name: quad.note ? `${quad.label} ${quad.note}` : quad.label,

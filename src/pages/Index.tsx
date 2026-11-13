@@ -55,7 +55,7 @@ const Index = () => {
       return {
         totalMatriculados: academicData.length,
         totalConcluintes: academicData.filter(r => r.defesa !== "").length,
-        totalEmAndamento: academicData.filter(r => r.conclusaoNoPrazo === "EM_ANDAMENTO").length,
+        totalEmAndamento: academicData.filter(r => r.conclusaoNoPrazo === "EM_ANDAMENTO" || r.conclusaoNoPrazo === "MATRICULADO").length,
       };
     } else if (selectedYear !== "Todos") {
       // Filter by year from academicData
@@ -63,7 +63,7 @@ const Index = () => {
       return {
         totalMatriculados: yearData.length,
         totalConcluintes: yearData.filter(r => r.defesa !== "").length,
-        totalEmAndamento: yearData.filter(r => r.conclusaoNoPrazo === "EM_ANDAMENTO").length,
+        totalEmAndamento: yearData.filter(r => r.conclusaoNoPrazo === "EM_ANDAMENTO" || r.conclusaoNoPrazo === "MATRICULADO").length,
       };
     }
     
@@ -71,7 +71,7 @@ const Index = () => {
     return {
       totalMatriculados: filteredData.length,
       totalConcluintes: filteredData.filter(r => r.defesa !== "").length,
-      totalEmAndamento: filteredData.filter(r => r.conclusaoNoPrazo === "EM_ANDAMENTO").length,
+      totalEmAndamento: filteredData.filter(r => r.conclusaoNoPrazo === "EM_ANDAMENTO" || r.conclusaoNoPrazo === "MATRICULADO").length,
     };
   }, [selectedYear, selectedProfessor, selectedPeriod, selectedPeriodType, filteredData]);
 
@@ -94,11 +94,12 @@ const Index = () => {
   const advisorsData = useMemo(() => {
     const advisorCounts: Record<string, { total: number; ongoing: number; completed: number }> = {};
     filteredData.forEach(record => {
+      if (record.orientador === "NÃO INFORMADO") return;
       if (!advisorCounts[record.orientador]) {
         advisorCounts[record.orientador] = { total: 0, ongoing: 0, completed: 0 };
       }
       advisorCounts[record.orientador].total++;
-      if (record.conclusaoNoPrazo === "EM_ANDAMENTO") {
+      if (record.conclusaoNoPrazo === "EM_ANDAMENTO" || record.conclusaoNoPrazo === "MATRICULADO") {
         advisorCounts[record.orientador].ongoing++;
       } else {
         advisorCounts[record.orientador].completed++;
@@ -119,6 +120,7 @@ const Index = () => {
   const researchLinesData = useMemo(() => {
     const lineCounts: Record<string, number> = {};
     filteredData.forEach(record => {
+      if (record.linhaPesquisa === "NÃO INFORMADA") return;
       const lineName = record.linhaPesquisa.includes("CUIDADO") 
         ? "Cuidado em Saúde e Enfermagem" 
         : "Enfermagem em Saúde Coletiva";
@@ -201,7 +203,7 @@ const Index = () => {
                 icon={Clock} 
               />
               <KPICard 
-                title="Conclusão no prazo" 
+                title="Taxa de conclusão" 
                 value={`${completionRate.toFixed(0)}%`}
                 subtitle={`${completedOrientations} de ${totalStudents}`}
                 icon={Timer} 
@@ -210,7 +212,7 @@ const Index = () => {
 
             {/* Charts Grid - Responsivo */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-              <GaugeChart title="Taxa de conclusão no prazo" percentage={completionRate} />
+              <GaugeChart title="Taxa de conclusão" percentage={completionRate} />
               <BarChart 
                 title="Distribuição por linha de pesquisa" 
                 data={researchLinesData} 

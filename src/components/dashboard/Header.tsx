@@ -16,7 +16,7 @@ export function Header() {
               Sistema de Análise de Dados Acadêmicos - PPGENF
             </h1>
             <p className="text-white/90 text-xs sm:text-sm mt-0.5 sm:mt-1">
-              Painel de visualização - Dados de 2011 a 2025
+              Painel de visualização - Dados de 2011 a 2026
             </p>
           </div>
         </div>

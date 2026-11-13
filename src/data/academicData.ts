@@ -8,7 +8,7 @@ export interface AcademicRecord {
   defesa: string;
   dataQualificacao?: string;
   totalMeses: number;
-  conclusaoNoPrazo: "SIM" | "NÃO" | "EM_ANDAMENTO" | "TRANCADO";
+  conclusaoNoPrazo: "SIM" | "NÃO" | "EM_ANDAMENTO" | "TRANCADO" | "MATRICULADO";
   ano: number;
   turma: number;
 }
@@ -232,6 +232,21 @@ export const academicData: AcademicRecord[] = [
   { matricula: "20251006739", nome: "NISIANE DOS SANTOS", orientador: "SANTANA DE MARIA ALVES DE SOUSA", linhaPesquisa: "O CUIDADO EM SAÚDE E ENFERMAGEM", mesAnoEntrada: "4/2025", mesAnoLimite: "3/2027", defesa: "", totalMeses: 0, conclusaoNoPrazo: "EM_ANDAMENTO", ano: 2025, turma: 15 },
   { matricula: "20251006748", nome: "RENATA GABRIELA SOARES TEIXEIRA", orientador: "BRUNO LUCIANO CARNEIRO ALVES DE OLIVEIRA", linhaPesquisa: "ENFERMAGEM EM SAÚDE COLETIVA", mesAnoEntrada: "4/2025", mesAnoLimite: "3/2027", defesa: "", totalMeses: 0, conclusaoNoPrazo: "EM_ANDAMENTO", ano: 2025, turma: 15 },
   { matricula: "20251006766", nome: "VINICIUS ANDRE DO NASCIMENTO SILVA", orientador: "CARLOS LEONARDO FIGUEIREDO CUNHA", linhaPesquisa: "ENFERMAGEM EM SAÚDE COLETIVA", mesAnoEntrada: "4/2025", mesAnoLimite: "3/2027", defesa: "", totalMeses: 0, conclusaoNoPrazo: "EM_ANDAMENTO", ano: 2025, turma: 15 },
+
+  // TURMA 16 - 2026 (Matriculados — dados do PDF "PPGENF -- DADOS E TITULO DA PESQUISA--2011-2026")
+  // Orientador e linha de pesquisa ainda não constam no PDF; entram como "NÃO INFORMADO".
+  { matricula: "20261009224", nome: "ANDRESSA KELINE FREITAS PACHECO", orientador: "NÃO INFORMADO", linhaPesquisa: "NÃO INFORMADA", mesAnoEntrada: "4/2026", mesAnoLimite: "3/2028", defesa: "", totalMeses: 0, conclusaoNoPrazo: "MATRICULADO", ano: 2026, turma: 16 },
+  { matricula: "20261009636", nome: "DANIEL VINICIUS COSTA ROCHA", orientador: "NÃO INFORMADO", linhaPesquisa: "NÃO INFORMADA", mesAnoEntrada: "4/2026", mesAnoLimite: "3/2028", defesa: "", totalMeses: 0, conclusaoNoPrazo: "MATRICULADO", ano: 2026, turma: 16 },
+  { matricula: "20261009233", nome: "FRANCISCA PAULA LOPES LIMA", orientador: "NÃO INFORMADO", linhaPesquisa: "NÃO INFORMADA", mesAnoEntrada: "4/2026", mesAnoLimite: "3/2028", defesa: "", totalMeses: 0, conclusaoNoPrazo: "MATRICULADO", ano: 2026, turma: 16 },
+  { matricula: "20261009242", nome: "HELEN MAYSA BELFORT SOUSA", orientador: "NÃO INFORMADO", linhaPesquisa: "NÃO INFORMADA", mesAnoEntrada: "4/2026", mesAnoLimite: "3/2028", defesa: "", totalMeses: 0, conclusaoNoPrazo: "MATRICULADO", ano: 2026, turma: 16 },
+  { matricula: "20261009251", nome: "KELLY ROSE PINHO MORAES", orientador: "NÃO INFORMADO", linhaPesquisa: "NÃO INFORMADA", mesAnoEntrada: "4/2026", mesAnoLimite: "3/2028", defesa: "", totalMeses: 0, conclusaoNoPrazo: "MATRICULADO", ano: 2026, turma: 16 },
+  { matricula: "20261009260", nome: "KEYLIANE SANTOS LIMA", orientador: "NÃO INFORMADO", linhaPesquisa: "NÃO INFORMADA", mesAnoEntrada: "4/2026", mesAnoLimite: "3/2028", defesa: "", totalMeses: 0, conclusaoNoPrazo: "MATRICULADO", ano: 2026, turma: 16 },
+  { matricula: "20261009270", nome: "LETICIA MARIA PAIVA CRUZ", orientador: "NÃO INFORMADO", linhaPesquisa: "NÃO INFORMADA", mesAnoEntrada: "4/2026", mesAnoLimite: "3/2028", defesa: "", totalMeses: 0, conclusaoNoPrazo: "MATRICULADO", ano: 2026, turma: 16 },
+  { matricula: "20261009289", nome: "LUCAS MANOEL OLIVEIRA COSTA", orientador: "NÃO INFORMADO", linhaPesquisa: "NÃO INFORMADA", mesAnoEntrada: "4/2026", mesAnoLimite: "3/2028", defesa: "", totalMeses: 0, conclusaoNoPrazo: "MATRICULADO", ano: 2026, turma: 16 },
+  { matricula: "20261009645", nome: "RAISSA ALMEIDA RIBEIRO", orientador: "NÃO INFORMADO", linhaPesquisa: "NÃO INFORMADA", mesAnoEntrada: "4/2026", mesAnoLimite: "3/2028", defesa: "", totalMeses: 0, conclusaoNoPrazo: "MATRICULADO", ano: 2026, turma: 16 },
+  { matricula: "20261009298", nome: "RENATA SOUSA CAMPOS", orientador: "NÃO INFORMADO", linhaPesquisa: "NÃO INFORMADA", mesAnoEntrada: "4/2026", mesAnoLimite: "3/2028", defesa: "", totalMeses: 0, conclusaoNoPrazo: "MATRICULADO", ano: 2026, turma: 16 },
+  { matricula: "20261009304", nome: "SAMIA DA SILVA ARAUJO", orientador: "NÃO INFORMADO", linhaPesquisa: "NÃO INFORMADA", mesAnoEntrada: "4/2026", mesAnoLimite: "3/2028", defesa: "", totalMeses: 0, conclusaoNoPrazo: "MATRICULADO", ano: 2026, turma: 16 },
+  { matricula: "20261009313", nome: "WILKER JOSE EVANGELISTA ALVES SOUSA", orientador: "NÃO INFORMADO", linhaPesquisa: "NÃO INFORMADA", mesAnoEntrada: "4/2026", mesAnoLimite: "3/2028", defesa: "", totalMeses: 0, conclusaoNoPrazo: "MATRICULADO", ano: 2026, turma: 16 },
 ];
 
 // Helper functions

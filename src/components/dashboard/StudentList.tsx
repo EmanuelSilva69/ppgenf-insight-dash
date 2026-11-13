@@ -11,6 +11,9 @@ interface StudentListProps {
 
 export function StudentList({ title, students }: StudentListProps) {
   const getStatusBadge = (status: string) => {
+    if (status === "MATRICULADO") {
+      return <Badge variant="secondary" className="bg-blue-500/20 text-blue-700">Matriculado</Badge>;
+    }
     // Only show "Em andamento" status badge for active students
     if (status === "EM_ANDAMENTO") {
       return <Badge variant="secondary" className="bg-yellow-500/20 text-yellow-700">Em andamento</Badge>;
@@ -37,7 +40,9 @@ export function StudentList({ title, students }: StudentListProps) {
                     <div className="flex items-center gap-2">
                       <p className="font-bold text-sm text-foreground break-words">{student.nome}</p>
                       {student.conclusaoNoPrazo === "TRANCADO" && (
-                        <Lock className="h-4 w-4 text-red-600" title="Matrícula trancada" />
+                        <span title="Matrícula trancada">
+                          <Lock className="h-4 w-4 text-red-600" aria-label="Matrícula trancada" />
+                        </span>
                       )}
                     </div>
                     <p className="text-xs text-muted-foreground mt-1 break-words">

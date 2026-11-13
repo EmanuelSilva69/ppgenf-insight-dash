@@ -219,10 +219,10 @@ export function CriticalAnalysisTab() {
     const totalEvasao = programTotals.desistencias + programTotals.desligamentos;
     if (totalEvasao === 0) {
       issues.push({
-        type: 'success',
-        title: 'Taxa de Evasão Zero',
-        description: 'O programa não registrou desistências ou desligamentos até o momento, indicando excelente retenção de discentes.',
-        badge: 'Excelente'
+        type: 'info',
+        title: 'Sem registros de evasão na base',
+        description: 'A base acadêmica atual não possui desistências ou desligamentos registrados. Isso não equivale a evasão zero: turmas anteriores podem ter alunos sem registro (ver docs/ALUNOS_DESLIGADOS_E_DESISTENCIAS.md).',
+        badge: 'Verificar'
       });
     } else if (programTotals.taxaEvasao > 20) {
       issues.push({
