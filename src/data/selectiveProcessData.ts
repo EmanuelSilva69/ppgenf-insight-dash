@@ -32,15 +32,19 @@ export const selectiveProcessData: SelectiveProcessData[] = [
   { turma: 10, ano: 2020, vagas_ofertadas: 16, inscritos: 78, aprovados: 16, matriculados: 13, concluintes: 13, desistencias: 0, desligamentos: 0, emAndamento: 0 },
   
   // Quadriênio 2021-2024
-  { turma: 11, ano: 2021, vagas_ofertadas: 16, inscritos: 82, aprovados: 18, matriculados: 16, concluintes: 16, desistencias: 0, desligamentos: 0, emAndamento: 0 },
-  { turma: 12, ano: 2022, vagas_ofertadas: 16, inscritos: 90, aprovados: 11, matriculados: 11, concluintes: 11, desistencias: 0, desligamentos: 0, emAndamento: 0 },
+  // Números oficiais: 2020 (42 inscritos, 24 aprovados), 2021 (28 inscritos, 16 aprovados),
+  // 2022 (13 inscritos, 8 aprovados) e 2023 (91 inscritos, 35 aprovados).
+  { turma: 11, ano: 2021, vagas_ofertadas: 16, inscritos: 42, aprovados: 24, matriculados: 16, concluintes: 16, desistencias: 0, desligamentos: 0, emAndamento: 0 },
+  { turma: 12, ano: 2022, vagas_ofertadas: 16, inscritos: 28, aprovados: 16, matriculados: 11, concluintes: 11, desistencias: 0, desligamentos: 0, emAndamento: 0 },
   // Turma 13: Edital 48/2022 tinha 14 vagas e 13 inscrições homologadas; 8 aprovados.
   // A base acadêmica tem 6 (Felipe Moraes da Silva e Ana Luísa Pereira Brasileiro não constam).
   { turma: 13, ano: 2023, vagas_ofertadas: 14, inscritos: 13, aprovados: 8, matriculados: 6, concluintes: 6, desistencias: 0, desligamentos: 0, emAndamento: 0 },
-  { turma: 14, ano: 2024, vagas_ofertadas: 16, inscritos: 88, aprovados: 17, matriculados: 17, concluintes: 14, desistencias: 0, desligamentos: 0, emAndamento: 3 },
+  // Turma 14: Edital 51/2023 (retificado) tinha 17 vagas e 91 inscrições homologadas; 35 aprovados.
+  { turma: 14, ano: 2024, vagas_ofertadas: 17, inscritos: 91, aprovados: 35, matriculados: 17, concluintes: 14, desistencias: 0, desligamentos: 0, emAndamento: 3 },
   
   // Quadriênio 2025+
-  { turma: 15, ano: 2025, vagas_ofertadas: 18, inscritos: 102, aprovados: 16, matriculados: 16, concluintes: 0, desistencias: 0, desligamentos: 0, emAndamento: 15 },
+  // Turma 15: Edital 55/2024 tinha 16 vagas + 4 suplementares e 95 inscrições; 29 aprovados.
+  { turma: 15, ano: 2025, vagas_ofertadas: 20, inscritos: 95, aprovados: 29, matriculados: 16, concluintes: 0, desistencias: 0, desligamentos: 0, emAndamento: 15 },
   // Turma 16 (2026): 12 matriculados no PDF oficial; 64 inscrições homologadas e 30 aprovados/classificados no resultado final de 2025.
   { turma: 16, ano: 2026, vagas_ofertadas: 16, inscritos: 64, aprovados: 30, matriculados: 12, concluintes: 0, desistencias: 0, desligamentos: 0, emAndamento: 12 },
 ];
@@ -67,8 +71,8 @@ export interface QuadrienniumAnalysis {
 // Função para agrupar dados por quadriênio
 export const getAnalysisByQuadriennium = (): QuadrienniumAnalysis[] => {
   const quadrienios = [
-    { nome: "2011-2013 (Incompleto)", anos: [2011, 2012, 2013] },
-    { nome: "2013-2016", anos: [2014, 2015, 2016] },
+    { nome: "2011-2012 (Incompleto)", anos: [2011, 2012] },
+    { nome: "2013-2016", anos: [2013, 2014, 2015, 2016] },
     { nome: "2017-2020", anos: [2017, 2018, 2019, 2020] },
     { nome: "2021-2024", anos: [2021, 2022, 2023, 2024] },
     { nome: "2025+", anos: [2025, 2026, 2027, 2028] },

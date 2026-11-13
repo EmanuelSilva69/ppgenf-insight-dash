@@ -11,7 +11,6 @@ import {
   getAttritionAlerts
 } from "@/data/selectiveProcessData";
 import { academicData } from "@/data/academicData";
-import { vagasData, getVagasTotals } from "@/data/vagasData";
 import { 
   Users, 
   UserCheck, 
@@ -116,13 +115,14 @@ export function CriticalAnalysisTab() {
   // Dados para gráfico Oferta vs Demanda - Acumulado
   const ofertaDemandaData = useMemo(() => {
     if (selectedYear === "Todos") {
-      // Usar dados acumulados de vagasData
-      const vagas = getVagasTotals();
+      // Usar os mesmos dados oficiais do seletivo (selectiveProcessData)
+      const totalVagas = selectiveProcessData.reduce((sum, t) => sum + t.vagas_ofertadas, 0);
+      const totalInscritos = selectiveProcessData.reduce((sum, t) => sum + t.inscritos, 0);
       return [{
         ano: "Acumulado",
-        vagas: vagas.totalVagas,
-        inscritos: vagas.totalInscritos,
-        ratio: (vagas.totalInscritos / vagas.totalVagas).toFixed(1),
+        vagas: totalVagas,
+        inscritos: totalInscritos,
+        ratio: totalVagas > 0 ? (totalInscritos / totalVagas).toFixed(1) : "0",
       }];
     } else {
       // Dados por ano
