@@ -189,7 +189,6 @@ const Index = () => {
               <KPICard 
                 title="Total de matrículas" 
                 value={totalStudents} 
-                subtitle="201 com registro + 18 canceladas + 3 sem registro"
                 icon={Users} 
               />
               <KPICard 
@@ -245,7 +244,7 @@ const Index = () => {
             {/* Student List */}
             <div>
               <StudentList 
-                title="Lista de alunos com registro acadêmico" 
+                title="Lista de alunos" 
                 students={filteredData} 
               />
             </div>

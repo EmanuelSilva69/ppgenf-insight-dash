@@ -18,7 +18,7 @@ import {
   PieChart, Pie, Cell, ResponsiveContainer, 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine 
 } from "recharts";
-import { Users, UserCheck, FileText, TrendingUp, User, Calendar, Percent } from "lucide-react";
+import { Users, UserCheck, FileText, User, Calendar, Percent } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 // Calcula média de idade na defesa por ano usando datas de nascimento atualizadas (DOCX)
@@ -132,9 +132,8 @@ export function CotasTab() {
                     <FileText className="h-5 xs:h-6 w-5 xs:w-6 text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs xs:text-sm text-muted-foreground truncate">Cotistas listados</p>
+                    <p className="text-xs xs:text-sm text-muted-foreground truncate">Cotistas</p>
                     <p className="text-xl xs:text-2xl font-bold">{totals.total}</p>
-                    <p className="text-xs text-muted-foreground">2020–2026</p>
                   </div>
                 </div>
               </CardContent>
@@ -149,7 +148,6 @@ export function CotasTab() {
                   <div className="flex-1 min-w-0">
                     <p className="text-xs xs:text-sm text-muted-foreground truncate">Ações afirmativas</p>
                     <p className="text-xl xs:text-2xl font-bold">{totals.af}</p>
-                    <p className="text-xs text-muted-foreground">exclui servidor UFMA</p>
                   </div>
                 </div>
               </CardContent>
@@ -164,7 +162,6 @@ export function CotasTab() {
                   <div className="flex-1 min-w-0">
                     <p className="text-xs xs:text-sm text-muted-foreground truncate">Titulados</p>
                     <p className="text-xl xs:text-2xl font-bold">{totals.titulados}</p>
-                    <p className="text-xs text-muted-foreground">{totals.tituladosAf} de ações afirmativas</p>
                   </div>
                 </div>
               </CardContent>
@@ -174,12 +171,11 @@ export function CotasTab() {
               <CardContent className="p-3 sm:p-4 md:p-6">
                 <div className="flex flex-col xs:flex-row xs:items-center gap-2 xs:gap-3">
                   <div className="p-2 xs:p-3 rounded-lg bg-primary/10 flex-shrink-0">
-                    <TrendingUp className="h-5 xs:h-6 w-5 xs:w-6 text-primary" />
+                    <FileText className="h-5 xs:h-6 w-5 xs:w-6 text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs xs:text-sm text-muted-foreground truncate">Ingresso confirmado</p>
-                    <p className="text-xl xs:text-2xl font-bold">{totals.ingressaram}</p>
-                    <p className="text-xs text-muted-foreground">na base acadêmica do site</p>
+                    <p className="text-xs xs:text-sm text-muted-foreground truncate">Servidor UFMA</p>
+                    <p className="text-xl xs:text-2xl font-bold">{totals.servidor}</p>
                   </div>
                 </div>
               </CardContent>
