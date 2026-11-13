@@ -44,6 +44,7 @@ export function QuadrienniumChart({ data }: QuadrienniumChartProps) {
           total: students.length,
           concluidos: completed,
           emAndamento: ongoing,
+          cancelados: 0,
           color: COLORS[index % COLORS.length]
         };
       }).filter(q => q.total > 0);
@@ -54,12 +55,14 @@ export function QuadrienniumChart({ data }: QuadrienniumChartProps) {
         const totalMatriculados = turmas.reduce((sum, t) => sum + t.matriculados, 0);
         const totalConcluintes = turmas.reduce((sum, t) => sum + t.concluintes, 0);
         const totalEmAndamento = turmas.reduce((sum, t) => sum + t.emAndamento, 0);
+        const totalCancelados = turmas.reduce((sum, t) => sum + t.desistencias + t.desligamentos, 0);
         
         return {
           name: quad.note ? `${quad.label} ${quad.note}` : quad.label,
           total: totalMatriculados,
           concluidos: totalConcluintes,
           emAndamento: totalEmAndamento,
+          cancelados: totalCancelados,
           color: COLORS[index % COLORS.length]
         };
       }).filter(q => q.total > 0);
@@ -102,7 +105,8 @@ export function QuadrienniumChart({ data }: QuadrienniumChartProps) {
                 const labels: Record<string, string> = {
                   total: "Total",
                   concluidos: "Concluídos",
-                  emAndamento: "Em Andamento"
+                  emAndamento: "Em Andamento",
+                  cancelados: "Cancelamentos"
                 };
                 return [value, labels[name] || name];
               }}
@@ -121,7 +125,8 @@ export function QuadrienniumChart({ data }: QuadrienniumChartProps) {
                 const labels: Record<string, string> = {
                   total: "Total",
                   concluidos: "Concluídos",
-                  emAndamento: "Em Andamento"
+                  emAndamento: "Em Andamento",
+                  cancelados: "Cancelamentos"
                 };
                 return labels[value] || value;
               }}
@@ -129,6 +134,7 @@ export function QuadrienniumChart({ data }: QuadrienniumChartProps) {
             <Bar dataKey="total" fill="hsl(var(--chart-1))" radius={[8, 8, 0, 0]} />
             <Bar dataKey="concluidos" fill="hsl(var(--chart-2))" radius={[8, 8, 0, 0]} />
             <Bar dataKey="emAndamento" fill="hsl(var(--chart-3))" radius={[8, 8, 0, 0]} />
+            <Bar dataKey="cancelados" fill="hsl(var(--destructive))" radius={[8, 8, 0, 0]} />
           </RechartsBarChart>
         </ResponsiveContainer>
       </CardContent>

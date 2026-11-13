@@ -10,7 +10,7 @@ import {
   getMostCompetitiveYear,
   getAttritionAlerts
 } from "@/data/selectiveProcessData";
-import { academicData } from "@/data/academicData";
+import { cancelledStudents, getCancelledTotals } from "@/data/cancelledStudents";
 import { 
   Users, 
   UserCheck, 
@@ -88,6 +88,7 @@ export function CriticalAnalysisTab() {
   const filteredData = useMemo(() => filterDataByYear(selectedYear), [selectedYear]);
   const quadrienniumData = useMemo(() => getAnalysisByQuadriennium(), []);
   const programTotals = useMemo(() => getProgramTotals(), []);
+  const cancelTotals = useMemo(() => getCancelledTotals(), []);
   const mostCompetitiveYear = useMemo(() => getMostCompetitiveYear(), []);
   const attritionAlerts = useMemo(() => getAttritionAlerts(), []);
 
@@ -140,7 +141,7 @@ export function CriticalAnalysisTab() {
     // Calcular totais acumulados do selectiveProcessData
     const totalInscritos = selectiveProcessData.reduce((sum, t) => sum + t.inscritos, 0);
     const totalAprovados = selectiveProcessData.reduce((sum, t) => sum + t.aprovados, 0);
-    const totalMatriculados = academicData.length; // 186 - apenas com registros acadêmicos
+    const totalMatriculados = selectiveProcessData.reduce((sum, t) => sum + t.matriculados, 0);
     
     return [
       { name: "Inscritos", value: totalInscritos, displayValue: totalInscritos, fill: COLORS.primary },
@@ -231,6 +232,13 @@ export function CriticalAnalysisTab() {
         description: `A taxa de evasão de ${programTotals.taxaEvasao.toFixed(1)}% está acima de 20%, indicando necessidade de ações de retenção.`,
         badge: 'Atenção'
       });
+    } else {
+      issues.push({
+        type: 'success',
+        title: 'Evasão sob controle',
+        description: `${cancelTotals.total} matrículas canceladas (${cancelTotals.desligamentos} desligamentos, ${cancelTotals.desistencias} desistências e ${cancelTotals.abandonos} abandono) em ${programTotals.matriculados} matrículas — taxa de evasão de ${programTotals.taxaEvasao.toFixed(1)}%.`,
+        badge: 'Baixa Evasão'
+      });
     }
 
     // Alertas por coorte com evasão > 20%
@@ -272,7 +280,7 @@ export function CriticalAnalysisTab() {
     }
 
     return issues;
-  }, [programTotals, mostCompetitiveYear, attritionAlerts]);
+  }, [programTotals, cancelTotals, mostCompetitiveYear, attritionAlerts]);
 
   return (
     <div className="space-y-6">
@@ -512,6 +520,92 @@ export function CriticalAnalysisTab() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Lista nominal dos discentes com matrícula cancelada */}
+      <Card className="border-primary/20">
+        <CardHeader>
+          <CardTitle className="text-lg font-semibold text-primary flex items-center gap-2">
+            <UserX className="h-5 w-5" />
+            Discentes com matrícula cancelada ({cancelTotals.total})
+          </CardTitle>
+          <CardDescription>
+            Fonte: Lista de Discentes com Matrícula Cancelada — PPGENF — 13/11/2026
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5 text-sm">
+            <div className="rounded-md border bg-secondary/30 p-3">
+              <p className="text-muted-foreground">Total</p>
+              <p className="text-2xl font-bold text-foreground">{cancelTotals.total}</p>
+            </div>
+            <div className="rounded-md border bg-secondary/30 p-3">
+              <p className="text-muted-foreground">Desligamentos</p>
+              <p className="text-2xl font-bold text-red-600">{cancelTotals.desligamentos}</p>
+            </div>
+            <div className="rounded-md border bg-secondary/30 p-3">
+              <p className="text-muted-foreground">Desistências</p>
+              <p className="text-2xl font-bold text-amber-600">{cancelTotals.desistencias}</p>
+            </div>
+            <div className="rounded-md border bg-secondary/30 p-3">
+              <p className="text-muted-foreground">Abandono</p>
+              <p className="text-2xl font-bold text-foreground">{cancelTotals.abandonos}</p>
+            </div>
+          </div>
+
+          <div className="overflow-x-auto">
+            <Table className="min-w-[900px] text-sm">
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Ingresso</TableHead>
+                  <TableHead>Matrícula</TableHead>
+                  <TableHead>Nome</TableHead>
+                  <TableHead>Linha de pesquisa</TableHead>
+                  <TableHead className="text-center">Tipo de saída</TableHead>
+                  <TableHead className="text-center">Créditos (integralizados/exigidos)</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {cancelledStudents.map((c) => (
+                  <TableRow key={`${c.matricula}-${c.ano}`}>
+                    <TableCell className="whitespace-nowrap">T{c.turma} ({c.ano})</TableCell>
+                    <TableCell className="whitespace-nowrap">{c.matricula}</TableCell>
+                    <TableCell className="font-medium">
+                      {c.nome}
+                      {c.observacao && (
+                        <span className="block text-xs text-muted-foreground mt-1">{c.observacao}</span>
+                      )}
+                    </TableCell>
+                    <TableCell className="text-xs">{c.linhaPesquisa}</TableCell>
+                    <TableCell className="text-center">
+                      <Badge
+                        variant={c.tipoSaida === "DESLIGADO" ? "destructive" : "secondary"}
+                        className={
+                          c.tipoSaida === "DESISTÊNCIA"
+                            ? "bg-amber-500/20 text-amber-700"
+                            : c.tipoSaida === "ABANDONO"
+                              ? "bg-slate-500/20 text-slate-700"
+                              : ""
+                        }
+                      >
+                        {c.tipoSaida}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-center whitespace-nowrap">
+                      {c.creditosIntegralizados}/{c.creditosExigidos}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+
+          <p className="text-xs text-muted-foreground mt-4">
+            Total de {cancelTotals.total} cancelamentos em {programTotals.matriculados} matrículas
+            ({programTotals.taxaEvasao.toFixed(1)}%). A lista oficial registra também 1 aluna com
+            matrícula trancada (Nayara Araujo Sousa, Turma 15), que não entra como cancelamento.
+          </p>
+        </CardContent>
+      </Card>
 
       {/* Chart 5: Aprovados vs Concluintes */}
       <Card className="border-primary/20">
@@ -860,8 +954,11 @@ export function CriticalAnalysisTab() {
       <Card className="border-muted bg-muted/30">
         <CardContent className="pt-6">
           <p className="text-sm text-muted-foreground">
-            <strong>Nota:</strong> Os dados de inscritos e aprovados são estimativas baseadas nos registros históricos do programa. 
-            Para maior precisão, recomenda-se a atualização com os dados oficiais de cada processo seletivo.
+            <strong>Fontes:</strong> inscritos, aprovados e vagas de 2020–2026 vêm dos resultados finais
+            e das homologações oficiais de cada seleção; os anos de 2011 a 2019 são estimativas baseadas
+            nos registros históricos. Matriculados, desistências e desligamentos vêm da
+            “Lista de Discentes com Matrícula Cancelada — PPGENF — 13/11/2026”
+            ({programTotals.matriculados} matrículas e {cancelTotals.total} cancelamentos).
             A análise atende ao requisito de autoavaliação do programa para subsidiar o planejamento estratégico 
             e desenvolvimento de ações de melhoria contínua, conforme destacado na avaliação CAPES.
           </p>

@@ -12,41 +12,44 @@ export interface SelectiveProcessData {
   emAndamento: number;
 }
 
-// Dados estimados com base nos registros acadêmicos
-// Cada turma tem dados do processo seletivo
+// Inscritos, aprovados e vagas: resultados finais e homologações oficiais (2020–2026).
+// Anos anteriores a 2020 são estimativas baseadas nos registros históricos.
+// Matriculados: total de matrículas por ano de ingresso conforme a
+// "LISTA DE DISCENTES COM MATRICULA CANCELADA — PPGENF — 13/11/2026" (222 matrículas).
+// Desistências/desligamentos: a mesma lista oficial (18 cancelamentos no total).
 export const selectiveProcessData: SelectiveProcessData[] = [
-  // Quadriênio 2011-2013 (Incompleto)
+  // Quadriênio 2011-2012 (Incompleto)
   { turma: 1, ano: 2011, vagas_ofertadas: 15, inscritos: 45, aprovados: 15, matriculados: 13, concluintes: 13, desistencias: 0, desligamentos: 0, emAndamento: 0 },
-  { turma: 2, ano: 2012, vagas_ofertadas: 15, inscritos: 52, aprovados: 15, matriculados: 12, concluintes: 12, desistencias: 0, desligamentos: 0, emAndamento: 0 },
-  { turma: 3, ano: 2013, vagas_ofertadas: 15, inscritos: 58, aprovados: 15, matriculados: 13, concluintes: 13, desistencias: 0, desligamentos: 0, emAndamento: 0 },
+  { turma: 2, ano: 2012, vagas_ofertadas: 15, inscritos: 52, aprovados: 15, matriculados: 13, concluintes: 12, desistencias: 0, desligamentos: 1, emAndamento: 0 },
   
   // Quadriênio 2013-2016
-  { turma: 4, ano: 2014, vagas_ofertadas: 16, inscritos: 65, aprovados: 16, matriculados: 13, concluintes: 13, desistencias: 0, desligamentos: 0, emAndamento: 0 },
+  { turma: 3, ano: 2013, vagas_ofertadas: 15, inscritos: 58, aprovados: 15, matriculados: 13, concluintes: 13, desistencias: 0, desligamentos: 0, emAndamento: 0 },
+  { turma: 4, ano: 2014, vagas_ofertadas: 16, inscritos: 65, aprovados: 16, matriculados: 14, concluintes: 13, desistencias: 0, desligamentos: 1, emAndamento: 0 },
   { turma: 5, ano: 2015, vagas_ofertadas: 14, inscritos: 72, aprovados: 14, matriculados: 11, concluintes: 11, desistencias: 0, desligamentos: 0, emAndamento: 0 },
-  { turma: 6, ano: 2016, vagas_ofertadas: 15, inscritos: 68, aprovados: 15, matriculados: 11, concluintes: 11, desistencias: 0, desligamentos: 0, emAndamento: 0 },
+  { turma: 6, ano: 2016, vagas_ofertadas: 15, inscritos: 68, aprovados: 15, matriculados: 12, concluintes: 11, desistencias: 0, desligamentos: 1, emAndamento: 0 },
   
   // Quadriênio 2017-2020
   { turma: 7, ano: 2017, vagas_ofertadas: 16, inscritos: 75, aprovados: 16, matriculados: 12, concluintes: 12, desistencias: 0, desligamentos: 0, emAndamento: 0 },
-  { turma: 8, ano: 2018, vagas_ofertadas: 16, inscritos: 80, aprovados: 16, matriculados: 14, concluintes: 14, desistencias: 0, desligamentos: 0, emAndamento: 0 },
-  { turma: 9, ano: 2019, vagas_ofertadas: 16, inscritos: 85, aprovados: 16, matriculados: 11, concluintes: 11, desistencias: 0, desligamentos: 0, emAndamento: 0 },
-  { turma: 10, ano: 2020, vagas_ofertadas: 16, inscritos: 78, aprovados: 16, matriculados: 13, concluintes: 13, desistencias: 0, desligamentos: 0, emAndamento: 0 },
+  { turma: 8, ano: 2018, vagas_ofertadas: 16, inscritos: 80, aprovados: 16, matriculados: 15, concluintes: 14, desistencias: 0, desligamentos: 1, emAndamento: 0 },
+  { turma: 9, ano: 2019, vagas_ofertadas: 16, inscritos: 85, aprovados: 16, matriculados: 13, concluintes: 11, desistencias: 1, desligamentos: 1, emAndamento: 0 },
+  { turma: 10, ano: 2020, vagas_ofertadas: 16, inscritos: 78, aprovados: 16, matriculados: 14, concluintes: 13, desistencias: 0, desligamentos: 1, emAndamento: 0 },
   
   // Quadriênio 2021-2024
   // Números oficiais: 2020 (42 inscritos, 24 aprovados), 2021 (28 inscritos, 16 aprovados),
   // 2022 (13 inscritos, 8 aprovados) e 2023 (91 inscritos, 35 aprovados).
-  { turma: 11, ano: 2021, vagas_ofertadas: 16, inscritos: 42, aprovados: 24, matriculados: 16, concluintes: 16, desistencias: 0, desligamentos: 0, emAndamento: 0 },
-  { turma: 12, ano: 2022, vagas_ofertadas: 16, inscritos: 28, aprovados: 16, matriculados: 11, concluintes: 11, desistencias: 0, desligamentos: 0, emAndamento: 0 },
+  { turma: 11, ano: 2021, vagas_ofertadas: 16, inscritos: 42, aprovados: 24, matriculados: 20, concluintes: 16, desistencias: 0, desligamentos: 2, emAndamento: 0 },
+  { turma: 12, ano: 2022, vagas_ofertadas: 16, inscritos: 28, aprovados: 16, matriculados: 15, concluintes: 11, desistencias: 2, desligamentos: 1, emAndamento: 0 },
   // Turma 13: Edital 48/2022 tinha 14 vagas e 13 inscrições homologadas; 8 aprovados.
-  // A base acadêmica tem 6 (Felipe Moraes da Silva e Ana Luísa Pereira Brasileiro não constam).
-  { turma: 13, ano: 2023, vagas_ofertadas: 14, inscritos: 13, aprovados: 8, matriculados: 6, concluintes: 6, desistencias: 0, desligamentos: 0, emAndamento: 0 },
+  // A lista oficial de cancelamentos registra 7 matrículas (1 desligamento: Felipe Moraes da Silva).
+  { turma: 13, ano: 2023, vagas_ofertadas: 14, inscritos: 13, aprovados: 8, matriculados: 7, concluintes: 6, desistencias: 0, desligamentos: 1, emAndamento: 0 },
   // Turma 14: Edital 51/2023 (retificado) tinha 17 vagas e 91 inscrições homologadas; 35 aprovados.
   { turma: 14, ano: 2024, vagas_ofertadas: 17, inscritos: 91, aprovados: 35, matriculados: 17, concluintes: 14, desistencias: 0, desligamentos: 0, emAndamento: 3 },
   
   // Quadriênio 2025+
   // Turma 15: Edital 55/2024 tinha 16 vagas + 4 suplementares e 95 inscrições; 29 aprovados.
-  { turma: 15, ano: 2025, vagas_ofertadas: 20, inscritos: 95, aprovados: 29, matriculados: 16, concluintes: 0, desistencias: 0, desligamentos: 0, emAndamento: 15 },
-  // Turma 16 (2026): 12 matriculados no PDF oficial; 64 inscrições homologadas e 30 aprovados/classificados no resultado final de 2025.
-  { turma: 16, ano: 2026, vagas_ofertadas: 16, inscritos: 64, aprovados: 30, matriculados: 12, concluintes: 0, desistencias: 0, desligamentos: 0, emAndamento: 12 },
+  { turma: 15, ano: 2025, vagas_ofertadas: 20, inscritos: 95, aprovados: 29, matriculados: 19, concluintes: 0, desistencias: 3, desligamentos: 0, emAndamento: 15 },
+  // Turma 16 (2026): 14 matrículas na lista oficial; 12 em curso e 2 desistências.
+  { turma: 16, ano: 2026, vagas_ofertadas: 16, inscritos: 64, aprovados: 30, matriculados: 14, concluintes: 0, desistencias: 2, desligamentos: 0, emAndamento: 12 },
 ];
 
 // Interface para análise por quadriênio
@@ -168,9 +171,9 @@ export const getAttritionAlerts = () => {
   selectiveProcessData.forEach(t => {
     if (t.matriculados > 0 && t.emAndamento === 0) { // Só turmas finalizadas
       const taxaEvasao = ((t.desistencias + t.desligamentos) / t.matriculados) * 100;
-      if (taxaEvasao > 20) {
+      if (taxaEvasao >= 20) {
         alerts.push({ ano: t.ano, turma: t.turma, taxa: taxaEvasao, tipo: 'high' });
-      } else if (taxaEvasao > 10) {
+      } else if (taxaEvasao >= 10) {
         alerts.push({ ano: t.ano, turma: t.turma, taxa: taxaEvasao, tipo: 'medium' });
       }
     }
