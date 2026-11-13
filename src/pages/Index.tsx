@@ -210,7 +210,7 @@ const Index = () => {
               />
               <KPICard 
                 title="Taxa de conclusão" 
-                value={`${completionRate.toFixed(0)}%`}
+                value={`${completionRate.toFixed(1)}%`}
                 subtitle={`${completedOrientations} de ${totalStudents}`}
                 icon={Timer} 
               />
