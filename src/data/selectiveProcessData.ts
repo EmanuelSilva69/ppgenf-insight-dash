@@ -40,7 +40,7 @@ export const selectiveProcessData: SelectiveProcessData[] = [
   { turma: 11, ano: 2021, vagas_ofertadas: 16, inscritos: 42, aprovados: 24, matriculados: 20, concluintes: 16, desistencias: 0, desligamentos: 2, emAndamento: 0 },
   { turma: 12, ano: 2022, vagas_ofertadas: 16, inscritos: 28, aprovados: 16, matriculados: 15, concluintes: 11, desistencias: 2, desligamentos: 1, emAndamento: 0 },
   // Turma 13: Edital 48/2022 tinha 14 vagas e 13 inscrições homologadas; 8 aprovados.
-  // A lista oficial de cancelamentos registra 7 matrículas (1 desligamento: Felipe Moraes da Silva).
+  // A lista oficial de cancelamentos registra 7 matrículas (1 desligamento na Turma 13).
   { turma: 13, ano: 2023, vagas_ofertadas: 14, inscritos: 13, aprovados: 8, matriculados: 7, concluintes: 6, desistencias: 0, desligamentos: 1, emAndamento: 0 },
   // Turma 14: Edital 51/2023 (retificado) tinha 17 vagas e 91 inscrições homologadas; 35 aprovados.
   { turma: 14, ano: 2024, vagas_ofertadas: 17, inscritos: 91, aprovados: 35, matriculados: 17, concluintes: 14, desistencias: 0, desligamentos: 0, emAndamento: 3 },

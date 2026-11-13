@@ -521,7 +521,7 @@ export function CriticalAnalysisTab() {
         </Card>
       </div>
 
-      {/* Lista nominal dos discentes com matrícula cancelada */}
+      {/* Lista dos discentes com matrícula cancelada */}
       <Card className="border-primary/20">
         <CardHeader>
           <CardTitle className="text-lg font-semibold text-primary flex items-center gap-2">
@@ -529,7 +529,8 @@ export function CriticalAnalysisTab() {
             Discentes com matrícula cancelada ({cancelTotals.total})
           </CardTitle>
           <CardDescription>
-            Fonte: Lista de Discentes com Matrícula Cancelada — PPGENF — 13/11/2026
+            Fonte: Lista de Discentes com Matrícula Cancelada — PPGENF — 13/11/2026.
+            Nomes suprimidos por LGPD; cada registro é identificado por um código.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -558,7 +559,7 @@ export function CriticalAnalysisTab() {
                 <TableRow>
                   <TableHead>Ingresso</TableHead>
                   <TableHead>Matrícula</TableHead>
-                  <TableHead>Nome</TableHead>
+                  <TableHead>Identificação</TableHead>
                   <TableHead>Linha de pesquisa</TableHead>
                   <TableHead className="text-center">Tipo de saída</TableHead>
                   <TableHead className="text-center">Créditos (integralizados/exigidos)</TableHead>
@@ -570,7 +571,7 @@ export function CriticalAnalysisTab() {
                     <TableCell className="whitespace-nowrap">T{c.turma} ({c.ano})</TableCell>
                     <TableCell className="whitespace-nowrap">{c.matricula}</TableCell>
                     <TableCell className="font-medium">
-                      {c.nome}
+                      {c.identificacao}
                       {c.observacao && (
                         <span className="block text-xs text-muted-foreground mt-1">{c.observacao}</span>
                       )}
@@ -602,7 +603,7 @@ export function CriticalAnalysisTab() {
           <p className="text-xs text-muted-foreground mt-4">
             Total de {cancelTotals.total} cancelamentos em {programTotals.matriculados} matrículas
             ({programTotals.taxaEvasao.toFixed(1)}%). A lista oficial registra também 1 aluna com
-            matrícula trancada (Nayara Araujo Sousa, Turma 15), que não entra como cancelamento.
+            matrícula trancada (Turma 15), que não entra como cancelamento.
           </p>
         </CardContent>
       </Card>
