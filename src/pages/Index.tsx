@@ -46,25 +46,30 @@ const Index = () => {
     return data;
   }, [selectedYear, selectedProfessor, selectedPeriodType, selectedPeriod]);
 
+  const programTotals = useMemo(() => getProgramTotals(), []);
+
   // Gets program totals when no filters, filtered when there are filters
   const getProgramStats = useMemo(() => {
     const hasFilters = selectedYear !== "Todos" || selectedProfessor !== "Todos" || selectedPeriod !== "Todos";
     
     if (!hasFilters) {
-      // No filters - use academicData totals only (students with complete academic records)
+      // No filters - use official totals (222 matrículas, 170 concluintes)
       return {
-        totalMatriculados: academicData.length,
-        totalConcluintes: academicData.filter(r => r.defesa !== "").length,
-        totalEmAndamento: academicData.filter(r => r.conclusaoNoPrazo === "EM_ANDAMENTO" || r.conclusaoNoPrazo === "MATRICULADO").length,
+        totalMatriculados: programTotals.matriculados,
+        totalConcluintes: programTotals.concluintes,
+        totalEmAndamento: programTotals.emAndamento,
       };
-    } else if (selectedYear !== "Todos") {
-      // Filter by year from academicData
-      const yearData = academicData.filter(r => r.ano === parseInt(selectedYear));
-      return {
-        totalMatriculados: yearData.length,
-        totalConcluintes: yearData.filter(r => r.defesa !== "").length,
-        totalEmAndamento: yearData.filter(r => r.conclusaoNoPrazo === "EM_ANDAMENTO" || r.conclusaoNoPrazo === "MATRICULADO").length,
-      };
+    } else if (selectedYear !== "Todos" && selectedProfessor === "Todos") {
+      // Filter by year using the official per-year totals
+      const yearData = selectiveProcessData.filter(t => t.ano === parseInt(selectedYear));
+      if (yearData.length > 0) {
+        const year = yearData[0];
+        return {
+          totalMatriculados: year.matriculados,
+          totalConcluintes: year.concluintes,
+          totalEmAndamento: year.emAndamento,
+        };
+      }
     }
     
     // For other filters, use filtered academic data
@@ -73,7 +78,7 @@ const Index = () => {
       totalConcluintes: filteredData.filter(r => r.defesa !== "").length,
       totalEmAndamento: filteredData.filter(r => r.conclusaoNoPrazo === "EM_ANDAMENTO" || r.conclusaoNoPrazo === "MATRICULADO").length,
     };
-  }, [selectedYear, selectedProfessor, selectedPeriod, selectedPeriodType, filteredData]);
+  }, [selectedYear, selectedProfessor, selectedPeriod, selectedPeriodType, filteredData, programTotals]);
 
   // Calculate KPIs using program stats
   const totalStudents = getProgramStats.totalMatriculados;
@@ -182,8 +187,9 @@ const Index = () => {
             {/* KPI Cards - Responsivo com Grid Adaptativo */}
             <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-3 md:gap-4">
               <KPICard 
-                title="Total de alunos" 
+                title="Total de matrículas" 
                 value={totalStudents} 
+                subtitle="201 com registro + 18 canceladas + 3 sem registro"
                 icon={Users} 
               />
               <KPICard 
@@ -239,7 +245,7 @@ const Index = () => {
             {/* Student List */}
             <div>
               <StudentList 
-                title="Lista de alunos" 
+                title="Lista de alunos com registro acadêmico" 
                 students={filteredData} 
               />
             </div>
