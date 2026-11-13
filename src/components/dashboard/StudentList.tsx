@@ -25,7 +25,7 @@ export function StudentList({ title, students }: StudentListProps) {
   return (
     <Card className="border-primary/20">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold text-primary">{title} ({students.length})</CardTitle>
+        <CardTitle className="text-lg font-semibold text-primary">{title}</CardTitle>
       </CardHeader>
       <CardContent>
         <ScrollArea className="h-[500px] pr-4">

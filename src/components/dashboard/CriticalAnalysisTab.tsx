@@ -324,15 +324,15 @@ export function CriticalAnalysisTab() {
           icon={Target} 
         />
         <KPICard 
-          title="Taxa de Sucesso Global" 
-          value={`${filteredTotals.taxaSucesso.toFixed(0)}%`}
-          subtitle="Concluintes / Aprovados"
+          title="Aprovados que concluíram" 
+          value={`${filteredTotals.taxaSucesso.toFixed(1)}%`}
+          subtitle={selectedYear !== "Todos" ? `Ano ${selectedYear}` : undefined}
           icon={Award} 
         />
         <KPICard 
-          title="Taxa de Perda Total" 
-          value={`${filteredTotals.taxaPerda.toFixed(0)}%`}
-          subtitle="(Desist. + Deslig.) / Aprovados"
+          title="Perdas sobre aprovados" 
+          value={`${filteredTotals.taxaPerda.toFixed(1)}%`}
+          subtitle={selectedYear !== "Todos" ? `Ano ${selectedYear}` : undefined}
           icon={TrendingDown} 
         />
       </div>

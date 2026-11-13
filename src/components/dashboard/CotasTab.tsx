@@ -132,7 +132,7 @@ export function CotasTab() {
                     <FileText className="h-5 xs:h-6 w-5 xs:w-6 text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs xs:text-sm text-muted-foreground truncate">Cotistas</p>
+                    <p className="text-xs xs:text-sm text-muted-foreground truncate">Listados em cotas</p>
                     <p className="text-xl xs:text-2xl font-bold">{totals.total}</p>
                   </div>
                 </div>

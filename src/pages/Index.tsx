@@ -192,12 +192,12 @@ const Index = () => {
                 icon={Users} 
               />
               <KPICard 
-                title="Orientações em andamento" 
+                title="Em andamento" 
                 value={ongoingOrientations} 
                 icon={UserCheck} 
               />
               <KPICard 
-                title="Orientações concluídas" 
+                title="Concluintes" 
                 value={completedOrientations} 
                 icon={CheckCircle} 
               />
