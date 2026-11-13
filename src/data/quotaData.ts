@@ -1,81 +1,301 @@
-// Dados verificados de cotas — Processo Seletivo 2024 (ingresso 2025, Turma 15)
+// Cotistas do PPGENF/UFMA — dados verificados nos resultados finais oficiais (2020-2026)
 //
-// Fontes (documentos oficiais/SIGAA recebidos em 12/11/2026):
-//  - FORMULÁRIOS DE INSCRIÇÃO SELETIVO DO ANO 2024.pdf
-//    (campo "3. Categoria da vaga" de cada candidato)
-//  - LISTA DE APROVADOS DO SELETIVO DO ANO 2024.pdf
-//    (16 candidatos com status "CANDIDATO APROVADO")
+// Fontes (PDFs oficiais das seleções, pasta "Resultado_Final_Ingressantes/pdfs_finais"):
+//  - 2020_12_RESULTADO_FINAL... (Edital 25/2020 — Turma 2021)
+//  - 2021_12_EDITAL_AGEUFMA_602021... (Edital 60/2021 — Turma 2022)
+//  - 2022_11_RESULTADO_FINAL... (Edital 48/2022 — Turma 2023)
+//  - 2023_11_RESULTADO_FINAL... (Edital 51/2023 — Turma 2024)
+//  - 2024_12_DIVULGACAO_DA_NOTA_DO_RESULTADO_FINAL... (Edital 55/2024 — Turma 2025)
+//  - 2026_1_DIVULGACAO_DA_NOTA_DO_RESULTADO_FINAL... (Edital 25/2025 — Turma 2026)
 //
 // IMPORTANTE:
-//  - Os números representam a CATEGORIA DECLARADA na inscrição.
-//  - Candidato(a) que declarou cota, mas foi aprovado(a) na ampla concorrência,
-//    deve ser contabilizado(a) como ampla. Sem as notas/classificação final não é
-//    possível aplicar essa regra; por isso o painel usa a categoria declarada.
-//  - A série histórica de cotas de 2020 a 2023 NÃO está disponível nos documentos
-//    recebidos. Os números antigos (44 "vagas de cotas" e a distribuição por tipo)
-//    não tinham lastro documental e foram removidos para não serem citados em
-//    documentos oficiais do programa.
+//  - A política de cotas (Resolução CONSEPE nº 3058/2023) passou a valer na seleção
+//    de 2023 (ingresso 2024). Nas seleções de 2020, 2021 e 2022 não há listas de
+//    ações afirmativas nos resultados finais.
+//  - Quem declarou cota, mas foi classificado na ampla concorrência, NÃO ocupa vaga
+//    de cota (regra expressa nos editais). Esses casos aparecem separados em
+//    "quotaDeclaredButBroad".
+//  - Na seleção de 2025 (Turma 2026) o resultado final é anonimizado por LGPD:
+//    os candidatos aparecem apenas por número de inscrição.
+//  - "Titulado" = defesa registrada na base acadêmica do site (academicData.ts).
 
-export interface QuotaCategory {
-  tipo: string;
-  inscritos: number;
-  aprovados: number;
-  cor: string;
+export type QuotaCategoria =
+  | "Negras/Pardas"
+  | "Indígenas/Quilombolas"
+  | "Trans"
+  | "Baixa renda"
+  | "PcD"
+  | "Servidor UFMA";
+
+export interface QuotaEntry {
+  turma: number; // ano de ingresso
+  anoSeletiva: number;
+  nome: string; // nome ou "ID 21327" quando anonimizado
+  categoria: QuotaCategoria;
+  situacao: string; // situação impressa no resultado final
+  ingressou: boolean | null; // consta na base acadêmica do site?
+  titulado: boolean | null; // defesa registrada?
+  observacao?: string;
+  fonte: string;
 }
 
-export const seletivo2024 = {
-  processo: "Seletivo 2024",
-  ingresso: 2025,
-  turma: 15,
-  inscritos: 95,
-  aprovados: 16,
-  categorias: [
-    { tipo: "Ampla concorrência", inscritos: 69, aprovados: 11, cor: "hsl(var(--primary))" },
-    { tipo: "Negras/Pardas", inscritos: 8, aprovados: 1, cor: "hsl(200, 70%, 50%)" },
-    { tipo: "Indígenas/Quilombolas", inscritos: 3, aprovados: 1, cor: "hsl(40, 80%, 50%)" },
-    { tipo: "Trans", inscritos: 1, aprovados: 1, cor: "hsl(340, 70%, 50%)" },
-    { tipo: "Baixa renda", inscritos: 2, aprovados: 1, cor: "hsl(160, 70%, 40%)" },
-    { tipo: "Servidor UFMA", inscritos: 2, aprovados: 0, cor: "hsl(280, 70%, 60%)" },
-    { tipo: "Sem informação", inscritos: 10, aprovados: 1, cor: "hsl(220, 10%, 55%)" },
-  ] as QuotaCategory[],
-};
+const F2023 = "Resultado final 2023 (Edital 51/2023)";
+const F2024 = "Resultado final 2024 (Edital 55/2024)";
+const F2025 = "Resultado final 2025 (Edital 25/2025)";
 
-// Categorias que caracterizam vaga de ação afirmativa/cota
-const COTA_TIPOS = ["Negras/Pardas", "Indígenas/Quilombolas", "Trans", "Baixa renda", "Servidor UFMA"];
+export const quotaEntries: QuotaEntry[] = [
+  // ===== Turma 2024 (seleção 2023) =====
+  {
+    turma: 2024,
+    anoSeletiva: 2023,
+    nome: "GIRLANE CAROLINE PEREIRA SANTOS",
+    categoria: "Negras/Pardas",
+    situacao: "Classificada",
+    ingressou: true,
+    titulado: true,
+    observacao: "Defesa em 22/12/2025",
+    fonte: F2023,
+  },
+  {
+    turma: 2024,
+    anoSeletiva: 2023,
+    nome: "SUELEN GONÇALVES BARROSO",
+    categoria: "Negras/Pardas",
+    situacao: "Classificada",
+    ingressou: true,
+    titulado: false,
+    observacao: "Em andamento",
+    fonte: F2023,
+  },
+  {
+    turma: 2024,
+    anoSeletiva: 2023,
+    nome: "EVANDICLEUDE FERREIRA DE CARVALHO RODRIGUES",
+    categoria: "Servidor UFMA",
+    situacao: "Classificada",
+    ingressou: true,
+    titulado: true,
+    observacao: "Defesa em 27/03/2026",
+    fonte: F2023,
+  },
 
-export const getQuotaCategories = (): QuotaCategory[] => seletivo2024.categorias;
+  // ===== Turma 2025 (seleção 2024) =====
+  {
+    turma: 2025,
+    anoSeletiva: 2024,
+    nome: "JEAN BISMARCK FERREIRA RAMALHO",
+    categoria: "Negras/Pardas",
+    situacao: "Classificado",
+    ingressou: false,
+    titulado: null,
+    observacao: "Não consta na lista de alunos da Turma 15",
+    fonte: F2024,
+  },
+  {
+    turma: 2025,
+    anoSeletiva: 2024,
+    nome: "JOSÉ PEREIRA DE MIRANDA NETO",
+    categoria: "Trans",
+    situacao: "Classificado",
+    ingressou: true,
+    titulado: false,
+    observacao: "Em andamento",
+    fonte: F2024,
+  },
+
+  // ===== Turma 2026 (seleção 2025 — resultado anonimizado) =====
+  {
+    turma: 2026,
+    anoSeletiva: 2025,
+    nome: "ID 21327",
+    categoria: "Negras/Pardas",
+    situacao: "Lista de ações afirmativas",
+    ingressou: null,
+    titulado: null,
+    fonte: F2025,
+  },
+  {
+    turma: 2026,
+    anoSeletiva: 2025,
+    nome: "ID 21356",
+    categoria: "Negras/Pardas",
+    situacao: "Lista de ações afirmativas",
+    ingressou: null,
+    titulado: null,
+    fonte: F2025,
+  },
+  {
+    turma: 2026,
+    anoSeletiva: 2025,
+    nome: "ID 21371",
+    categoria: "Negras/Pardas",
+    situacao: "Lista de ações afirmativas",
+    ingressou: null,
+    titulado: null,
+    fonte: F2025,
+  },
+  {
+    turma: 2026,
+    anoSeletiva: 2025,
+    nome: "ID 21374",
+    categoria: "Negras/Pardas",
+    situacao: "Lista de ações afirmativas",
+    ingressou: null,
+    titulado: null,
+    fonte: F2025,
+  },
+  {
+    turma: 2026,
+    anoSeletiva: 2025,
+    nome: "ID 21366",
+    categoria: "Negras/Pardas",
+    situacao: "Lista de ações afirmativas",
+    ingressou: null,
+    titulado: null,
+    fonte: F2025,
+  },
+  {
+    turma: 2026,
+    anoSeletiva: 2025,
+    nome: "ID 21381",
+    categoria: "Negras/Pardas",
+    situacao: "Lista de ações afirmativas",
+    ingressou: null,
+    titulado: null,
+    fonte: F2025,
+  },
+  {
+    turma: 2026,
+    anoSeletiva: 2025,
+    nome: "ID 20926",
+    categoria: "Negras/Pardas",
+    situacao: "Lista de ações afirmativas",
+    ingressou: null,
+    titulado: null,
+    observacao: "Também listado em baixa renda/trans",
+    fonte: F2025,
+  },
+  {
+    turma: 2026,
+    anoSeletiva: 2025,
+    nome: "ID 21325",
+    categoria: "Baixa renda",
+    situacao: "Lista de ações afirmativas",
+    ingressou: null,
+    titulado: null,
+    observacao: "Lista conjunta baixa renda/trans",
+    fonte: F2025,
+  },
+  {
+    turma: 2026,
+    anoSeletiva: 2025,
+    nome: "ID 21345",
+    categoria: "Baixa renda",
+    situacao: "Lista de ações afirmativas",
+    ingressou: null,
+    titulado: null,
+    observacao: "Lista conjunta baixa renda/trans",
+    fonte: F2025,
+  },
+  {
+    turma: 2026,
+    anoSeletiva: 2025,
+    nome: "ID 20894",
+    categoria: "Servidor UFMA",
+    situacao: "Lista de servidores TAE",
+    ingressou: null,
+    titulado: null,
+    fonte: F2025,
+  },
+];
+
+// Declararam cota, mas foram classificados/ingressaram pela ampla concorrência.
+// Não entram na contagem de cotistas (regra dos editais).
+export interface BroadEntry {
+  turma: number;
+  anoSeletiva: number;
+  nome: string;
+  categoriaDeclarada: QuotaCategoria;
+  ingressou: boolean | null;
+  observacao: string;
+}
+
+export const quotaDeclaredButBroad: BroadEntry[] = [
+  {
+    turma: 2025,
+    anoSeletiva: 2024,
+    nome: "NISIANE DOS SANTOS",
+    categoriaDeclarada: "Indígenas/Quilombolas",
+    ingressou: true,
+    observacao: "Classificada na vaga de ampla concorrência",
+  },
+  {
+    turma: 2025,
+    anoSeletiva: 2024,
+    nome: "GEOVANE MOURA VIANA",
+    categoriaDeclarada: "Negras/Pardas",
+    ingressou: true,
+    observacao: "Classificado na vaga de ampla concorrência",
+  },
+  {
+    turma: 2025,
+    anoSeletiva: 2024,
+    nome: "BRENDA MARIA DOS SANTOS DE MELO",
+    categoriaDeclarada: "Negras/Pardas",
+    ingressou: false,
+    observacao: "Classificada na vaga de ampla concorrência; não consta na lista de alunos",
+  },
+  {
+    turma: 2025,
+    anoSeletiva: 2024,
+    nome: "MARCUS VINICIUS BARBOSA CHAGAS",
+    categoriaDeclarada: "Baixa renda",
+    ingressou: true,
+    observacao: "Classificado na vaga de ampla concorrência",
+  },
+];
+
+// Série por turma de ingresso. 2020-2023 = 0 (política de cotas começou em 2023/2024).
+export const quotaByYear = [
+  { turma: 2020, anoSeletiva: 2019, af: 0, servidor: 0, total: 0 },
+  { turma: 2021, anoSeletiva: 2020, af: 0, servidor: 0, total: 0 },
+  { turma: 2022, anoSeletiva: 2021, af: 0, servidor: 0, total: 0 },
+  { turma: 2023, anoSeletiva: 2022, af: 0, servidor: 0, total: 0 },
+  { turma: 2024, anoSeletiva: 2023, af: 2, servidor: 1, total: 3 },
+  { turma: 2025, anoSeletiva: 2024, af: 2, servidor: 0, total: 2 },
+  { turma: 2026, anoSeletiva: 2025, af: 9, servidor: 1, total: 10 },
+];
 
 export const getQuotaTotals = () => {
-  const categorias = seletivo2024.categorias;
-  const inscritos = categorias.reduce((sum, c) => sum + c.inscritos, 0);
-  const aprovados = categorias.reduce((sum, c) => sum + c.aprovados, 0);
-  const ampla = categorias
-    .filter((c) => c.tipo === "Ampla concorrência")
-    .reduce((sum, c) => sum + c.aprovados, 0);
-  const semInformacao = categorias
-    .filter((c) => c.tipo === "Sem informação")
-    .reduce((sum, c) => sum + c.aprovados, 0);
-  const cotistas = categorias
-    .filter((c) => COTA_TIPOS.includes(c.tipo))
-    .reduce((sum, c) => sum + c.aprovados, 0);
+  const af = quotaEntries.filter(
+    (e) => e.categoria !== "Servidor UFMA"
+  ).length;
+  const servidor = quotaEntries.filter(
+    (e) => e.categoria === "Servidor UFMA"
+  ).length;
+  const total = quotaEntries.length;
+  const titulados = quotaEntries.filter((e) => e.titulado === true).length;
+  const tituladosAf = quotaEntries.filter(
+    (e) => e.titulado === true && e.categoria !== "Servidor UFMA"
+  ).length;
+  const ingressaram = quotaEntries.filter((e) => e.ingressou === true).length;
+  const emAndamento = quotaEntries.filter((e) => e.titulado === false).length;
 
   return {
-    inscritos,
-    aprovados,
-    ampla,
-    cotistas,
-    semInformacao,
-    percentualCotas: aprovados > 0 ? (cotistas / aprovados) * 100 : 0,
-    percentualAmpla: aprovados > 0 ? (ampla / aprovados) * 100 : 0,
-    percentualSemInformacao: aprovados > 0 ? (semInformacao / aprovados) * 100 : 0,
+    total,
+    af,
+    servidor,
+    titulados,
+    tituladosAf,
+    ingressaram,
+    emAndamento,
   };
 };
 
-// Série para o gráfico de barras: inscritos x aprovados por categoria
-export const getQuotaByCategory = () =>
-  seletivo2024.categorias.map((c) => ({
-    tipo: c.tipo,
-    inscritos: c.inscritos,
-    aprovados: c.aprovados,
-    cor: c.cor,
-  }));
+export const getQuotaByCategory = () => {
+  const map = new Map<string, number>();
+  quotaEntries.forEach((e) => {
+    map.set(e.categoria, (map.get(e.categoria) ?? 0) + 1);
+  });
+  return Array.from(map.entries()).map(([tipo, total]) => ({ tipo, total }));
+};

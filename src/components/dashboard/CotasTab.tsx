@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getQuotaCategories, getQuotaTotals, getQuotaByCategory, seletivo2024 } from "@/data/quotaData";
+import { quotaEntries, quotaByYear, quotaDeclaredButBroad, getQuotaTotals, getQuotaByCategory } from "@/data/quotaData";
 import { 
   getGenderDistribution, 
   getAgeDistribution, 
@@ -51,6 +51,20 @@ function getAverageAgeAtDefenseByYear() {
     .sort((a, b) => a.ano - b.ano);
 }
 
+const CATEGORY_COLORS: Record<string, string> = {
+  "Negras/Pardas": "hsl(200, 70%, 50%)",
+  "Indígenas/Quilombolas": "hsl(40, 80%, 50%)",
+  "Trans": "hsl(340, 70%, 50%)",
+  "Baixa renda": "hsl(160, 70%, 40%)",
+  "PcD": "hsl(280, 70%, 60%)",
+  "Servidor UFMA": "hsl(280, 70%, 60%)",
+};
+
+function formatBool(value: boolean | null): string {
+  if (value === null) return "—";
+  return value ? "Sim" : "Não";
+}
+
 export function CotasTab() {
   const [selectedYear, setSelectedYear] = useState<string>("Todos");
   const [quotaChartRef, quotaChartWidth] = useElementWidth<HTMLDivElement>();
@@ -60,8 +74,7 @@ export function CotasTab() {
   const genderMedium = genderChartWidth > 0 && genderChartWidth < 900;
   const inscrMobile = inscrChartWidth > 0 && inscrChartWidth < 450;
   
-  const quotaCategories = useMemo(() => getQuotaCategories(), []);
-  const quotaByCategory = useMemo(() => getQuotaByCategory(), []);
+  const categoryData = useMemo(() => getQuotaByCategory(), []);
   const totals = useMemo(() => getQuotaTotals(), []);
   const availableYears = useMemo(() => getAvailableYears(), []);
   const ageAtDefenseData = useMemo(() => getAverageAgeAtDefenseByYear(), []);
@@ -73,11 +86,6 @@ export function CotasTab() {
     const totalQuantidade = ageAtDefenseData.reduce((sum, d) => sum + d.quantidade, 0);
     return totalWeighted / totalQuantidade;
   }, [ageAtDefenseData]);
-
-  const totalCotas = totals.cotistas;
-  const percentCotas = totals.percentualCotas.toFixed(1);
-  const percentAmpla = totals.percentualAmpla.toFixed(1);
-  const percentSemInformacao = totals.percentualSemInformacao.toFixed(1);
 
   // Dados demográficos baseados no filtro de ano
   const yearFilter = selectedYear === "Todos" ? undefined : parseInt(selectedYear);
@@ -104,14 +112,14 @@ export function CotasTab() {
 
         {/* === ABA COTAS === */}
         <TabsContent value="cotas" className="space-y-4 sm:space-y-6">
-          {/* Aviso de escopo e verificação */}
+          {/* Aviso de escopo e fontes */}
           <Card className="border-amber-500/40 bg-amber-500/5">
             <CardContent className="p-3 sm:p-4">
               <p className="text-xs sm:text-sm text-muted-foreground">
-                <strong className="text-foreground">Dados verificados:</strong>{" "}
-                {seletivo2024.processo} (ingresso {seletivo2024.ingresso} — Turma {seletivo2024.turma}).
-                Fonte: formulários de inscrição (campo “Categoria da vaga”) e lista de aprovados do SIGAA.
-                A série histórica de cotas de 2020 a 2023 não consta nos documentos disponíveis e não é exibida.
+                <strong className="text-foreground">Dados verificados nos resultados finais oficiais (2020–2026).</strong>{" "}
+                A política de cotas passou a valer na seleção de 2023 (ingresso 2024): nas seleções de 2020, 2021 e 2022
+                não há listas de ações afirmativas. Quem declarou cota, mas foi classificado na ampla concorrência,
+                não entra na contagem (regra dos editais).
               </p>
             </CardContent>
           </Card>
@@ -125,9 +133,9 @@ export function CotasTab() {
                     <FileText className="h-5 xs:h-6 w-5 xs:w-6 text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs xs:text-sm text-muted-foreground truncate">Aprovados no seletivo 2024</p>
-                    <p className="text-xl xs:text-2xl font-bold">{totals.aprovados}</p>
-                    <p className="text-xs text-muted-foreground">{totals.inscritos} inscritos</p>
+                    <p className="text-xs xs:text-sm text-muted-foreground truncate">Cotistas listados</p>
+                    <p className="text-xl xs:text-2xl font-bold">{totals.total}</p>
+                    <p className="text-xs text-muted-foreground">2020–2026</p>
                   </div>
                 </div>
               </CardContent>
@@ -140,9 +148,9 @@ export function CotasTab() {
                     <Users className="h-5 xs:h-6 w-5 xs:w-6 text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs xs:text-sm text-muted-foreground truncate">Aprovados cotistas</p>
-                    <p className="text-xl xs:text-2xl font-bold">{totalCotas}</p>
-                    <p className="text-xs text-muted-foreground">{percentCotas}% dos aprovados</p>
+                    <p className="text-xs xs:text-sm text-muted-foreground truncate">Ações afirmativas</p>
+                    <p className="text-xl xs:text-2xl font-bold">{totals.af}</p>
+                    <p className="text-xs text-muted-foreground">exclui servidor UFMA</p>
                   </div>
                 </div>
               </CardContent>
@@ -155,9 +163,9 @@ export function CotasTab() {
                     <UserCheck className="h-5 xs:h-6 w-5 xs:w-6 text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs xs:text-sm text-muted-foreground truncate">Ampla concorrência</p>
-                    <p className="text-xl xs:text-2xl font-bold">{totals.ampla}</p>
-                    <p className="text-xs text-muted-foreground">{percentAmpla}% dos aprovados</p>
+                    <p className="text-xs xs:text-sm text-muted-foreground truncate">Titulados</p>
+                    <p className="text-xl xs:text-2xl font-bold">{totals.titulados}</p>
+                    <p className="text-xs text-muted-foreground">{totals.tituladosAf} de ações afirmativas</p>
                   </div>
                 </div>
               </CardContent>
@@ -170,9 +178,9 @@ export function CotasTab() {
                     <TrendingUp className="h-5 xs:h-6 w-5 xs:w-6 text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs xs:text-sm text-muted-foreground truncate">Sem informação</p>
-                    <p className="text-xl xs:text-2xl font-bold">{totals.semInformacao}</p>
-                    <p className="text-xs text-muted-foreground">{percentSemInformacao}% (categoria não registrada)</p>
+                    <p className="text-xs xs:text-sm text-muted-foreground truncate">Ingresso confirmado</p>
+                    <p className="text-xl xs:text-2xl font-bold">{totals.ingressaram}</p>
+                    <p className="text-xs text-muted-foreground">na base acadêmica do site</p>
                   </div>
                 </div>
               </CardContent>
@@ -181,10 +189,47 @@ export function CotasTab() {
 
           {/* Charts Row */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-            {/* Pie Chart - Aprovados por categoria */}
+            {/* Bar Chart - Cotistas por turma */}
             <Card className="border-primary/20">
               <CardHeader>
-                <CardTitle className="text-sm sm:text-lg font-semibold text-primary">Aprovados por Categoria de Vaga (2024)</CardTitle>
+                <CardTitle className="text-sm sm:text-lg font-semibold text-primary">Cotistas por Turma de Ingresso</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={quotaByYear} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis 
+                      dataKey="turma" 
+                      tick={{ fill: "hsl(var(--foreground))", fontWeight: "bold" }}
+                    />
+                    <YAxis tick={{ fill: "hsl(var(--foreground))", fontWeight: "bold" }} allowDecimals={false} />
+                    <Tooltip
+                      contentStyle={{ 
+                        backgroundColor: "hsl(var(--card))",
+                        border: "1px solid hsl(var(--border))",
+                        borderRadius: "8px"
+                      }}
+                      formatter={(value: number, name: string) => [`${value} cotista(s)`, name]}
+                      labelFormatter={(label) => `Turma ${label}`}
+                    />
+                    <Legend 
+                      wrapperStyle={{ fontSize: '11px', paddingTop: '10px' }}
+                      iconSize={10}
+                      layout="horizontal"
+                      verticalAlign="bottom"
+                      align="center"
+                    />
+                    <Bar dataKey="af" name="Ações afirmativas" fill="hsl(200, 70%, 50%)" stackId="a" radius={[0, 0, 0, 0]} />
+                    <Bar dataKey="servidor" name="Servidor UFMA" fill="hsl(280, 70%, 60%)" stackId="a" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+
+            {/* Pie Chart - Cotistas por categoria */}
+            <Card className="border-primary/20">
+              <CardHeader>
+                <CardTitle className="text-sm sm:text-lg font-semibold text-primary">Cotistas por Categoria</CardTitle>
               </CardHeader>
               <CardContent className="px-2 sm:px-6">
                 <div ref={quotaChartRef} className="w-full overflow-x-auto">
@@ -192,19 +237,19 @@ export function CotasTab() {
                     <ResponsiveContainer width="100%" height={quotaMedium && inscrMobile ? 420 : 330}>
                       <PieChart margin={{ top: quotaMedium && inscrMobile ? 20 : 10, right: 10, bottom: quotaMedium && inscrMobile ? 130 : 20, left: 10 }}>
                         <Pie
-                          data={quotaCategories.filter((c) => c.aprovados > 0)}
+                          data={categoryData}
                           cx="50%"
                           cy={quotaMedium && inscrMobile ? "45%" : "50%"}
                           innerRadius={quotaMedium ? 50 : inscrMobile ? 45 : 50}
                           outerRadius={quotaMedium ? 78 : inscrMobile ? 70 : 90}
                           paddingAngle={3}
-                          dataKey="aprovados"
+                          dataKey="total"
                           nameKey="tipo"
-                          label={({ aprovados, percent }) => `${aprovados} (${(percent * 100).toFixed(0)}%)`}
+                          label={({ total, percent }) => `${total} (${(percent * 100).toFixed(0)}%)`}
                           labelLine={quotaMedium && inscrMobile ? false : { stroke: "hsl(var(--muted-foreground))", strokeWidth: 1 }}
                         >
-                          {quotaCategories.filter((c) => c.aprovados > 0).map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={entry.cor} />
+                          {categoryData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={CATEGORY_COLORS[entry.tipo] ?? "hsl(var(--primary))"} />
                           ))}
                         </Pie>
                         <Tooltip
@@ -214,7 +259,7 @@ export function CotasTab() {
                             borderRadius: "8px",
                             fontSize: quotaMedium && inscrMobile ? "10px" : "12px"
                           }}
-                          formatter={(value: number, name: string) => [`${value} aprovado(s)`, name]}
+                          formatter={(value: number, name: string) => [`${value} cotista(s)`, name]}
                         />
                         <Legend 
                           verticalAlign="bottom"
@@ -239,150 +284,115 @@ export function CotasTab() {
                 </div>
               </CardContent>
             </Card>
-
-            {/* Bar Chart - Inscritos x Aprovados */}
-            <Card className="border-primary/20">
-              <CardHeader>
-                <CardTitle className="text-sm sm:text-lg font-semibold text-primary">Inscritos vs Aprovados por Categoria (2024)</CardTitle>
-              </CardHeader>
-              <CardContent className="px-2 sm:px-6">
-                <div ref={inscrChartRef} className="w-full overflow-x-auto -mx-2 sm:mx-0">
-                  <ResponsiveContainer width={inscrMobile ? 500 : "100%"} height={inscrMobile ? 300 : 330}>
-                    <BarChart 
-                      data={quotaByCategory} 
-                      layout="vertical"
-                      margin={{ top: 5, right: inscrMobile ? 15 : 30, left: inscrMobile ? 90 : 150, bottom: 5 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                      <XAxis type="number" tick={{ fill: "hsl(var(--foreground))", fontWeight: "bold", fontSize: inscrMobile ? 9 : 11 }} />
-                      <YAxis 
-                        dataKey="tipo" 
-                        type="category" 
-                        tick={{ fill: "hsl(var(--foreground))", fontWeight: "bold", fontSize: inscrMobile ? 9 : 12 }}
-                        width={inscrMobile ? 85 : 140}
-                      />
-                      <Tooltip
-                        contentStyle={{ 
-                          backgroundColor: "hsl(var(--card))",
-                          border: "1px solid hsl(var(--border))",
-                          borderRadius: "8px",
-                          fontSize: inscrMobile ? "10px" : "12px"
-                        }}
-                        formatter={(value: number, name: string) => {
-                          if (name === "inscritos") return [`${value} inscrito(s)`, "Inscritos"];
-                          return [`${value} aprovado(s)`, "Aprovados"];
-                        }}
-                      />
-                      <Legend 
-                        wrapperStyle={{ fontSize: inscrMobile ? '9px' : '11px', paddingTop: '10px' }} 
-                        iconSize={inscrMobile ? 8 : 10}
-                        layout="horizontal"
-                        verticalAlign="bottom"
-                        align="center"
-                      />
-                      <Bar dataKey="inscritos" name="Inscritos" fill="hsl(var(--muted-foreground))" radius={[0, 4, 4, 0]} opacity={0.5} />
-                      <Bar dataKey="aprovados" name="Aprovados" fill="hsl(var(--primary))" radius={[0, 4, 4, 0]}>
-                        {quotaByCategory.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.cor} />
-                        ))}
-                      </Bar>
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              </CardContent>
-            </Card>
           </div>
 
-          {/* Detailed Table */}
+          {/* Tabela de cotistas */}
           <Card className="border-primary/20 mb-6">
             <CardHeader>
-              <CardTitle className="text-lg font-semibold text-primary">Detalhamento — Seletivo 2024 (Turma {seletivo2024.turma})</CardTitle>
+              <CardTitle className="text-lg font-semibold text-primary">Cotistas — Lista Nominal</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid gap-3 md:hidden">
-                {quotaCategories.map((row) => (
-                  <Card key={row.tipo} className="border-primary/20 bg-secondary/30">
+                {quotaEntries.map((row, index) => (
+                  <Card key={`${row.turma}-${row.nome}-${index}`} className="border-primary/20 bg-secondary/30">
                     <CardContent className="p-4 space-y-3">
                       <div className="flex items-start justify-between gap-3">
-                        <p className="text-sm font-semibold text-foreground">{row.tipo}</p>
-                        <Badge variant="outline" className="shrink-0">{row.aprovados} aprovado(s)</Badge>
+                        <div>
+                          <p className="text-sm font-semibold text-foreground">{row.nome}</p>
+                          <p className="text-xs text-muted-foreground">Turma {row.turma} · seleção {row.anoSeletiva}</p>
+                        </div>
+                        <Badge variant="outline" className="shrink-0">{row.categoria}</Badge>
                       </div>
                       <div className="grid grid-cols-2 gap-2 text-xs">
                         <div className="rounded-md bg-background/80 p-2">
-                          <p className="text-muted-foreground">Inscritos</p>
-                          <p className="font-semibold text-foreground">{row.inscritos}</p>
+                          <p className="text-muted-foreground">Situação</p>
+                          <p className="font-semibold text-foreground">{row.situacao}</p>
                         </div>
                         <div className="rounded-md bg-background/80 p-2">
-                          <p className="text-muted-foreground">Taxa de aprovação</p>
-                          <p className="font-semibold text-foreground">
-                            {row.inscritos > 0 ? ((row.aprovados / row.inscritos) * 100).toFixed(1) : "0"}%
-                          </p>
+                          <p className="text-muted-foreground">Ingressou</p>
+                          <p className="font-semibold text-foreground">{formatBool(row.ingressou)}</p>
+                        </div>
+                        <div className="rounded-md bg-background/80 p-2">
+                          <p className="text-muted-foreground">Titulado</p>
+                          <p className="font-semibold text-foreground">{formatBool(row.titulado)}</p>
+                        </div>
+                        <div className="rounded-md bg-background/80 p-2">
+                          <p className="text-muted-foreground">Observação</p>
+                          <p className="font-semibold text-foreground">{row.observacao ?? "—"}</p>
                         </div>
                       </div>
                     </CardContent>
                   </Card>
                 ))}
-
-                <Card className="border-primary/20 bg-muted/40">
-                  <CardContent className="p-4">
-                    <p className="text-sm font-semibold text-foreground mb-3">Totais</p>
-                    <div className="grid grid-cols-2 gap-2 text-xs">
-                      <div className="rounded-md bg-background/80 p-2">
-                        <p className="text-muted-foreground">Inscritos</p>
-                        <p className="font-semibold text-foreground">{totals.inscritos}</p>
-                      </div>
-                      <div className="rounded-md bg-background/80 p-2">
-                        <p className="text-muted-foreground">Aprovados</p>
-                        <p className="font-semibold text-foreground">{totals.aprovados}</p>
-                      </div>
-                      <div className="rounded-md bg-background/80 p-2">
-                        <p className="text-muted-foreground">Cotistas</p>
-                        <p className="font-semibold text-foreground">{totalCotas}</p>
-                      </div>
-                      <div className="rounded-md bg-background/80 p-2">
-                        <p className="text-muted-foreground">Ampla</p>
-                        <p className="font-semibold text-foreground">{totals.ampla}</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
               </div>
 
               <div className="hidden md:block overflow-x-auto">
-                <Table className="min-w-[720px] text-sm">
+                <Table className="min-w-[860px] text-sm">
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="font-bold">Categoria da vaga</TableHead>
-                      <TableHead className="font-bold text-center">Inscritos</TableHead>
-                      <TableHead className="font-bold text-center">Aprovados</TableHead>
-                      <TableHead className="font-bold text-center">% dos aprovados</TableHead>
-                      <TableHead className="font-bold text-center">Taxa de aprovação</TableHead>
+                      <TableHead className="font-bold">Turma</TableHead>
+                      <TableHead className="font-bold">Seleção</TableHead>
+                      <TableHead className="font-bold">Nome / ID</TableHead>
+                      <TableHead className="font-bold">Categoria</TableHead>
+                      <TableHead className="font-bold">Situação</TableHead>
+                      <TableHead className="font-bold text-center">Ingressou</TableHead>
+                      <TableHead className="font-bold text-center">Titulado</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {quotaCategories.map((row) => (
-                      <TableRow key={row.tipo}>
-                        <TableCell className="font-semibold">{row.tipo}</TableCell>
-                        <TableCell className="text-center">{row.inscritos}</TableCell>
-                        <TableCell className="text-center">{row.aprovados}</TableCell>
-                        <TableCell className="text-center">
-                          {totals.aprovados > 0 ? ((row.aprovados / totals.aprovados) * 100).toFixed(1) : "0"}%
-                        </TableCell>
-                        <TableCell className="text-center">
-                          {row.inscritos > 0 ? ((row.aprovados / row.inscritos) * 100).toFixed(1) : "0"}%
-                        </TableCell>
+                    {quotaEntries.map((row, index) => (
+                      <TableRow key={`${row.turma}-${row.nome}-${index}`}>
+                        <TableCell className="font-semibold">{row.turma}</TableCell>
+                        <TableCell>{row.anoSeletiva}</TableCell>
+                        <TableCell className="font-semibold">{row.nome}</TableCell>
+                        <TableCell>{row.categoria}</TableCell>
+                        <TableCell>{row.situacao}</TableCell>
+                        <TableCell className="text-center">{formatBool(row.ingressou)}</TableCell>
+                        <TableCell className="text-center">{formatBool(row.titulado)}</TableCell>
                       </TableRow>
                     ))}
-                    {/* Totals Row */}
                     <TableRow className="bg-muted/50 font-bold">
-                      <TableCell>TOTAL</TableCell>
-                      <TableCell className="text-center">{totals.inscritos}</TableCell>
-                      <TableCell className="text-center">{totals.aprovados}</TableCell>
-                      <TableCell className="text-center">100%</TableCell>
-                      <TableCell className="text-center">
-                        {totals.inscritos > 0 ? ((totals.aprovados / totals.inscritos) * 100).toFixed(1) : "0"}%
-                      </TableCell>
+                      <TableCell colSpan={5}>TOTAL</TableCell>
+                      <TableCell className="text-center">{totals.ingressaram}</TableCell>
+                      <TableCell className="text-center">{totals.titulados}</TableCell>
                     </TableRow>
+                  </TableBody>
+                </Table>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Declararam cota, mas ingressaram pela ampla */}
+          <Card className="border-primary/20 mb-6">
+            <CardHeader>
+              <CardTitle className="text-sm sm:text-lg font-semibold text-primary">
+                Declararam cota, mas foram classificados pela ampla concorrência
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-xs text-muted-foreground mb-3">
+                Pela regra dos editais, quem é classificado na ampla ocupa essa vaga e libera a vaga de cota.
+                Por isso esses candidatos não entram no total de cotistas.
+              </p>
+              <div className="overflow-x-auto">
+                <Table className="min-w-[640px] text-sm">
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="font-bold">Turma</TableHead>
+                      <TableHead className="font-bold">Nome</TableHead>
+                      <TableHead className="font-bold">Cota declarada</TableHead>
+                      <TableHead className="font-bold">Observação</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {quotaDeclaredButBroad.map((row) => (
+                      <TableRow key={`${row.turma}-${row.nome}`}>
+                        <TableCell className="font-semibold">{row.turma}</TableCell>
+                        <TableCell className="font-semibold">{row.nome}</TableCell>
+                        <TableCell>{row.categoriaDeclarada}</TableCell>
+                        <TableCell className="text-muted-foreground">{row.observacao}</TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </div>
@@ -394,10 +404,10 @@ export function CotasTab() {
             <CardContent className="p-4">
               <p className="text-sm font-semibold text-muted-foreground mb-2">📌 Sobre os dados de cotas:</p>
               <div className="text-xs text-muted-foreground space-y-1">
-                <p>• Fonte: formulários de inscrição e lista de aprovados do seletivo 2024 (SIGAA).</p>
-                <p>• A categoria é a <strong>declarada na inscrição</strong>. Quem declarou cota, mas foi aprovado na ampla concorrência, deve ser contado como ampla — regra que depende das notas finais, não disponíveis neste painel.</p>
-                <p>• “Sem informação”: candidato(a) aprovado(a) cujo formulário não registra a categoria da vaga.</p>
-                <p>• A série 2020-2023 não foi localizada nos documentos recebidos; por isso não há totais históricos de cotistas neste painel.</p>
+                <p>• Fonte: resultados finais oficiais de cada seleção (2020–2026), com as listas de ações afirmativas e de servidores TAE.</p>
+                <p>• A política de cotas começou na seleção de 2023 (ingresso 2024) — por isso 2020, 2021 e 2022 aparecem com zero.</p>
+                <p>• “Ingressou” e “Titulado” vêm do cruzamento com a base acadêmica do site; “—” indica dado não disponível (2026 está anonimizado por LGPD).</p>
+                <p>• Na Turma 2026, o resultado final lista 10 pessoas em ações afirmativas/servidor, mas o edital reserva 4 vagas de ações afirmativas + 3 de servidor; nem todas necessariamente ocuparam vaga.</p>
               </div>
             </CardContent>
           </Card>
