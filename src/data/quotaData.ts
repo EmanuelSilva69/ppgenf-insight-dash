@@ -30,7 +30,7 @@ export type QuotaCategoria =
 export interface QuotaEntry {
   turma: number; // ano de ingresso
   anoSeletiva: number;
-  nome: string; // nome ou "ID 21327" quando anonimizado
+  nome: string; // código anônimo ("Cotista 01") ou ID quando o edital já é anonimizado
   categoria: QuotaCategoria;
   situacao: string; // situação impressa no resultado final
   ingressou: boolean | null; // consta na base acadêmica do site?
@@ -48,18 +48,18 @@ export const quotaEntries: QuotaEntry[] = [
   {
     turma: 2024,
     anoSeletiva: 2023,
-    nome: "GIRLANE CAROLINE PEREIRA SANTOS",
+    nome: "Cotista 01",
     categoria: "Negras/Pardas",
     situacao: "Classificada",
     ingressou: true,
     titulado: true,
-    observacao: "Defesa em 22/12/2025",
+    observacao: "Titulado",
     fonte: F2023,
   },
   {
     turma: 2024,
     anoSeletiva: 2023,
-    nome: "SUELEN GONÇALVES BARROSO",
+    nome: "Cotista 02",
     categoria: "Negras/Pardas",
     situacao: "Classificada",
     ingressou: true,
@@ -70,12 +70,12 @@ export const quotaEntries: QuotaEntry[] = [
   {
     turma: 2024,
     anoSeletiva: 2023,
-    nome: "EVANDICLEUDE FERREIRA DE CARVALHO RODRIGUES",
+    nome: "Cotista 03",
     categoria: "Servidor UFMA",
     situacao: "Classificada",
     ingressou: true,
     titulado: true,
-    observacao: "Defesa em 27/03/2026",
+    observacao: "Titulado",
     fonte: F2023,
   },
 
@@ -83,7 +83,7 @@ export const quotaEntries: QuotaEntry[] = [
   {
     turma: 2025,
     anoSeletiva: 2024,
-    nome: "JEAN BISMARCK FERREIRA RAMALHO",
+    nome: "Cotista 04",
     categoria: "Negras/Pardas",
     situacao: "Classificado",
     ingressou: false,
@@ -94,7 +94,7 @@ export const quotaEntries: QuotaEntry[] = [
   {
     turma: 2025,
     anoSeletiva: 2024,
-    nome: "JOSÉ PEREIRA DE MIRANDA NETO",
+    nome: "Cotista 05",
     categoria: "Trans",
     situacao: "Classificado",
     ingressou: true,
@@ -224,7 +224,7 @@ export const quotaDeclaredButBroad: BroadEntry[] = [
   {
     turma: 2025,
     anoSeletiva: 2024,
-    nome: "NISIANE DOS SANTOS",
+    nome: "Candidato ampla 01",
     categoriaDeclarada: "Indígenas/Quilombolas",
     ingressou: true,
     observacao: "Classificada na vaga de ampla concorrência",
@@ -232,7 +232,7 @@ export const quotaDeclaredButBroad: BroadEntry[] = [
   {
     turma: 2025,
     anoSeletiva: 2024,
-    nome: "GEOVANE MOURA VIANA",
+    nome: "Candidato ampla 02",
     categoriaDeclarada: "Negras/Pardas",
     ingressou: true,
     observacao: "Classificado na vaga de ampla concorrência",
@@ -240,7 +240,7 @@ export const quotaDeclaredButBroad: BroadEntry[] = [
   {
     turma: 2025,
     anoSeletiva: 2024,
-    nome: "BRENDA MARIA DOS SANTOS DE MELO",
+    nome: "Candidato ampla 03",
     categoriaDeclarada: "Negras/Pardas",
     ingressou: false,
     observacao: "Classificada na vaga de ampla concorrência; não consta na lista de alunos",
@@ -248,7 +248,7 @@ export const quotaDeclaredButBroad: BroadEntry[] = [
   {
     turma: 2025,
     anoSeletiva: 2024,
-    nome: "MARCUS VINICIUS BARBOSA CHAGAS",
+    nome: "Candidato ampla 04",
     categoriaDeclarada: "Baixa renda",
     ingressou: true,
     observacao: "Classificado na vaga de ampla concorrência",

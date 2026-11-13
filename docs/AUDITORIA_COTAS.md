@@ -35,22 +35,24 @@
 
 ---
 
-## 3. Lista nominal
+## 3. Lista de registros (sem nomes)
+
+> Nomes suprimidos para proteger dados pessoais sensíveis (LGPD). Cada registro é identificado por um código; os dados de 2026 já vêm anonimizados pelo próprio edital.
 
 ### Turma 2024 (seleção 2023)
 
-| Nome | Categoria | Situação | Ingressou | Titulado |
+| Identificação | Categoria | Situação | Ingressou | Titulado |
 |---|---|---|---|---|
-| GIRLANE CAROLINE PEREIRA SANTOS | Negras/Pardas | Classificada | Sim | **Sim** (defesa 22/12/2025) |
-| SUELEN GONÇALVES BARROSO | Negras/Pardas | Classificada | Sim | Não (em andamento) |
-| EVANDICLEUDE FERREIRA DE CARVALHO RODRIGUES | Servidor UFMA | Classificada | Sim | **Sim** (defesa 27/03/2026) |
+| Cotista 01 | Negras/Pardas | Classificada | Sim | **Sim** |
+| Cotista 02 | Negras/Pardas | Classificada | Sim | Não (em andamento) |
+| Cotista 03 | Servidor UFMA | Classificada | Sim | **Sim** |
 
 ### Turma 2025 (seleção 2024)
 
-| Nome | Categoria | Situação | Ingressou | Titulado |
+| Identificação | Categoria | Situação | Ingressou | Titulado |
 |---|---|---|---|---|
-| JEAN BISMARCK FERREIRA RAMALHO | Negras/Pardas | Classificado | Não consta na lista de alunos | — |
-| JOSÉ PEREIRA DE MIRANDA NETO | Trans | Classificado | Sim | Não (em andamento) |
+| Cotista 04 | Negras/Pardas | Classificado | Não consta na lista de alunos | — |
+| Cotista 05 | Trans | Classificado | Sim | Não (em andamento) |
 
 ### Turma 2026 (seleção 2025 — resultado anonimizado)
 
@@ -75,12 +77,12 @@
 
 Pela regra dos editais, quem é classificado na ampla ocupa essa vaga e libera a vaga de cota. Por isso não entram no total de cotistas.
 
-| Nome | Cota declarada | Situação |
+| Identificação | Cota declarada | Situação |
 |---|---|---|
-| NISIANE DOS SANTOS | Indígenas/Quilombolas | Classificada na ampla |
-| GEOVANE MOURA VIANA | Negras/Pardas | Classificado na ampla |
-| BRENDA MARIA DOS SANTOS DE MELO | Negras/Pardas | Classificada na ampla (não consta na lista de alunos) |
-| MARCUS VINICIUS BARBOSA CHAGAS | Baixa renda | Classificado na ampla |
+| Candidato ampla 01 | Indígenas/Quilombolas | Classificada na ampla |
+| Candidato ampla 02 | Negras/Pardas | Classificado na ampla |
+| Candidato ampla 03 | Negras/Pardas | Classificada na ampla (não consta na lista de alunos) |
+| Candidato ampla 04 | Baixa renda | Classificado na ampla |
 
 ---
 
@@ -89,8 +91,8 @@ Pela regra dos editais, quem é classificado na ampla ocupa essa vaga e libera a
 - **15** pessoas listadas em ações afirmativas/servidor (2024–2026).
 - **13** em ações afirmativas (excluindo servidor UFMA).
 - **4** com ingresso confirmado na base acadêmica (3 na Turma 2024 + 1 na Turma 2025).
-- **2 titulados** (1 ação afirmativa + 1 servidor UFMA): Girlane Caroline Pereira Santos e Evandicleude Ferreira de Carvalho Rodrigues.
-- **2 em andamento** (Suelen Gonçalves Barroso e José Pereira de Miranda Neto).
+- **2 titulados** (1 ação afirmativa + 1 servidor UFMA): Cotista 01 e Cotista 03.
+- **2 em andamento**: Cotista 02 e Cotista 05.
 - **2026**: 10 listados, mas ingresso/titulação não confirmáveis (resultado anonimizado por LGPD).
 
 ---

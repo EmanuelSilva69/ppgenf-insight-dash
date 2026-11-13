@@ -11,7 +11,6 @@ import {
   getDemographicSummary, 
   getYearlyGenderData,
   getAvailableYears,
-  approvedCandidates,
   studentBirthDates
 } from "@/data/demographicData";
 import { academicData } from "@/data/academicData";
@@ -289,9 +288,14 @@ export function CotasTab() {
           {/* Tabela de cotistas */}
           <Card className="border-primary/20 mb-6">
             <CardHeader>
-              <CardTitle className="text-lg font-semibold text-primary">Cotistas — Lista Nominal</CardTitle>
+              <CardTitle className="text-lg font-semibold text-primary">Cotistas — Relação de registros</CardTitle>
             </CardHeader>
             <CardContent>
+              <p className="text-xs text-muted-foreground mb-3">
+                Nomes e datas individuais de defesa suprimidos para proteger dados pessoais
+                sensíveis (LGPD). Cada registro é identificado por um código; os dados de 2026 já
+                vêm anonimizados pelo próprio edital.
+              </p>
               <div className="grid gap-3 md:hidden">
                 {quotaEntries.map((row, index) => (
                   <Card key={`${row.turma}-${row.nome}-${index}`} className="border-primary/20 bg-secondary/30">
@@ -332,7 +336,7 @@ export function CotasTab() {
                     <TableRow>
                       <TableHead className="font-bold">Turma</TableHead>
                       <TableHead className="font-bold">Seleção</TableHead>
-                      <TableHead className="font-bold">Nome / ID</TableHead>
+                      <TableHead className="font-bold">Identificação</TableHead>
                       <TableHead className="font-bold">Categoria</TableHead>
                       <TableHead className="font-bold">Situação</TableHead>
                       <TableHead className="font-bold text-center">Ingressou</TableHead>
@@ -372,14 +376,15 @@ export function CotasTab() {
             <CardContent>
               <p className="text-xs text-muted-foreground mb-3">
                 Pela regra dos editais, quem é classificado na ampla ocupa essa vaga e libera a vaga de cota.
-                Por isso esses candidatos não entram no total de cotistas.
+                Por isso esses candidatos não entram no total de cotistas. Nomes suprimidos por LGPD
+                (identificação por código).
               </p>
               <div className="overflow-x-auto">
                 <Table className="min-w-[640px] text-sm">
                   <TableHeader>
                     <TableRow>
                       <TableHead className="font-bold">Turma</TableHead>
-                      <TableHead className="font-bold">Nome</TableHead>
+                      <TableHead className="font-bold">Identificação</TableHead>
                       <TableHead className="font-bold">Cota declarada</TableHead>
                       <TableHead className="font-bold">Observação</TableHead>
                     </TableRow>
@@ -407,6 +412,7 @@ export function CotasTab() {
                 <p>• Fonte: resultados finais oficiais de cada seleção (2020–2026), com as listas de ações afirmativas e de servidores TAE.</p>
                 <p>• A política de cotas começou na seleção de 2023 (ingresso 2024) — por isso 2020, 2021 e 2022 aparecem com zero.</p>
                 <p>• “Ingressou” e “Titulado” vêm do cruzamento com a base acadêmica do site; “—” indica dado não disponível (2026 está anonimizado por LGPD).</p>
+                <p>• Nomes de cotistas não são exibidos: a identificação é feita por código ou pelo ID do edital, para proteger dados pessoais sensíveis (LGPD).</p>
                 <p>• Na Turma 2026, o resultado final lista 10 pessoas em ações afirmativas/servidor, mas o edital reserva 4 vagas de ações afirmativas + 3 de servidor; nem todas necessariamente ocuparam vaga.</p>
               </div>
             </CardContent>
