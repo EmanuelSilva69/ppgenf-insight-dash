@@ -88,7 +88,27 @@
 
 > As 3 matrículas sem registro são **2 de 2021 e 1 de 2022**. Elas constam na contagem
 > oficial de matrículas, mas não aparecem no PDF "DADOS E TÍTULO DA PESQUISA 2011-2026"
-> nem na lista de cancelados. Precisam ser conferidas no SIGAA.
+> nem na lista de cancelados.
+
+### Conferência nos documentos emitidos pelo SIGAA (13/11/2026)
+
+| Fonte emitida pelo SIGAA | 2021 | 2022 |
+|---|---:|---:|
+| Matrículas no ano (lista de cancelados) | 20 | 15 |
+| Históricos escolares emitidos em 12/02/2026 | 16 | 11 |
+| Cancelamentos na lista oficial | 2 | 3 |
+| **Sem histórico e sem cancelamento** | **2** | **1** |
+
+- Os históricos escolares confirmam **16 matrículas em 2021** (13 do seletivo regular +
+  Débora Lorena, Eudijessica e Larissa Neuza, da seleção especial Edital 34/2021) e
+  **11 em 2022** — exatamente os nomes já cadastrados em `academicData`.
+- A plataforma Sucupira (exportação de 12/05/2026) só lista discentes/egressos de
+  2023–2026; nenhum dos 3 casos aparece lá.
+- Os 3 casos **não têm nome identificável** em nenhum documento disponível. São
+  matrículas que constam na contagem do SIGAA, mas sem histórico escolar (nenhuma
+  disciplina cursada) e sem registro de cancelamento. Não é possível resolver a
+  identificação sem consultar o SIGAA autenticado (relação de discentes por ano de
+  ingresso), que não está acessível nesta auditoria.
 
 Composição da base de 201 alunos:
 
