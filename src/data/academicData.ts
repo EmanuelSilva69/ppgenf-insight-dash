@@ -174,6 +174,9 @@ export const academicData: AcademicRecord[] = [
   { matricula: "2021102900", nome: "SAMARA SALES GOMES DE SOUSA", orientador: "ANDREA CRISTINA OLIVEIRA SILVA", linhaPesquisa: "O CUIDADO EM SAÚDE E ENFERMAGEM", mesAnoEntrada: "3/2021", mesAnoLimite: "2/2023", defesa: "28/02/2023", totalMeses: 23, conclusaoNoPrazo: "SIM", ano: 2021, turma: 11 },
   { matricula: "2021102875", nome: "SHIRLEY PRISCILA MARTINS CHAGAS DINIZ", orientador: "DORLENE MARIA CARDOSO DE AQUINO", linhaPesquisa: "ENFERMAGEM EM SAÚDE COLETIVA", mesAnoEntrada: "3/2021", mesAnoLimite: "2/2023", defesa: "28/03/2023", totalMeses: 24, conclusaoNoPrazo: "NÃO", ano: 2021, turma: 11 },
   { matricula: "2021102768", nome: "SILVANA MENDES COSTA", orientador: "SANTANA DE MARIA ALVES DE SOUSA", linhaPesquisa: "O CUIDADO EM SAÚDE E ENFERMAGEM", mesAnoEntrada: "3/2021", mesAnoLimite: "2/2023", defesa: "28/02/2023", totalMeses: 23, conclusaoNoPrazo: "SIM", ano: 2021, turma: 11 },
+  // Defesa confirmada pelo status DEFENDIDO na exportação do SIGAA (13/11/2026);
+  // data e orientador não constam nas bases detalhadas do programa.
+  { matricula: "2021102893", nome: "CLAUDIONETE ABREU COSTA", orientador: "NÃO INFORMADO", linhaPesquisa: "NÃO INFORMADA", mesAnoEntrada: "3/2021", mesAnoLimite: "2/2023", defesa: "", totalMeses: 0, conclusaoNoPrazo: "SIM", ano: 2021, turma: 11 },
 
   // TURMA 12 - 2022
   { matricula: "2022103080", nome: "CIBELE SILVA LIMA", orientador: "LISCIA DIVANA CARVALHO SILVA", linhaPesquisa: "O CUIDADO EM SAÚDE E ENFERMAGEM", mesAnoEntrada: "3/2022", mesAnoLimite: "2/2024", defesa: "23/02/2024", totalMeses: 23, conclusaoNoPrazo: "SIM", ano: 2022, turma: 12 },
@@ -187,6 +190,9 @@ export const academicData: AcademicRecord[] = [
   { matricula: "2022103071", nome: "BRUNA RAFAELLA CARVALHO ANDRADE", orientador: "ANA HELIA DE LIMA SARDINHA", linhaPesquisa: "O CUIDADO EM SAÚDE E ENFERMAGEM", mesAnoEntrada: "3/2022", mesAnoLimite: "2/2024", defesa: "19/08/2024", totalMeses: 29, conclusaoNoPrazo: "NÃO", ano: 2022, turma: 12 },
   { matricula: "2022103151", nome: "MILKA BORGES DA SILVA", orientador: "ADRIANA GOMES NOGUEIRA FERREIRA", linhaPesquisa: "O CUIDADO EM SAÚDE E ENFERMAGEM", mesAnoEntrada: "3/2022", mesAnoLimite: "2/2024", defesa: "30/08/2024", totalMeses: 29, conclusaoNoPrazo: "NÃO", ano: 2022, turma: 12 },
   { matricula: "2022103124", nome: "LUCAS ANTONIO DE OLIVEIRA CANTANHEDE", orientador: "ANDREA CRISTINA OLIVEIRA SILVA", linhaPesquisa: "ENFERMAGEM EM SAÚDE COLETIVA", mesAnoEntrada: "3/2022", mesAnoLimite: "2/2024", defesa: "30/08/2024", totalMeses: 29, conclusaoNoPrazo: "NÃO", ano: 2022, turma: 12 },
+  // Defesa confirmada pelo status DEFENDIDO na exportação do SIGAA (13/11/2026);
+  // data e orientador não constam nas bases detalhadas do programa.
+  { matricula: "2022103133", nome: "MARIA ALMIRA BULCAO LOUREIRO", orientador: "NÃO INFORMADO", linhaPesquisa: "NÃO INFORMADA", mesAnoEntrada: "3/2022", mesAnoLimite: "2/2024", defesa: "", totalMeses: 0, conclusaoNoPrazo: "SIM", ano: 2022, turma: 12 },
 
   // TURMA 13 - 2023
   { matricula: "2023105384", nome: "CLEIDIANE CRISTINA SOUSA DA SILVA DE OLIVEIRA", orientador: "ANA HELIA DE LIMA SARDINHA", linhaPesquisa: "O CUIDADO EM SAÚDE E ENFERMAGEM", mesAnoEntrada: "3/2023", mesAnoLimite: "2/2025", defesa: "24/03/2025", dataQualificacao: "20/02/2025", totalMeses: 24, conclusaoNoPrazo: "NÃO", ano: 2023, turma: 13 },

@@ -12,11 +12,11 @@
 | Indicador | Valor |
 |---|---:|
 | Matrículas totais (2011–2026) | **222** |
-| Matrículas canceladas | **18** |
+| Matrículas canceladas | **19** |
 | Desligamentos | 10 |
-| Desistências | 7 |
+| Desistências | 8 |
 | Abandono | 1 |
-| Taxa de evasão | **8,1%** |
+| Taxa de evasão | **8,6%** |
 | Matrículas trancadas | 1 (Turma 15) |
 
 > O trancamento **não** entra como cancelamento. Ele permanece como aluno regular
@@ -24,9 +24,9 @@
 
 ---
 
-## Relação dos 18 cancelamentos (sem nomes)
+## Relação dos 19 cancelamentos (sem nomes)
 
-| Ano | Turma | Matrícula | Nome | Tipo de saída | Créditos (integralizados/exigidos) |
+| Ano | Turma | Matrícula | Identificação | Tipo de saída | Créditos (integralizados/exigidos) |
 |---:|---:|---|---|---|---:|
 | 2012 | 2 | 2012103710 | Cancelamento 01 | DESLIGADO | 16/17 |
 | 2014 | 4 | 2014100718 | Cancelamento 02 | DESLIGADO | 10/17 |
@@ -37,19 +37,24 @@
 | 2020 | 10 | 2020103742 | Cancelamento 07 | DESLIGADO | 22/23 |
 | 2021 | 11 | 2021102919 | Cancelamento 08 | DESLIGADO | 23/23 |
 | 2021 | 11 | 2021102810 | Cancelamento 09 | DESLIGADO | 23/23 |
-| 2022 | 12 | 2022103062 | Cancelamento 10 | DESISTÊNCIA | 0/23 |
-| 2022 | 12 | 2022103142 | Cancelamento 11 | ABANDONO | 21/23 |
-| 2022 | 12 | 2022103189 | Cancelamento 12 | DESLIGADO | 0/23 |
-| 2023 | 13 | 2023102963 | Cancelamento 13 | DESLIGADO | 0/23 |
-| 2025 | 15 | 20251006621 | Cancelamento 14 | DESISTÊNCIA | 0/23 |
-| 2025 | 15 | 20251006668 | Cancelamento 15 | DESISTÊNCIA | 0/23 |
-| 2025 | 15 | 20251006757 | Cancelamento 16 | DESISTÊNCIA | 0/23 |
-| 2026 | 16 | 20261009672 | Cancelamento 17 | DESISTÊNCIA | 0/23 |
-| 2026 | 16 | 20261009627 | Cancelamento 18 | DESISTÊNCIA | 3/23 |
+| 2021 | 11 | 2021110106 | Cancelamento 10 | DESISTÊNCIA | — |
+| 2022 | 12 | 2022103062 | Cancelamento 11 | DESISTÊNCIA | 0/23 |
+| 2022 | 12 | 2022103142 | Cancelamento 12 | ABANDONO | 21/23 |
+| 2022 | 12 | 2022103189 | Cancelamento 13 | DESLIGADO | 0/23 |
+| 2023 | 13 | 2023102963 | Cancelamento 14 | DESLIGADO | 0/23 |
+| 2025 | 15 | 20251006621 | Cancelamento 15 | DESISTÊNCIA | 0/23 |
+| 2025 | 15 | 20251006668 | Cancelamento 16 | DESISTÊNCIA | 0/23 |
+| 2025 | 15 | 20251006757 | Cancelamento 17 | DESISTÊNCIA | 0/23 |
+| 2026 | 16 | 20261009672 | Cancelamento 18 | DESISTÊNCIA | 0/23 |
+| 2026 | 16 | 20261009627 | Cancelamento 19 | DESISTÊNCIA | 3/23 |
 
 > O registro de 2012 (matrícula 2012103710) foi desligado,
 > reingressou em 2014 (matrícula 2014100790) e concluiu em 2016. O cancelamento de
 > 2012 permanece registrado na série histórica.
+>
+> O Cancelamento 10 (matrícula 2021110106) não consta na lista oficial de 18: é o
+> registro anterior da mesma pessoa da matrícula 2021110133, que reingressou na Turma 11
+> e concluiu. Está aqui porque o SIGAA marca a matrícula como cancelada.
 
 ---
 
@@ -67,13 +72,13 @@
 | 2018 | 15 | 1 | 1 | 0 | 0 | 6,7% |
 | 2019 | 13 | 2 | 1 | 1 | 0 | 15,4% |
 | 2020 | 14 | 1 | 1 | 0 | 0 | 7,1% |
-| 2021 | 20 | 2 | 2 | 0 | 0 | 10,0% |
-| 2022 | 15 | 3 | 1 | 2 | 1 | 20,0% |
+| 2021 | 20 | 3 | 2 | 1 | 0 | 15,0% |
+| 2022 | 15 | 3 | 1 | 1 | 1 | 20,0% |
 | 2023 | 7 | 1 | 1 | 0 | 0 | 14,3% |
 | 2024 | 17 | 0 | 0 | 0 | 0 | 0,0% |
 | 2025 | 19 | 3 | 0 | 3 | 0 | 15,8% |
 | 2026 | 14 | 2 | 0 | 2 | 0 | 14,3% |
-| **TOTAL** | **222** | **18** | **10** | **7** | **1** | **8,1%** |
+| **TOTAL** | **222** | **19** | **10** | **8** | **1** | **8,6%** |
 
 ---
 
@@ -81,51 +86,44 @@
 
 | Situação | Quantidade |
 |---|---:|
-| Matrículas oficiais (lista de cancelados) | 222 |
-| Com registro acadêmico na base (`academicData`) | 201 |
-| Canceladas (lista oficial) | 18 |
-| Sem registro acadêmico e sem cancelamento | 3 |
+| Matrículas oficiais (SIGAA) | 222 |
+| Com registro acadêmico na base (`academicData`) | 203 |
+| Canceladas | 19 |
+| Sem registro | 0 |
 
-> As 3 matrículas sem registro são **2 de 2021 e 1 de 2022**. Elas constam na contagem
-> oficial de matrículas, mas não aparecem no PDF "DADOS E TÍTULO DA PESQUISA 2011-2026"
-> nem na lista de cancelados.
+> 203 + 19 = 222. Nenhuma matrícula ficou sem classificação.
 
-### Conferência nos documentos emitidos pelo SIGAA (13/11/2026)
+### Conferência na exportação "Lista de Concluídos e Cancelados" do SIGAA (13/11/2026)
 
-| Fonte emitida pelo SIGAA | 2021 | 2022 |
-|---|---:|---:|
-| Matrículas no ano (lista de cancelados) | 20 | 15 |
-| Históricos escolares emitidos em 12/02/2026 | 16 | 11 |
-| Cancelamentos na lista oficial | 2 | 3 |
-| **Sem histórico e sem cancelamento** | **2** | **1** |
+| Status no SIGAA | Quantidade |
+|---|---:|
+| CONCLUÍDO | 166 |
+| DEFENDIDO | 6 |
+| ATIVO | 31 |
+| CANCELADO | 19 |
+| **Total** | **222** |
 
-- Os históricos escolares confirmam **16 matrículas em 2021** (13 do seletivo regular +
-  Débora Lorena, Eudijessica e Larissa Neuza, da seleção especial Edital 34/2021) e
-  **11 em 2022** — exatamente os nomes já cadastrados em `academicData`.
-- A plataforma Sucupira (exportação de 12/05/2026) só lista discentes/egressos de
-  2023–2026; nenhum dos 3 casos aparece lá.
-- Os 3 casos **não têm nome identificável** em nenhum documento disponível. São
-  matrículas que constam na contagem do SIGAA, mas sem histórico escolar (nenhuma
-  disciplina cursada) e sem registro de cancelamento. Não é possível resolver a
-  identificação sem consultar o SIGAA autenticado (relação de discentes por ano de
-  ingresso), que não está acessível nesta auditoria.
+- As **3 matrículas que antes não tinham registro** foram identificadas nessa exportação:
+  2 com status DEFENDIDO (matrículas 2021102893 e 2022103133) e 1 CANCELADO
+  (matrícula 2021110106).
+- Das 31 matrículas ATIVO, 30 estão em andamento e 1 está trancada (Turma 15).
 
-Composição da base de 201 alunos:
+Composição da base de 203 alunos:
 
 | Situação na base | Quantidade |
 |---|---:|
-| Concluintes | 170 |
+| Concluintes | 172 |
 | Em andamento | 18 |
 | Matriculados (Turma 2026) | 12 |
 | Trancados | 1 |
-| **TOTAL** | **201** |
+| **TOTAL** | **203** |
 
 ---
 
 ## Turma 13 (2023)
 
 A lista oficial confirma **7 matrículas** na Turma 13: **6 concluintes + 1 desligamento**
-(Cancelamento 13, matrícula 2023102963).
+(Cancelamento 14, matrícula 2023102963).
 
 Os 8 aprovados no seletivo de 2022 (Edital 48/2022) foram:
 
@@ -153,4 +151,4 @@ como evasão.
   **não é uma lista de matrícula** e não inclui quem se desligou antes de registrar o
   projeto.
 - A Turma 15 tem 1 aluna trancada (matrícula 20251008116), que
-  **não** integra os 18 cancelamentos.
+  **não** integra os 19 cancelamentos.

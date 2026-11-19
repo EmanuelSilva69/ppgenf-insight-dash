@@ -592,7 +592,9 @@ export function CriticalAnalysisTab() {
                       </Badge>
                     </TableCell>
                     <TableCell className="text-center whitespace-nowrap">
-                      {c.creditosIntegralizados}/{c.creditosExigidos}
+                      {c.creditosExigidos === null
+                        ? "—"
+                        : `${c.creditosIntegralizados}/${c.creditosExigidos}`}
                     </TableCell>
                   </TableRow>
                 ))}

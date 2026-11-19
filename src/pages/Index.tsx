@@ -53,7 +53,7 @@ const Index = () => {
     const hasFilters = selectedYear !== "Todos" || selectedProfessor !== "Todos" || selectedPeriod !== "Todos";
     
     if (!hasFilters) {
-      // No filters - use official totals (222 matrículas, 170 concluintes)
+      // No filters - use official totals (222 matrículas, 172 concluintes)
       return {
         totalMatriculados: programTotals.matriculados,
         totalConcluintes: programTotals.concluintes,

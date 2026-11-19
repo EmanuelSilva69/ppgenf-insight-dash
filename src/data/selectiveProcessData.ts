@@ -15,8 +15,11 @@ export interface SelectiveProcessData {
 // Inscritos, aprovados e vagas: resultados finais e homologações oficiais (2020–2026).
 // Anos anteriores a 2020 são estimativas baseadas nos registros históricos.
 // Matriculados: total de matrículas por ano de ingresso conforme a
-// "LISTA DE DISCENTES COM MATRICULA CANCELADA — PPGENF — 13/11/2026" (222 matrículas).
-// Desistências/desligamentos: a mesma lista oficial (18 cancelamentos no total).
+// "LISTA DE DISCENTES COM MATRICULA CANCELADA — PPGENF — 13/11/2026" (222 matrículas),
+// conferida com a exportação "Lista de Concluídos e Cancelados" do SIGAA (13/11/2026).
+// Desistências/desligamentos: 19 matrículas canceladas — 18 da lista oficial + 1 registro
+// da Turma 11 que consta como cancelado no SIGAA (a pessoa reingressou e concluiu).
+// Concluintes: status CONCLUÍDO + DEFENDIDO no SIGAA (172 no total).
 export const selectiveProcessData: SelectiveProcessData[] = [
   // Quadriênio 2011-2012 (Incompleto)
   { turma: 1, ano: 2011, vagas_ofertadas: 15, inscritos: 45, aprovados: 15, matriculados: 13, concluintes: 13, desistencias: 0, desligamentos: 0, emAndamento: 0 },
@@ -37,8 +40,8 @@ export const selectiveProcessData: SelectiveProcessData[] = [
   // Quadriênio 2021-2024
   // Números oficiais: 2020 (42 inscritos, 24 aprovados), 2021 (28 inscritos, 16 aprovados),
   // 2022 (13 inscritos, 8 aprovados) e 2023 (91 inscritos, 35 aprovados).
-  { turma: 11, ano: 2021, vagas_ofertadas: 16, inscritos: 42, aprovados: 24, matriculados: 20, concluintes: 16, desistencias: 0, desligamentos: 2, emAndamento: 0 },
-  { turma: 12, ano: 2022, vagas_ofertadas: 16, inscritos: 28, aprovados: 16, matriculados: 15, concluintes: 11, desistencias: 2, desligamentos: 1, emAndamento: 0 },
+  { turma: 11, ano: 2021, vagas_ofertadas: 16, inscritos: 42, aprovados: 24, matriculados: 20, concluintes: 17, desistencias: 1, desligamentos: 2, emAndamento: 0 },
+  { turma: 12, ano: 2022, vagas_ofertadas: 16, inscritos: 28, aprovados: 16, matriculados: 15, concluintes: 12, desistencias: 2, desligamentos: 1, emAndamento: 0 },
   // Turma 13: Edital 48/2022 tinha 14 vagas e 13 inscrições homologadas; 8 aprovados.
   // A lista oficial de cancelamentos registra 7 matrículas (1 desligamento na Turma 13).
   { turma: 13, ano: 2023, vagas_ofertadas: 14, inscritos: 13, aprovados: 8, matriculados: 7, concluintes: 6, desistencias: 0, desligamentos: 1, emAndamento: 0 },

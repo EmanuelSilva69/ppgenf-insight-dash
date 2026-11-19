@@ -1,12 +1,16 @@
 // Discentes com matrícula cancelada no PPGENF
 // Fonte oficial: "LISTA DE DISCENTES COM MATRICULA CANCELADA — PPGENF — 13/11/2026"
 // (arquivo: LISTA DE DISCENTES CANCELADOS PPGENF (13-11-2026).pdf)
+// Conferência: exportação "Lista de Concluídos e Cancelados" do SIGAA (13/11/2026).
 //
 // A coluna "ano" é o ano de ingresso (turma), conforme a lista oficial.
-// A lista registra 222 matrículas e 18 matrículas canceladas:
+// São 222 matrículas e 19 matrículas canceladas:
 //   - 10 desligamentos
-//   - 7 desistências
+//   - 8 desistências
 //   - 1 abandono
+// A lista oficial registra 18; a 19ª (matrícula 2021110106) consta como cancelada no
+// SIGAA e não aparece na lista oficial. É o registro anterior da mesma pessoa da
+// matrícula 2021110133, que reingressou na Turma 11 e concluiu.
 
 export type ExitType = "DESISTÊNCIA" | "DESLIGADO" | "ABANDONO";
 
@@ -17,9 +21,9 @@ export interface CancelledStudent {
   identificacao: string;
   linhaPesquisa: string;
   tipoSaida: ExitType;
-  creditosExigidos: number;
-  creditosIntegralizados: number;
-  creditosPendentes: number;
+  creditosExigidos: number | null;
+  creditosIntegralizados: number | null;
+  creditosPendentes: number | null;
   observacao?: string;
 }
 
@@ -125,10 +129,22 @@ export const cancelledStudents: CancelledStudent[] = [
     creditosPendentes: 0,
   },
   {
+    ano: 2021,
+    turma: 11,
+    matricula: "2021110106",
+    identificacao: "Cancelamento 10",
+    linhaPesquisa: "NÃO INFORMADA",
+    tipoSaida: "DESISTÊNCIA",
+    creditosExigidos: null,
+    creditosIntegralizados: null,
+    creditosPendentes: null,
+    observacao: "Registro anterior da matrícula 2021110133, que reingressou e concluiu (SIGAA).",
+  },
+  {
     ano: 2022,
     turma: 12,
     matricula: "2022103062",
-    identificacao: "Cancelamento 10",
+    identificacao: "Cancelamento 11",
     linhaPesquisa: "O CUIDADO EM SAÚDE E ENFERMAGEM",
     tipoSaida: "DESISTÊNCIA",
     creditosExigidos: 23,
@@ -139,7 +155,7 @@ export const cancelledStudents: CancelledStudent[] = [
     ano: 2022,
     turma: 12,
     matricula: "2022103142",
-    identificacao: "Cancelamento 11",
+    identificacao: "Cancelamento 12",
     linhaPesquisa: "O CUIDADO EM SAÚDE E ENFERMAGEM",
     tipoSaida: "ABANDONO",
     creditosExigidos: 23,
@@ -150,7 +166,7 @@ export const cancelledStudents: CancelledStudent[] = [
     ano: 2022,
     turma: 12,
     matricula: "2022103189",
-    identificacao: "Cancelamento 12",
+    identificacao: "Cancelamento 13",
     linhaPesquisa: "O CUIDADO EM SAÚDE E ENFERMAGEM",
     tipoSaida: "DESLIGADO",
     creditosExigidos: 23,
@@ -161,7 +177,7 @@ export const cancelledStudents: CancelledStudent[] = [
     ano: 2023,
     turma: 13,
     matricula: "2023102963",
-    identificacao: "Cancelamento 13",
+    identificacao: "Cancelamento 14",
     linhaPesquisa: "O CUIDADO EM SAÚDE E ENFERMAGEM",
     tipoSaida: "DESLIGADO",
     creditosExigidos: 23,
@@ -172,7 +188,7 @@ export const cancelledStudents: CancelledStudent[] = [
     ano: 2025,
     turma: 15,
     matricula: "20251006621",
-    identificacao: "Cancelamento 14",
+    identificacao: "Cancelamento 15",
     linhaPesquisa: "ENFERMAGEM EM SAÚDE COLETIVA",
     tipoSaida: "DESISTÊNCIA",
     creditosExigidos: 23,
@@ -183,7 +199,7 @@ export const cancelledStudents: CancelledStudent[] = [
     ano: 2025,
     turma: 15,
     matricula: "20251006668",
-    identificacao: "Cancelamento 15",
+    identificacao: "Cancelamento 16",
     linhaPesquisa: "O CUIDADO EM SAÚDE E ENFERMAGEM",
     tipoSaida: "DESISTÊNCIA",
     creditosExigidos: 23,
@@ -194,7 +210,7 @@ export const cancelledStudents: CancelledStudent[] = [
     ano: 2025,
     turma: 15,
     matricula: "20251006757",
-    identificacao: "Cancelamento 16",
+    identificacao: "Cancelamento 17",
     linhaPesquisa: "ENFERMAGEM EM SAÚDE COLETIVA",
     tipoSaida: "DESISTÊNCIA",
     creditosExigidos: 23,
@@ -205,7 +221,7 @@ export const cancelledStudents: CancelledStudent[] = [
     ano: 2026,
     turma: 16,
     matricula: "20261009672",
-    identificacao: "Cancelamento 17",
+    identificacao: "Cancelamento 18",
     linhaPesquisa: "O CUIDADO EM SAÚDE E ENFERMAGEM",
     tipoSaida: "DESISTÊNCIA",
     creditosExigidos: 23,
@@ -216,7 +232,7 @@ export const cancelledStudents: CancelledStudent[] = [
     ano: 2026,
     turma: 16,
     matricula: "20261009627",
-    identificacao: "Cancelamento 18",
+    identificacao: "Cancelamento 19",
     linhaPesquisa: "ENFERMAGEM EM SAÚDE COLETIVA",
     tipoSaida: "DESISTÊNCIA",
     creditosExigidos: 23,
